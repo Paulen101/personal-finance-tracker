@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.AppWrapper {
+  background-color: black;   
+  width: 100%;
+  min-height: 100vh;
+  display: flex; 
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
