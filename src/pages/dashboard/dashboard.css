@@ -1,0 +1,13 @@
+.dashboardWrapper { 
+    width: 100%;
+    height: 90vh;
+    background-color: white;
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: auto auto; /* change grid size depending on component */
+    margin-right: 10px;
+}
+
+.expensesSummary { 
+
+}
