@@ -6,6 +6,10 @@
   --txtBlack: rgba(0, 0, 0, 1);
 }
 
+*{
+  box-sizing: border-box;
+}
+
 .navbar{
   width: 20%;
   height: 90vh;
@@ -30,6 +34,9 @@
   text-decoration: none;
   text-transform: none;   
   color: var(--txtWhite);
+  /* uncomment to make the not make nav item not push out to the righ */
+  /* padding: 10px;        */
+  transition: all 0.3s ease;
 }
 
 .navList {
@@ -51,4 +58,11 @@
   text-align: left;
   line-height: 1.3;
   margin-bottom: 75px; 
+}
+
+.navText a:hover {
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  padding: 10px;
 }

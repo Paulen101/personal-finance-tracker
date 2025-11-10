@@ -8,6 +8,11 @@
     margin-right: 10px;
 }
 
-.expensesSummary { 
+.historySummary { 
+    text-align: left;
+    padding-left: 30px;
+}
 
+.expensesSummary{
+    padding-top: 20px;
 }
