@@ -1,4 +1,4 @@
-import React, {useState, useContext, useMemo, useLayoutEffect} from "react";
+import React, {useState, useContext, useLayoutEffect} from "react";
 import { AppContext } from "../../AppContext";
 import { HistorySummary } from "../../components/HistorySummary"
 import { TotalSummary } from "../../components/TotalSummary"
