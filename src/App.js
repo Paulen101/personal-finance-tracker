@@ -1,24 +1,21 @@
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { FinanceProvider } from './context/FinanceContext';
+import BudgetPage from './pages/BudgetPage';
+import { initializeDemoDataIfNeeded } from './utils/demoData';
 import './App.css';
 
 function App() {
+  useEffect(() => {
+    // Initialize demo data on first load
+    initializeDemoDataIfNeeded();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <FinanceProvider>
+      <div className="App">
+        <BudgetPage />
+      </div>
+    </FinanceProvider>
   );
 }
 
