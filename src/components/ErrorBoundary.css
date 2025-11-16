@@ -1,0 +1,73 @@
+.error-boundary-root {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+  padding: 24px;
+}
+
+.error-card {
+  background: white;
+  padding: 28px;
+  border-radius: 12px;
+  max-width: 720px;
+  width: 100%;
+  box-shadow: 0 8px 30px rgba(16, 24, 40, 0.08);
+  text-align: center;
+}
+
+.error-illustration {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.error-card h2 {
+  margin: 0 0 8px 0;
+  color: #1f2937;
+}
+
+.error-card p {
+  color: #6b7280;
+  margin: 0 0 18px 0;
+}
+
+.error-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #1f2937;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.error-details {
+  text-align: left;
+  margin-top: 12px;
+  color: #374151;
+}
+
+.error-details pre {
+  background: #f9fafb;
+  padding: 12px;
+  border-radius: 8px;
+  overflow: auto;
+}

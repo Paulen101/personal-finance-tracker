@@ -120,6 +120,16 @@
   border-radius: 6px;
 }
 
+.budget-badge.global {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  color: white;
+}
+
+.budget-badge.wallet {
+  background: linear-gradient(135deg, #06B6D4 0%, #8B5CF6 100%);
+  color: white;
+}
+
 .budget-item-footer {
   display: flex;
   justify-content: space-between;

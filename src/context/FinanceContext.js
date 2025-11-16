@@ -11,33 +11,63 @@ export const useFinance = () => {
 };
 
 export const FinanceProvider = ({ children }) => {
-  // Initialize state from localStorage
-  const [wallets, setWallets] = useState(() => {
-    const saved = localStorage.getItem('finance_wallets');
-    return saved ? JSON.parse(saved) : [
-      {
-        id: 0,
-        name: 'Main Wallet',
-        balance: 1000,
-        transactions: []
-      }
-    ];
-  });
+  // Error state for storage issues
+  const [storageError, setStorageError] = useState(null);
 
-  const [budgets, setBudgets] = useState(() => {
-    const saved = localStorage.getItem('finance_budgets');
-    return saved ? JSON.parse(saved) : [];
-  });
+  // Safe localStorage helpers
+  const safeGet = (key, fallback) => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : fallback;
+    } catch (e) {
+      console.error('localStorage.getItem error', key, e);
+      setStorageError(e);
+      return fallback;
+    }
+  };
 
-  const [selectedWalletId, setSelectedWalletId] = useState(0);
+  const safeSet = (key, value) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {
+      console.error('localStorage.setItem error', key, e);
+      setStorageError(e);
+    }
+  };
+
+  const safeRemove = (key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (e) {
+      console.error('localStorage.removeItem error', key, e);
+      setStorageError(e);
+    }
+  };
+
+  // Initialize state from localStorage (safe)
+  const [wallets, setWallets] = useState(() => safeGet('finance_wallets', [
+    {
+      id: 0,
+      name: 'Main Wallet',
+      balance: 1000,
+      transactions: []
+    }
+  ]));
+
+  const [budgets, setBudgets] = useState(() => safeGet('finance_budgets', []));
+
+  const [selectedWalletId, setSelectedWalletId] = useState(() => {
+    const defaultWallet = (Array.isArray(wallets) && wallets[0] && wallets[0].id) || 0;
+    return defaultWallet;
+  });
 
   // Persist to localStorage whenever state changes
   useEffect(() => {
-    localStorage.setItem('finance_wallets', JSON.stringify(wallets));
+    safeSet('finance_wallets', wallets);
   }, [wallets]);
 
   useEffect(() => {
-    localStorage.setItem('finance_budgets', JSON.stringify(budgets));
+    safeSet('finance_budgets', budgets);
   }, [budgets]);
 
   // Get current wallet
@@ -45,17 +75,26 @@ export const FinanceProvider = ({ children }) => {
     return wallets.find(w => w.id === selectedWalletId) || wallets[0];
   };
 
-  // Calculate spent amount for a budget
+  // Calculate spent amount for a budget safely
   const calculateBudgetSpent = (budget) => {
-    const wallet = wallets.find(w => w.id === (budget.walletID ?? selectedWalletId));
-    if (!wallet || !wallet.transactions) return 0;
+    try {
+      // For wallet-specific budgets, use that wallet's transactions
+      // For global budgets (walletID === null), calculate against the selected wallet
+      const targetWalletId = budget.walletID === null ? selectedWalletId : budget.walletID;
+      const wallet = Array.isArray(wallets) ? wallets.find(w => w.id === targetWalletId) : null;
+      if (!wallet || !Array.isArray(wallet.transactions)) return 0;
 
-    // Sum transactions that match the budget category
-    const spent = wallet.transactions
-      .filter(t => t.category === budget.category && t.type === 'expense')
-      .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+      // Sum transactions that match the budget category and are expenses
+      const spent = wallet.transactions
+        .filter(t => t && t.category === budget.category && t.type === 'expense')
+        .reduce((sum, t) => sum + Math.abs(Number(t.amount) || 0), 0);
 
-    return spent;
+      return spent;
+    } catch (e) {
+      console.error('Error calculating budget spent', e);
+      setStorageError(e);
+      return 0;
+    }
   };
 
   // Get applicable budgets for current wallet
@@ -122,6 +161,13 @@ export const FinanceProvider = ({ children }) => {
     ));
   };
 
+  const clearStorage = () => {
+    safeRemove('finance_wallets');
+    safeRemove('finance_budgets');
+    setWallets([]);
+    setBudgets([]);
+  };
+
   const value = {
     wallets,
     setWallets,
@@ -136,6 +182,9 @@ export const FinanceProvider = ({ children }) => {
     updateBudget,
     deleteBudget,
     addTransaction
+    , storageError,
+    clearStorage,
+    clearStorageError: () => setStorageError(null)
   };
 
   return (

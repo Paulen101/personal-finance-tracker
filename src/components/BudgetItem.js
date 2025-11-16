@@ -6,9 +6,9 @@ const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
   
   // Determine status color
   const getStatusColor = () => {
-    if (percentage >= 100) return '#ef4444'; // Red - exceeded
-    if (percentage >= 80) return '#f59e0b'; // Yellow - warning
-    return '#10b981'; // Green - safe
+    if (percentage >= 100) return '#EF4444'; // Red - exceeded
+    if (percentage >= 80) return '#F59E0B'; // Yellow - warning
+    return '#8B5CF6'; // Primary Purple - default under threshold
   };
 
   const getWalletName = () => {

@@ -15,6 +15,7 @@ const BudgetPage = () => {
     addBudget,
     updateBudget,
     deleteBudget
+    , storageError, clearStorage
   } = useFinance();
 
   const [showForm, setShowForm] = useState(false);
@@ -126,6 +127,16 @@ const BudgetPage = () => {
 
   return (
     <div className="budget-page">
+      {storageError && (
+        <div className="storage-error-banner">
+          <div>⚠️ Storage error detected. Some features may not work correctly.</div>
+          <div className="storage-error-actions">
+            <button className="btn-clear-storage" onClick={() => { if (window.confirm('Clear local data and reload?')) { clearStorage(); window.location.reload(); } }}>
+              Clear Local Data
+            </button>
+          </div>
+        </div>
+      )}
       <div className="budget-header">
         <div className="budget-header-top">
           <h1>💰 Budget Management</h1>
