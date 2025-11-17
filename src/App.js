@@ -10,8 +10,8 @@ function App() {
     <FinanceProvider>
       <Router>
         <Routes>
-          <Route path="/expenses" component={Expenses} />
-          <Route path="/wallet" component={Wallet} />
+          <Route path="/expenses" element={<Expenses />} />
+          <Route path="/wallet" element={<Wallet />} />
         </Routes>
       </Router>
     </FinanceProvider>
