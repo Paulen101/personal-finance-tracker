@@ -1,18 +1,154 @@
 .dashboardWrapper { 
-    width: 100%;
-    height: 90vh;
-    background-color: white;
-    border-radius: 30px;
-    display: grid;
-    grid-template-columns: auto auto; /* change grid size depending on component */
-    margin-right: 10px;
+  width: 100%;
+  height: 90vh;
+  background-color: white;
+  border-radius: 30px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto 1fr;
+  row-gap: 30px;    
+  column-gap: 100px; /* horizontal spacing only */
+  padding: 10px 40px 30px;
+  /* grid-template-columns: auto auto; change grid size depending on component */
+  margin-right: 10px;
+}
+
+/* specialIcon.css */
+.specialIcon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.expensesSummary {
+  height: 250px;             /* fixed height for chart */
+  min-height: 250px;
+  max-height: 250px;
+}
+
+.progressBarContainer {
+  display: flex;      
+  flex-direction: column; 
 }
 
 .historySummary { 
-    text-align: left;
-    padding-left: 30px;
+  display: flex;
+  flex-direction: column;       /* stack transactions + page controls */
+  padding-left: 30px;
+  text-align: left;
+  border: 1px solid #eee;       /* optional */
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-sizing: border-box;
+  position: relative;           /* allows absolute positioning inside */
 }
 
-.expensesSummary{
-    padding-top: 20px;
+.budgetReminder {
+  text-align: left;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: #f3f3f3;
+  height: 230px;
+  margin-top: auto;
+  padding-left: 30px;
+  padding-right: 20px;
 }
+
+.budgetReminder p {
+  margin: 4px 0;
+}
+
+.buttonWrapper {
+  text-align: center;  /* center the button inside this div */
+  margin-top: 20px;    /* optional spacing */
+}
+
+.buttonWrapper button {
+  display: inline-block;  /* keep button size tight */
+  cursor: pointer;         /* show pointer on hover */
+}
+
+.pageControls {
+  position: absolute;           /* stick to bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px 0;
+  border-top: 1px solid #ddd;
+  background-color: inherit;    /* optional: match container */
+}
+
+.totalSummary {
+  height: 200px;             /* fixed height */
+  min-height: 100px;
+}
+
+.totalSummary {
+  text-align: left;
+}
+
+/* NOTE: this might mess up some other pages that uses the same elements  */
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background-color: #ecececff; /* background bar */
+  overflow: hidden;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #ecececff;
+  border-radius: 6px;
+}
+
+progress::-webkit-progress-value {
+  background-color: #4caf50;
+  border-radius: 6px;
+}
+
+progress::-moz-progress-bar {
+  background-color: #4caf50;
+  border-radius: 6px;
+}
+
+progress::-ms-fill {
+  background-color: #4caf50;
+  border-radius: 6px;
+}
+
+/* if possible configure size of bar later*/ 
+.progressBar {
+  width: 100%;        /* visually smaller */
+  max-width: 400px;  /* optional */
+  text-align: left;         /* align text and contents to the left */
+  margin-bottom: 15px;      /* optional gap between bars */
+}
+
+progress {
+  width: 100%;      
+  height: 12px;
+}
+
+
+.loadingOverlay { 
+    /* configure later  */
+}
+
+/* NOTE: this might mess up some other pages that uses the same elements  */
+/* recharts charts (remove the jarring black border on-click)  */
+.recharts-wrapper svg:focus {
+  outline: none !important;
+}
+
+.recharts-wrapper:focus {
+  outline: none !important;
+}
+

@@ -8,27 +8,20 @@ const CategorySummary = ({spending}) => {
   const max = 5;
 
   // reduce only happens when the transactions array changes
-  const CategoryGroup = useMemo(() => {
+  const categoryGroup = useMemo(() => {
     // total per category
     const totals = spending.reduce((acc, curr) => {
-      const key = curr.category;
+      
+      if (curr.type !== "expense") return acc; // skip income
 
-      if (!acc[key]) {
-        acc[key] = 0;
-      }
-
-      if (curr.type === "expense") { 
-        acc[key] += curr.amount; 
-      // } else {       // total spending check so don't need to worry about income yet, uncomment if otherwise
-      //   acc[key] -= curr.amount; 
-      }
+      acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
 
       return acc;
     }, {});
 
     // sort categories by spending
     // convert obj to array 
-    const sortedCategory = Object.entries(totals).sort(   // sort the numericals at [1] intead of the category [0]
+    const sortedCategory = Object.entries(totals).sort(   // sort the numbers at [1] intead of the category [0]
       (a, b) => b[1] - a[1] // b - a to place the arr in descending order
     );
 
@@ -36,28 +29,76 @@ const CategorySummary = ({spending}) => {
     const other = sortedCategory.slice(max - 1);     // at index 4
 
     const otherTotal = other.reduce((sum, [, value]) => sum + value, 0);
-    const topTotal = top.reduce((sum, [, value]) => sum + value, 0);
-    const maxTotal = otherTotal + topTotal;
-
+    
     const result = [...top];
-    if (otherTotal > 0) result.push(["Other", otherTotal]);
+    
+    // If there is any leftover, always make it "Other"
+    if (otherTotal > 0 || result.length < max) {
+      result.push(["Other", otherTotal]);
+    }
+
+    // Fill with dummy categories if fewer than 5
+    const dummyCategories = [
+      ["Food", 0],
+      ["Rent", 0],
+      ["Entertainment", 0],
+      ["Transit", 0]
+    ];
+
+    // Add dummy entries for missing slots
+    let i = 0;
+    while (result.length < max && i < dummyCategories.length) {
+      const [cat, val] = dummyCategories[i];
+      if (!result.find(([rCat]) => rCat === cat)) {
+        result.push([cat, val]);
+      }
+      i++;
+    }
+
+    const maxTotal = result.reduce((sum, [, value]) => sum + value, 0) || 1;
 
     return {result, maxTotal}; // [["Food", 165], ["Rent", 200], ["Other", 50]], maxtotal
   }, [spending]);
 
   // destructure for use
-  const {result, maxTotal} = CategoryGroup;
+  const {result, maxTotal} = categoryGroup;
 
   return (
-    <>
+    <div className="progressBarContainer">
       {result.map(([category, total]) => (
-        <div key={category}>
-          {category}: ${total} <br></br>
+        <div className="progressBar" key={category}>
+          {category}: ${total} spent<br></br>
           <progress value={total} max={maxTotal}/>  {/* using react's progress component (for now, may or may not change styles later later) */}
         </div>
       ))}
-    </>
+    </div>
   )
+
+  // {result.map(([category, total]) => {
+  //   const percent = Math.min((total / maxTotal) * 100, 100);
+
+  //   return (
+  //     <div key={category} style={{ marginBottom: '8px' }}>
+  //       {category}: ${total}
+  //       <div
+  //         style={{
+  //           width: '100%',
+  //           height: '12px',
+  //           backgroundColor: '#ecececff',
+  //           borderRadius: '6px',
+  //         }}
+  //       >
+  //         <div
+  //           style={{
+  //             width: `${percent}%`,
+  //             height: '100%',
+  //             backgroundColor: '#4caf50',
+  //           }}
+  //         />
+  //       </div>
+  //     </div>
+  //   );
+  // })}
 }
 
 const EmptyCategorySummary = () => {
@@ -73,10 +114,10 @@ const EmptyCategorySummary = () => {
   const maxTotal = 1; // avoid max=0 which can break <progress>
 
   return (
-    <div>
+    <div className="progressBarContainer">
       {dummyCategories.map(([category, value]) => (
-        <div key={category}>
-          {category}: ${value} <br></br>
+        <div className="progressBar" key={category}>
+          {category}: ${value} spent<br></br>
           <progress value={value} max={maxTotal}/>
         </div>
       ))}

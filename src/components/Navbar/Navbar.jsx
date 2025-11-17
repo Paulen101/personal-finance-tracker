@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './Navbar.css';
 
 function Navbar() {
@@ -10,11 +10,12 @@ function Navbar() {
             </div>
             <div className="navWrapper">
                 <ul className="navList">
-                    <li className="navText"><Link to="/">DASHBOARD</Link></li>
-                    <li className="navText"><Link to="/">EXPENSES</Link></li>
-                    <li className="navText"><Link to="/">WALLETS</Link></li>
-                    <li className="navText"><Link to="/">BUDGETS</Link></li>
-                    <li className="navText"><Link to="/">ANALYTICS</Link></li>
+                    {/* can prob use map here later */}
+                    <li className={`navText`}><NavLink to="/" className={"navText"}>DASHBOARD</NavLink></li>
+                    <li className={`navText`}><NavLink to="/expenses" className={"navText"}>EXPENSES</NavLink></li>
+                    <li className={`navText`}><NavLink to="/wallets" className={"navText"}>WALLETS</NavLink></li>
+                    <li className={`navText`}><NavLink to="/budgets" className={"navText"}>BUDGETS</NavLink></li>
+                    <li className={`navText`}><NavLink to="/analytics" className={"navText"}>ANALYTICS</NavLink></li>
                 </ul>
             </div>
         </div>

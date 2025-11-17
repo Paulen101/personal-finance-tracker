@@ -6,12 +6,7 @@ export function AppProvider({ children }) {
   const [wallets, setWallets] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
-
-  // // initialize wallets and budgets (runs once)
-  // useEffect(() => {
-  //   setWallets(JSON.parse(localStorage.getItem("wallets")) || []);
-  //   setBudgets(JSON.parse(localStorage.getItem("budgets")) || []);
-  // }, []);
+  // maybe set other state later (status, error)
 
   // persist wallets and budgets to localStorage on change <- this set the wallet to local storage
   useEffect(() => {
@@ -26,23 +21,7 @@ export function AppProvider({ children }) {
     }
   }, [budgets, isLoaded]);
 
-  useEffect(() => {
-    const savedWallets = loadFromLocalStorage("wallets");
-    const savedBudgets = loadFromLocalStorage("budgets");
-
-    setWallets(savedWallets);
-    setBudgets(savedBudgets);
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    setBudgets(prevBudgets => updateBudgetsSpent(wallets, prevBudgets));
-  }, [wallets, isLoaded]);
-
-
-  // helper load function 
+  // helper load function <- IMPORTANT
   const loadFromLocalStorage = (key, fallback = []) => {
     // load "key" (wallets or budgets) from browser 
     try {
@@ -56,8 +35,60 @@ export function AppProvider({ children }) {
     }
   }
 
+  // load all local storage items on component
+  useEffect(() => {
+    const savedWallets = loadFromLocalStorage("wallets");
+    const savedBudgets = loadFromLocalStorage("budgets");
+
+    setWallets(savedWallets);
+    setBudgets(savedBudgets);
+    setIsLoaded(true);
+  }, []);
+
+  const updateBudgetsSpent = (walletsData, budgetsData) => {
+    const localBudgetKeys = new Set(
+      budgetsData
+        .filter(b => b.walletID !== null)
+        .map(b => `${b.walletID}-${b.category}`)
+    );
+
+    return budgetsData.map(budget => {
+      let relevantTransactions = [];
+
+      if (budget.walletID !== null) {
+        const wallet = walletsData.find(w => w.accountID === budget.walletID);
+        if (wallet) relevantTransactions = wallet.transactions;
+      } else {
+        relevantTransactions = walletsData
+          .filter(w => !localBudgetKeys.has(`${w.accountID}-${budget.category}`))
+          .flatMap(w => w.transactions);
+      }
+
+      // Only include transactions (on or after dateSet)
+      const budgetStartDate = budget.dateSet ? new Date(budget.dateSet) : null;
+
+      const totalSpent = relevantTransactions
+        .filter(t => 
+          t.type === "expense" &&
+          t.category === budget.category &&
+          (!budgetStartDate || new Date(t.date) >= budgetStartDate)
+        )
+        .reduce((sum, t) => sum + (parseFloat(t.amount) || 0), 0);
+
+      return { ...budget, spent: totalSpent };
+    });
+  };
+
+  useEffect(() => {
+    if (!isLoaded) return;
+
+    setBudgets(prevBudgets => updateBudgetsSpent(wallets, prevBudgets));
+  }, [wallets, isLoaded]);
+
+  
   // Add wallets & budgets
   const addWallets = (walletInput) => {
+    // if walletInput is just an array
     if (Array.isArray(walletInput)) {
       // Batch add multiple wallets
       setWallets(prev => [
@@ -108,41 +139,6 @@ export function AppProvider({ children }) {
 
     setBudgets(prev => [...prev, newBudget]);
   };
-
-  const updateBudgetsSpent = (walletsData, budgetsData) => {
-    const localBudgetKeys = new Set(
-      budgetsData
-        .filter(b => b.walletID !== null)
-        .map(b => `${b.walletID}-${b.category}`)
-    );
-
-    return budgetsData.map(budget => {
-      let relevantTransactions = [];
-
-      if (budget.walletID !== null) {
-        const wallet = walletsData.find(w => w.accountID === budget.walletID);
-        if (wallet) relevantTransactions = wallet.transactions;
-      } else {
-        relevantTransactions = walletsData
-          .filter(w => !localBudgetKeys.has(`${w.accountID}-${budget.category}`))
-          .flatMap(w => w.transactions);
-      }
-
-      // Only include transactions (on or after dateSet)
-      const budgetStartDate = budget.dateSet ? new Date(budget.dateSet) : null;
-
-      const totalSpent = relevantTransactions
-        .filter(t => 
-          t.type === "expense" &&
-          t.category === budget.category &&
-          (!budgetStartDate || new Date(t.date) >= budgetStartDate)
-        )
-        .reduce((sum, t) => sum + (parseFloat(t.amount) || 0), 0);
-
-      return { ...budget, spent: totalSpent };
-    });
-  };
-
 
   return (
     <AppContext.Provider

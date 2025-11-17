@@ -34,7 +34,7 @@
   text-decoration: none;
   text-transform: none;   
   color: var(--txtWhite);
-  /* uncomment to make the not make nav item not push out to the righ */
+  /* uncomment to make the not make nav item not push out to the right */
   /* padding: 10px;        */
   transition: all 0.3s ease;
 }
@@ -60,9 +60,18 @@
   margin-bottom: 75px; 
 }
 
-.navText a:hover {
+.navText a:hover{
   background-color: white;
   color: black;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+/* active highlight */
+.navText.active {
+  background-color: white;
+  color: black;
+  /* exact same as when hover so it is little static can configure if it is too stiff */
   border-radius: 5px;
   padding: 10px;
 }
