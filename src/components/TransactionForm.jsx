@@ -8,14 +8,30 @@ function TransactionForm() {
   const [category, setCategory] = useState("");
   const [type, setType] = useState("expense");
 
+  const categories = [
+    "Food",
+    "Transport",
+    "Salary",
+    "Entertainment",
+    "Rent",
+    "Bills",
+    "Gift",
+    "Other",
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (amount <= 0) {
+      alert("Please enter a valid amount!");
+      return;
+    }
 
     const newTransaction = {
       type,
       category,
       amount: parseFloat(amount),
-      date: new Date().toISOString().split('T')[0],
+      date: new Date().toISOString().split("T")[0],
     };
 
     addTransaction(selectedWalletId, newTransaction);
@@ -34,13 +50,18 @@ function TransactionForm() {
           onChange={(e) => setAmount(e.target.value)}
           required
         />
-        <input
-          type="text"
-          placeholder="Category"
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-        />
+        >
+          <option value="">Select Category</option>
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option value="expense">Expense</option>
           <option value="income">Income</option>

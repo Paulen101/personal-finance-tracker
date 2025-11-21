@@ -94,6 +94,23 @@ export const FinanceProvider = ({ children }) => {
     return defaultWallet;
   });
 
+  const currentWallet = wallets.find((w) => w.id === selectedWalletId);
+
+  const balance =
+    currentWallet?.transactions?.reduce((acc, t) => {
+      return t.type === "income" ? acc + t.amount : acc - t.amount;
+    }, 0) || 0;
+
+  const income =
+    currentWallet?.transactions
+      ?.filter((t) => t.type === "income")
+      .reduce((acc, t) => acc + t.amount, 0) || 0;
+
+  const expense =
+    currentWallet?.transactions
+      ?.filter((t) => t.type === "expense")
+      .reduce((acc, t) => acc + t.amount, 0) || 0;
+
   // Persist to localStorage whenever state changes
   useEffect(() => {
     safeSet("finance_wallets", wallets);
@@ -200,7 +217,7 @@ export const FinanceProvider = ({ children }) => {
               transactions: [
                 ...(w.transactions || []),
                 {
-                  id: Date.now(),
+                  id: `T${Date.now()}`,
                   ...transaction,
                   date: new Date().toISOString(),
                 },
@@ -233,6 +250,9 @@ export const FinanceProvider = ({ children }) => {
     deleteBudget,
     addTransaction,
     deleteTransaction,
+    balance,
+    expense,
+    income,
     storageError,
     clearStorage,
     clearStorageError: () => setStorageError(null),

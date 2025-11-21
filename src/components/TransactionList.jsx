@@ -14,7 +14,7 @@ function TransactionList() {
       <h2>Transactions</h2>
       {currentWallet?.transactions?.map((transaction) => (
         <div key={transaction.id}>
-          {transaction.date} - {transaction.category} - ${transaction.type} - {transaction.amount}
+          {transaction.id} - {transaction.category} - ${transaction.amount} - {new Date(transaction.date).toISOString().split('T')[0]}
           <button onClick={() => deleteTransaction(currentWallet.id, transaction.id)}>
             <FaTrash color='red'/>
           </button>

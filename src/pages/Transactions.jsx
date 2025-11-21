@@ -1,14 +1,17 @@
 import TransactionForm from "../components/TransactionForm";
 import TransactionList from "../components/TransactionList";
+import Balance from "../components/Balance";
+import { useFinance } from "../context/FinanceContext";
 
-function Expenses() {
+function Transactions() {
+
   return (
     <>
-      <h1>Expenses Page</h1>
+      <Balance />
       <TransactionForm />
       <TransactionList />
     </>
   );
 }
 
-export default Expenses;
+export default Transactions;
