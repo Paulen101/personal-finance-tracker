@@ -1,0 +1,95 @@
+/* WalletList.css */
+.wallet-list-container {
+  padding: 20px;
+}
+
+.wallet-list-container h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.wallet-list-empty {
+  color: #666;
+  font-style: italic;
+}
+
+.wallet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wallet-card {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.wallet-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.wallet-card.active {
+  border: 3px solid #2196F3;
+  background-color: #e3f2fd;
+}
+
+.wallet-card h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.wallet-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wallet-delete-btn {
+  background-color: transparent;
+  border: none;
+  color: #f44336;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.wallet-delete-btn:hover {
+  background-color: #ffebee;
+}
+
+.wallet-delete-btn:active {
+  transform: scale(0.95);
+}
+
+.wallet-balance {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4CAF50;
+  margin: 5px 0;
+}
+
+.wallet-balance.negative {
+  color: #f44336;
+}
+
+.wallet-transaction-count {
+  font-size: 12px;
+  color: #666;
+  margin: 5px 0;
+}
+
+.wallet-active-badge {
+  color: #2196F3;
+  font-size: 12px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 5px;
+}

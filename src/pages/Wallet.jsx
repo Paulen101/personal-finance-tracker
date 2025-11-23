@@ -1,12 +1,14 @@
-import { useFinance } from "../context/FinanceContext";
+import WalletForm from "../components/WalletForm";
+import WalletList from "../components/WalletList";
 
 function Wallet () {
-    const { wallets, balance } = useFinance();
 
     return (
         <div>
             <h1>Wallet Page</h1>
-            <h2>Balance ${balance}</h2>
+            <WalletForm />
+            <WalletList />
+
         </div>
     );
 }

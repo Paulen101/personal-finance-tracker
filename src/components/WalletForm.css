@@ -1,0 +1,82 @@
+/* WalletForm.css */
+.wallet-form-container {
+  margin-bottom: 20px;
+}
+
+.wallet-form-create-btn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.wallet-form-create-btn:hover {
+  background-color: #45a049;
+}
+
+.wallet-form {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.wallet-form h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.wallet-form-input {
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.wallet-form-input:focus {
+  outline: none;
+  border-color: #2196F3;
+}
+
+.wallet-form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.wallet-form-submit-btn {
+  padding: 8px 15px;
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.wallet-form-submit-btn:hover {
+  background-color: #0b7dda;
+}
+
+.wallet-form-cancel-btn {
+  padding: 8px 15px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.wallet-form-cancel-btn:hover {
+  background-color: #da190b;
+}

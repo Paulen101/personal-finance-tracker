@@ -235,6 +235,47 @@ export const FinanceProvider = ({ children }) => {
     );
   };
 
+  // Add this NEW function
+  const addWallet = (walletData) => {
+    const newWallet = {
+      id: Date.now(),
+      name: walletData.name,
+      transactions: [],
+    };
+    
+    setWallets([...wallets, newWallet]);
+    setSelectedWalletId(newWallet.id);
+    
+    return newWallet; 
+  };
+
+  const deleteWallet = (walletId) => {
+    if (wallets.length === 1) {
+      alert("You cannot delete your only wallet!");
+      return false;
+    }
+
+    const walletToDelete = wallets.find(w => w.id === walletId);
+
+    const transactionCount = walletToDelete?.transactions?.length || 0;
+    const confirmMsg = transactionCount > 0
+      ? `The wallet "${walletToDelete.name}" has ${transactionCount} transaction(s). Deleting it will also remove all its transactions. Are you sure you want to proceed?`
+      : `Are you sure you want to delete the wallet "${walletToDelete.name}"?`;
+
+      if (!window.confirm(confirmMsg)) {
+        return false;
+      }
+
+      if (selectedWalletId === walletId) {
+        const nextWallet = wallets.find(w => w.id !== walletId);
+        setSelectedWalletId(nextWallet.id);
+      }
+
+      setWallets(wallets.filter(w => w.id !== walletId));
+
+      return true;
+  };
+
   const clearStorage = () => {
     safeRemove("finance_wallets");
     safeRemove("finance_budgets");
@@ -260,6 +301,8 @@ export const FinanceProvider = ({ children }) => {
     balance,
     expense,
     income,
+    addWallet,
+    deleteWallet,
     storageError,
     clearStorage,
     clearStorageError: () => setStorageError(null),
