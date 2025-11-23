@@ -22,10 +22,21 @@ function TransactionForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!selectedWalletId) {
+      alert("Please select a wallet first!");
+      return;
+    }
+
     if (amount <= 0) {
       alert("Please enter a valid amount!");
       return;
     }
+
+    console.log(
+      "submit: selectedWalletId",
+      selectedWalletId,
+      typeof selectedWalletId
+    );
 
     const newTransaction = {
       type,
@@ -33,8 +44,9 @@ function TransactionForm() {
       amount: parseFloat(amount),
       date: new Date().toISOString().split("T")[0],
     };
+    console.log("newTransaction", newTransaction);
 
-    addTransaction(selectedWalletId, newTransaction);
+    addTransaction(Number(selectedWalletId), newTransaction);
 
     setAmount("");
     setCategory("");
@@ -66,7 +78,15 @@ function TransactionForm() {
           <option value="expense">Expense</option>
           <option value="income">Income</option>
         </select>
-        <button type="submit">Add Transaction</button>
+        <button type="submit" disabled={selectedWalletId === "all"}>
+          Add Transaction
+        </button>
+
+        {selectedWalletId === "all" && (
+          <p style={{ color: "red" }}>
+            Please select a specific wallet to add a transaction.
+          </p>
+        )}
       </form>
     </div>
   );

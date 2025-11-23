@@ -89,12 +89,18 @@ export const FinanceProvider = ({ children }) => {
   const [budgets, setBudgets] = useState(() => safeGet("finance_budgets", []));
 
   const [selectedWalletId, setSelectedWalletId] = useState(() => {
-    const defaultWallet =
-      (Array.isArray(wallets) && wallets[0] && wallets[0].id) || 0;
-    return defaultWallet;
+    const savedWallets = safeGet("finance_wallets", [
+      {
+        id: 0,
+        name: "Main Wallet",
+        balance: 1000,
+        transactions: [],
+      },
+    ]);
+    return (Array.isArray(savedWallets) && savedWallets[0]?.id) || 0;
   });
 
-  const currentWallet = wallets.find((w) => w.id === selectedWalletId);
+  const currentWallet = wallets.find((w) => w.id === selectedWalletId) || wallets[0];
 
   const balance =
     currentWallet?.transactions?.reduce((acc, t) => {
@@ -209,6 +215,7 @@ export const FinanceProvider = ({ children }) => {
 
   // Transaction operations (for demo purposes)
   const addTransaction = (walletId, transaction) => {
+    console.log("addTransaction called with walletId:", walletId, typeof walletId);
     setWallets(
       wallets.map((w) =>
         w.id === walletId
@@ -217,9 +224,9 @@ export const FinanceProvider = ({ children }) => {
               transactions: [
                 ...(w.transactions || []),
                 {
-                  id: `T${Date.now()}`,
+                  id: Date.now(),
                   ...transaction,
-                  date: new Date().toISOString(),
+                  date: transaction.date,
                 },
               ],
             }
