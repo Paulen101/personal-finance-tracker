@@ -13,7 +13,7 @@ export const setupDemoData = () => {
         { id: 3, category: 'Entertainment', amount: -50.00, type: 'expense', date: '2025-11-05T19:00:00Z', description: 'Movie tickets' },
         { id: 4, category: 'Transportation', amount: -60.00, type: 'expense', date: '2025-11-06T08:00:00Z', description: 'Gas' },
         { id: 5, category: 'Food', amount: -28.75, type: 'expense', date: '2025-11-08T13:00:00Z', description: 'Lunch' },
-        { id: 6, category: 'Shopping', amount: -150.00, type: 'expense', date: '2025-11-10T16:00:00Z', description: 'Clothing' },
+        { id: 6, category: 'Shopping', amount: 150.00, type: 'income', date: '2025-11-10T16:00:00Z', description: 'Clothing' },
         { id: 7, category: 'Entertainment', amount: -25.00, type: 'expense', date: '2025-11-12T20:00:00Z', description: 'Concert' },
       ]
     },

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useFinance } from '../context/FinanceContext';
 import SpendingTrendsChart from '../components/charts/SpendingTrendsChart';
 import IncomeVsExpensesChart from '../components/charts/IncomeVsExpensesChart';
@@ -76,6 +76,21 @@ const AnalyticsPage = () => {
     }
   }, [wallets, timeFilter, selectedWalletIds]);
 
+  // useMemo running into rendering warning so I moved the set states here
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    try {
+      if (!analyticsData) {
+        throw new Error('Failed to compute analytics')
+      };
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [analyticsData]);
+
   const handleWalletToggle = (walletId) => {
     setSelectedWalletIds(prev => {
       if (prev.includes(walletId)) {
@@ -146,9 +161,9 @@ const AnalyticsPage = () => {
               {selectedWalletIds.length === wallets.length ? '✓ All Selected' : 'Select All'}
             </button>
             <div className="wallet-chips">
-              {wallets.map(wallet => (
+              {wallets.map((wallet, index) => (
                 <button
-                  key={wallet.id || wallet.accountID}
+                  key={wallet.id ?? wallet.accountID ?? index}
                   className={`wallet-chip ${
                     selectedWalletIds.includes(wallet.id || wallet.accountID) || 
                     selectedWalletIds.length === 0 ? 'active' : ''
@@ -276,7 +291,7 @@ const AnalyticsPage = () => {
               <div className="top-categories">
                 {analyticsData.topCategories.length > 0 ? (
                   analyticsData.topCategories.map((cat, index) => (
-                    <div key={cat.category} className="category-item">
+                    <div key={`${cat.category}-${index}`} className="category-item">
                       <div className="category-info">
                         <span className="category-rank">#{index + 1}</span>
                         <span className="category-name">{cat.category}</span>

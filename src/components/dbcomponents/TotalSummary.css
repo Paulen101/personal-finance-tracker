@@ -1,0 +1,30 @@
+
+.progressBarContainer {
+  display: flex;      
+  flex-direction: column; 
+}
+
+/* if possible configure size of bar later*/ 
+.progressBar {
+  width: 100%;        /* visually smaller */
+  max-width: 410px;  /* optional */
+  text-align: left;         /* align text and contents to the left */
+  margin-bottom: 16px;   
+}
+
+.totalProgressBar {
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.totalProgressFill {
+  height: 100%;
+  transition: width 0.5s ease, background-color 0.5s ease;
+  border-radius: 6px;
+}
+
+.totalCategory { 
+  padding-bottom: 10px;
+}
