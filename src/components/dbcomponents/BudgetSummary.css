@@ -1,0 +1,36 @@
+.budgetReminder {
+  text-align: left;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  background-color: #f3f3f3;
+  height: 230px;
+  margin-top: auto;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+
+.budgetReminder p {
+  margin: 4px 0;
+}
+
+.buttonWrapper {
+  text-align: center;  /* center the button inside this div */
+  margin-top: 20px;    /* optional spacing */
+}
+
+.buttonWrapper button {
+  display: inline-block;  /* keep button size tight */
+  cursor: pointer;         /* show pointer on hover */
+}
+
+.btnGoBudget{
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}

@@ -31,6 +31,7 @@ const CategoryPieChart = ({ data }) => {
   const total = data.reduce((sum, item) => sum + item.value, 0);
   const chartData = data.map((item, index) => ({
     ...item,
+    name: item.category,      // show names instead of numbers (can remove this)
     percentage: total > 0 ? ((item.value / total) * 100).toFixed(1) : 0,
     fill: getCategoryColor(index)
   }));
@@ -49,7 +50,7 @@ const CategoryPieChart = ({ data }) => {
           dataKey="value"
         >
           {chartData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={entry.fill} />
+            <Cell key={`cell-${index}`} fill={entry.fill}/>
           ))}
         </Pie>
         <Tooltip content={<CustomTooltip />} />

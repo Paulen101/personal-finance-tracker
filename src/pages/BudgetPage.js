@@ -14,8 +14,7 @@ const BudgetPage = () => {
     getApplicableBudgets,
     addBudget,
     updateBudget,
-    deleteBudget
-    , storageError, clearStorage
+    deleteBudget, storageError, clearStorage
   } = useFinance();
 
   const [showForm, setShowForm] = useState(false);
@@ -88,8 +87,8 @@ const BudgetPage = () => {
       ? getApplicableBudgets(selectedWalletId)
       : budgetsWithSpent;
 
-    const totalLimit = relevantBudgets.reduce((sum, b) => sum + b.limit, 0);
-    const totalSpent = relevantBudgets.reduce((sum, b) => sum + b.spent, 0);
+    const totalLimit = relevantBudgets.reduce((sum, b) => sum + Number(b.limit || 0), 0);
+    const totalSpent = relevantBudgets.reduce((sum, b) => sum + Number(b.spent || 0), 0);
     const exceededCount = relevantBudgets.filter(b => b.spent > b.limit).length;
     const warningCount = relevantBudgets.filter(b => {
       const perc = (b.spent / b.limit) * 100;
@@ -124,7 +123,7 @@ const BudgetPage = () => {
     setShowForm(false);
     setEditingBudget(null);
   };
-
+  
   return (
     <div className="budget-page">
       {storageError && (
@@ -164,11 +163,11 @@ const BudgetPage = () => {
         <div className="budget-summary">
           <div className="summary-card">
             <div className="summary-label">Total Budget</div>
-            <div className="summary-value">${summary.totalLimit.toFixed(2)}</div>
+            <div className="summary-value">${Number(summary.totalLimit || 0).toFixed(2)}</div>
           </div>
           <div className="summary-card">
             <div className="summary-label">Total Spent</div>
-            <div className="summary-value">${summary.totalSpent.toFixed(2)}</div>
+            <div className="summary-value">${Number(summary.totalSpent || 0).toFixed(2)}</div>
           </div>
           <div className="summary-card">
             <div className="summary-label">Exceeded</div>

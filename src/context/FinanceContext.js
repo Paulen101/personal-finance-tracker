@@ -23,7 +23,7 @@ export const FinanceProvider = ({ children }) => {
       console.error('localStorage.getItem error', key, e);
       setStorageError(e);
       return fallback;
-    }
+    } 
   };
 
   const safeSet = (key, value) => {
@@ -32,7 +32,7 @@ export const FinanceProvider = ({ children }) => {
     } catch (e) {
       console.error('localStorage.setItem error', key, e);
       setStorageError(e);
-    }
+    } 
   };
 
   const safeRemove = (key) => {
@@ -41,21 +41,24 @@ export const FinanceProvider = ({ children }) => {
     } catch (e) {
       console.error('localStorage.removeItem error', key, e);
       setStorageError(e);
-    }
+    } 
   };
 
-  // Initialize state from localStorage (safe)
+  // State declarations 
+  // Initialize wallets state from localStorage (safe)
   const [wallets, setWallets] = useState(() => safeGet('finance_wallets', [
     {
       id: 0,
       name: 'Main Wallet',
-      balance: 1000,
+      balance: 0,
       transactions: []
     }
   ]));
 
+  // Initialize budgets state from localStorage (safe)
   const [budgets, setBudgets] = useState(() => safeGet('finance_budgets', []));
 
+  // Initialize selected wallet state (default to first wallet)
   const [selectedWalletId, setSelectedWalletId] = useState(() => {
     const defaultWallet = (Array.isArray(wallets) && wallets[0] && wallets[0].id) || 0;
     return defaultWallet;
@@ -181,8 +184,8 @@ export const FinanceProvider = ({ children }) => {
     addBudget,
     updateBudget,
     deleteBudget,
-    addTransaction
-    , storageError,
+    addTransaction, 
+    storageError,
     clearStorage,
     clearStorageError: () => setStorageError(null)
   };

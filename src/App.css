@@ -43,6 +43,10 @@
   font-size: 0.95rem;
   color: #6b7280;
   transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex; 
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-btn:hover {
