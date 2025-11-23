@@ -15,6 +15,7 @@ function Dashboard() {
     wallets
   } = useFinance();
 
+  // important state for expenses and total summary component to work together 
   const [selectedDate, setSelectedDate] = useState(null);
 
   const selectedWallet = getCurrentWallet();
@@ -25,6 +26,7 @@ function Dashboard() {
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
+  // Check if next month is valid for showing expenses 
   const isNextMonthValid = () => {
     const today = new Date();
     const next = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
@@ -43,16 +45,17 @@ function Dashboard() {
     setCurrentMonth(next);
   };
 
+  // for changing wallet
   const handleWalletChange = (walletId) => {
     setLoadingState(true);            
     try {
       setSelectedWalletId(walletId);    // change wallet
     } catch (e) {
       console.error(e);
-      setError(e); // store the error in state
+      setError(e);                     // store the error in state
     }
     finally {
-      setLoadingState(false);         // hide loading
+      setLoadingState(false);          // end loading
     }
   };
   
@@ -102,9 +105,10 @@ function Dashboard() {
         </div>
 
         <div className="dashboardBody">
-          <div className="chart-card">Wallet
+          {/* Expenses summary component card */}
+          <div className="chart-card">
             <div className="chart-header">
-              <h3>Daily Net Balance ({selectedWallet?.name ?? " "})</h3>
+              <h3>Daily Net Balance</h3> {/* can add ({selectedWallet?.name ?? " "}) to show current wallet */}
               <span
                 style={{ cursor: "pointer", userSelect: "none", color:"grey", paddingRight:"5px"}}
                 onClick={() => handlePrevMonth()}
@@ -131,8 +135,8 @@ function Dashboard() {
                     // End date logic
                     const end =
                       year === now.getFullYear() && month === now.getMonth()
-                        ? now // current month → end at today
-                        : new Date(year, month + 1, 0); // other months → end of month
+                        ? now // current month -> end at today
+                        : new Date(year, month + 1, 0); // other months -> end of month
 
                     return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
                   })()}
@@ -154,9 +158,11 @@ function Dashboard() {
               <ExpensesSummary wallet = {selectedWallet} onSelectDate={setSelectedDate} currentMonth={currentMonth} onError={setError}/>
             </div>
           </div>
+          
+          {/* Total summary component card */}
           <div className="chart-card">
             <div className="chart-header">
-              <h3>Where did your money go? ({selectedWallet?.name ?? " "})</h3>
+              <h3>Where did your money go?</h3> {/* can add ({selectedWallet?.name ?? " "}) to show current wallet */}
               <p className="dashboardSubtitle">Expenses distribution over the years</p>
             </div>
             <div className="chart-container">
@@ -164,8 +170,9 @@ function Dashboard() {
             </div>
           </div>
 
+          {/* History summary component card */}
           <div className="chart-card" style={{paddingBottom:"14px"}}>
-            <div className="chart-header">
+            <div className="chart-header" style={{marginBottom:"0px"}}>
               <h3>
                 {selectedDate
                   ? `Transactions on ${selectedDate}`
@@ -182,8 +189,11 @@ function Dashboard() {
             </div>
           </div>
 
-          <div className="chart-card">
-            <BudgetReminder budgets = {selectedBudgets}/>
+          {/* Budget reminder component card */}
+          <div className="chart-card" style={{paddingLeft:"40px", paddingRight:"40px"}}>
+            <div className="chart-container">
+              <BudgetReminder budgets = {selectedBudgets}/>
+            </div>
           </div>
         </div>
       </>

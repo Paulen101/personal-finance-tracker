@@ -7,14 +7,15 @@ import DashboardPage from './pages/DashboardPage';
 
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import ErrorBoundary from './components/ErrorBoundary';
-// import { initializeDemoDataIfNeeded } from './utils/demoData';
+import { initializeDemoDataIfNeeded } from './utils/demoData';
 import './App.css';
 
 function App() {
 
+  // might not work (uncommment in index.js instead if it doesn't work)
   useEffect(() => {
     // Initialize demo data on first load
-    
+    initializeDemoDataIfNeeded()
   }, []);
 
   return (

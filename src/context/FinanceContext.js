@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 
 const FinanceContext = createContext();
 
@@ -78,8 +78,8 @@ export const FinanceProvider = ({ children }) => {
     return wallets.find(w => w.id === selectedWalletId) || wallets[0];
   };
 
-  // Calculate spent amount for a budget safely
-  const calculateBudgetSpent = (budget) => {
+  // Calculate spent amount for a budget safely (useCallback to fix react warning)
+  const calculateBudgetSpent = useCallback((budget) => {
     try {
       // For wallet-specific budgets, use that wallet's transactions
       // For global budgets (walletID === null), calculate against the selected wallet
@@ -90,6 +90,7 @@ export const FinanceProvider = ({ children }) => {
       // Sum transactions that match the budget category and are expenses
       const spent = wallet.transactions
         .filter(t => t && t.category === budget.category && t.type === 'expense')
+        .filter(t => new Date(t.date) >= new Date(budget.dateSet))                            // <-  only count after budget was set
         .reduce((sum, t) => sum + Math.abs(Number(t.amount) || 0), 0);
 
       return spent;
@@ -98,7 +99,17 @@ export const FinanceProvider = ({ children }) => {
       setStorageError(e);
       return 0;
     }
-  };
+  }, [wallets, selectedWalletId]);
+
+  // Update spent in budgets whenever budgets or transactions change
+  useEffect(() => {
+    setBudgets(prev =>
+      prev.map(b => ({
+        ...b,
+        spent: calculateBudgetSpent(b),
+      }))
+    );
+  }, [budgets.length, calculateBudgetSpent]); 
 
   // Get applicable budgets for current wallet
   const getApplicableBudgets = (walletId = selectedWalletId) => {

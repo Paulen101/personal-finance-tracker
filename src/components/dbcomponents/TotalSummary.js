@@ -5,11 +5,15 @@ const CategorySummary = ({ spending }) => {
   const maxCategories = 5;
 
   const { result, maxTotal } = useMemo(() => {
-    if (!spending || spending.length === 0) return { result: [], maxTotal: 1 };
+    if (!spending || spending.length === 0) {
+      return { result: [], maxTotal: 1 };
+    }
 
-    // Aggregate expenses by category
+    // Break expenses down by category
     const totals = spending.reduce((acc, tx) => {
-      if (tx.type !== "expense") return acc;
+      if (tx.type !== "expense") {
+        return acc;
+      }
       acc[tx.category] = (acc[tx.category] || 0) + -tx.amount;
       return acc;
     }, {});
@@ -29,13 +33,18 @@ const CategorySummary = ({ spending }) => {
       ["Entertainment", 0],
       ["Transportation", 0]
     ];
+
+    // push dummy categories for the amount of max categories that is not filled 
     let i = 0;
     while (combined.length < maxCategories && i < dummyCategories.length) {
       const [cat, val] = dummyCategories[i];
-      if (!combined.find(([c]) => c === cat)) combined.push([cat, val]);
+      if (!combined.find(([c]) => c === cat)) {
+        combined.push([cat, val]);
+      }
       i++;
     }
     
+    // push other as always the last categories 
     if (otherTotal > 0 || combined.length < maxCategories) {
       combined.push(["Other", otherTotal]);
     }
@@ -67,6 +76,7 @@ const CategorySummary = ({ spending }) => {
   );
 };
 
+// for cases where there is exactly no category filled in yet 
 const EmptyCategorySummary = () => {
   const dummyCategories = [
     ["Food", 0],
@@ -75,6 +85,7 @@ const EmptyCategorySummary = () => {
     ["Transportation", 0],
     ["Other", 0]
   ];
+
   const maxTotal = 1;
 
   return (

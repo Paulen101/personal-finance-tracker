@@ -3,13 +3,14 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ReferenceLine, ResponsiveContaine
 import { formatDate, formatCurrency } from '../../utils/analyticsHelpers';
 import './ExpensesSummary.css';
 
+// custom tool tip for hover on the the bar charts 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
       <div className="custom-tooltip">
         <p className="tooltip-label">{formatDate(label)}</p>
         {payload.map((entry, index) => (
-          <p key={index} className="tooltip-value" style={{ color: "#00aeffff" }}>
+          <p key={index} className="tooltip-value" style={{ color: "#3B82F6" }}>
             Net Change: {formatCurrency(entry.value)}
           </p>
         ))}
@@ -20,6 +21,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError }) => {
+  // State initialization 
   const [activeIndex, setActiveIndex] = useState(null);
   const [focusedIndex, setFocusedIndex] = useState(null);
   const [loadingDate, setLoadingDate] = useState(false);
@@ -33,6 +35,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
       .padStart(2, '0')}`;
 
     const dailyTotals = {};
+
     wallet.transactions
       .filter(tx => tx.date.startsWith(monthStr))
       .forEach(tx => {
@@ -49,12 +52,14 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
   const handleClick = (data, index) => {
     setLoadingDate(true);
     try {
+      // unselect
       if (activeIndex === index) {
         setActiveIndex(null);
         onSelectDate?.(null);
+      // select
       } else {
         setActiveIndex(index);
-        onSelectDate?.(data.date);
+        onSelectDate?.(data.date);        // <- set selected date 
       }
     }
     catch (e) {
@@ -87,8 +92,6 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
             <YAxis stroke="#6B7280" style={{ fontSize: "12px" }} tickFormatter={(val) => `$${val}`} />
             <Tooltip content={<CustomTooltip />} />
             <ReferenceLine y={0} stroke="#9797979e" strokeWidth={1} />
-
-            {/* Legend keeps your style + shows a color box */}
             <Legend wrapperStyle={{ fontSize: "14px", paddingTop: "10px" }} />
 
             <Bar
@@ -96,18 +99,19 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
               name="Net Change"
               cursor="pointer"
               radius={[20, 20, 0, 0]}     // rounded edges  
-              fill="#27a8e4ff" 
+              fill="#3B82F6" 
               style={{ outline: "none" }}
               onClick={handleClick}
             >
+
               {data.map((entry, index) => {
                 const isSelected = index === activeIndex;
                 const isFocused = index === focusedIndex;
 
                 // colors for charts
                 const positive = "#10B981";
-                const negative = "#ff4848ff";
-                const selected = "#8B5CF6";
+                const negative = "#EF4444";
+                const selected = "#3B82F6";
 
                 return (
                   <Cell
@@ -118,6 +122,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
                     tabIndex={0}
                     onFocus={() => setFocusedIndex(index)}
                     onBlur={() => setFocusedIndex(null)}
+                    // for accessibility 
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();

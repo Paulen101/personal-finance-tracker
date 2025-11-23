@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './BudgetSummary.css'
 
 const BudgetOutput = ({groups, counts}) => {
@@ -7,30 +7,115 @@ const BudgetOutput = ({groups, counts}) => {
     const overbudgetCategory = Object.entries(groups)
       .filter(([_, info]) => info.status === "overbudget")
       .map(([category]) => category);
-    return (<h3>
-      You've went in overbudget in your {overbudgetCategory} category!
-    </h3>
+    return (
+      <>
+      <div 
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          // marginBottom: '15px',
+          padding: '15px 0'
+        }}
+      >
+
+      {/* Icon on the left */}
+      <div style={{fontSize:"50px", paddingLeft:"10px"}}>❗</div>
+
+      {/* Text in the right */}
+        <div style={{ paddingRight: '40px', flex: 1, color:"#EF4444", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
+          Oh no!
+        </div>
+      </div>
+      <h3 style={{marginTop:"15px", paddingBottom:"10px", fontSize:"18px", lineHeight:"1.6", fontWeight:600}}>
+      You've exceeded the budget in your <span style={{color:"#EF4444"}}>{overbudgetCategory}</span> category!
+      </h3>
+      </>
     )
   }
   else if (counts.overbudget > 1) {
-    return (<h3>
-      You've went in overbudget in {counts.overbudget} categories!
-    </h3>
+    return (
+      <>
+      <div 
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          // marginBottom: '15px',
+          padding: '15px 0'
+        }}
+      >
+
+      {/* Icon on the left */}
+      <div style={{fontSize:"50px", paddingLeft:"10px"}}>❌</div>
+
+      {/* Text in the right */}
+        <div style={{ paddingRight: '40px', flex: 1, color:"#EF4444", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
+          Oh no!
+        </div>
+      </div>
+      <h3 style={{marginTop:"15px", paddingBottom:"10px", fontSize:"18px", lineHeight:"1.6", fontWeight:600}}>
+        You've exceeded the budget in <span style={{color:"#EF4444"}}>{counts.overbudget}</span> categories!
+      </h3>
+      </>
     )
   }
   else if (counts.warning === 1) {
     const WarningCategory = Object.entries(groups)
-      .filter(([_, info]) => info.status === "overbudget")
+      .filter(([_, info]) => info.status === "warning")
       .map(([category]) => category);
-    return (<h3>
-      You're close to going over budget in your {WarningCategory} category!
-    </h3>
+    return (
+      <>
+      <div 
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          // marginBottom: '15px',
+          padding: '15px 0'
+        }}
+      >
+
+      {/* Icon on the left */}
+      <div style={{fontSize:"50px", paddingLeft:"10px"}}>⚠️</div>
+
+      {/* Text in the right */}
+        <div style={{ paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
+          Be careful!
+        </div>
+      </div>
+      <h3 style={{marginTop:"15px", paddingBottom:"10px", fontSize:"18px", lineHeight:"1.6", fontWeight:600}}>
+        You're close to going over budget in your <span style={{color:"#F59E0B"}}>{WarningCategory}</span> category!
+      </h3>
+      </>
     )
   }
   else if (counts.warning > 1) {
-    return (<h3>
-      You're close to going over budget in your {counts.warning} categories!
-    </h3>
+    return (
+      <>
+      <div 
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          // marginBottom: '15px',
+          padding: '15px 0'
+        }}
+      >
+
+      {/* Icon on the left */}
+      <div style={{fontSize:"50px", paddingLeft:"10px"}}>⚠️</div>
+
+      {/* Text in the right */}
+        <div style={{ paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
+          Be careful!
+        </div>
+      </div>
+
+      <h3 style={{marginTop:"15px", paddingBottom:"10px", fontSize:"18px", lineHeight:"1.6", fontWeight:600}}>
+        You're close to going over budget in <span style={{color:"#F59E0B"}}>{counts.warning}</span> categories!
+      </h3>
+    </>
     )
   }
   else {
@@ -41,19 +126,42 @@ const BudgetOutput = ({groups, counts}) => {
           : [maxCat, maxInfo];
       }, ["", {dateLength: 0}] 
     )
-    return (<h3>
-      You're kept all your budgets under control. Your {longestCategory} budget has been well managed for {longestInfo.dateLength} days!
-    </h3>)
+
+    // color either #8B5CF6 or #10B981
+    return (
+    <>
+    <div 
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        // marginBottom: '15px',
+        padding: '15px 0'
+      }}
+    >
+      {/* Icon on the left */}
+      <div style={{fontSize:"50px", paddingLeft:"10px"}}>🎉</div>
+
+      {/* Text in the right */}
+      <div style={{ paddingRight: '40px', flex: 1, color:"#10B981", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
+        Well done!
+      </div>
+    </div>
+
+    <h3 style={{marginTop:"15px", paddingBottom:"10px", fontSize:"18px", lineHeight:"1.6", fontWeight:600}}>
+      You've kept all your budgets under control. Your <span style={{color:"#10B981"}}>{longestCategory}</span> budget has been well managed for <span style={{color:"#10B981"}}>{longestInfo.dateLength}</span> days!
+    </h3>
+    </>
+    )
   }
 }
 
 
 export const BudgetReminder = ({budgets}) => { 
-  /*  plan: looks at the budget then decide on the 3(? <- could be more) states by on budgets
-    (can reuse progress bar to show spent/budget)
+  /*
     - 1st state: nothing is close to budget limit -> gives congrats + how long since you've kept it under budget
-    - 2nd state: >= 85% -> warning message 
-    - 3rc state: >= 100% -> emergency message -> point to transaction/budget page to reset/review
+    - 2nd state: >= 80% -> warning message 
+    - 3rd state: >= 100% -> emergency message -> point to transaction/budget page to reset/review
   */ 
   // breakdown each of the category into an object of their own 
   const categoryGroup = useMemo(() => {
@@ -74,7 +182,7 @@ export const BudgetReminder = ({budgets}) => {
         status = "overbudget";
         counts.overbudget += 1;
       }
-      else if (spentPercentage >= 85) {
+      else if (spentPercentage >= 80) {
         status = "warning";
         counts.warning += 1;
       }
@@ -98,11 +206,11 @@ export const BudgetReminder = ({budgets}) => {
   if (!budgets || budgets.length === 0) { 
     return (
       <div className="budgetReminder">
-        You have not set any budgets yet. <br></br>
+        <div style={{display: 'flex', alignItems: 'center'}} className="chart-empty-state">⚠️ No transactions found.</div>;
         <div className="buttonWrapper">
-          <NavLink to="/budget">
-            <button className="btnGoBudget">Go to Budgets</button>
-          </NavLink>
+          <Link to="/budget">
+            <button className="btnGoBudget">Go to Budget</button>
+          </Link>
         </div>
       </div>
     )
@@ -113,14 +221,24 @@ export const BudgetReminder = ({budgets}) => {
   return (
     <div className="budgetReminder">
       <BudgetOutput groups={groups} counts={counts} />
-      <p>Overbudget categories: {counts.overbudget}</p>
-      <p>Warning categories: {counts.warning}</p>
-      <p>All good categories: {counts.ok}</p>
+      <div className="budgetBox">
+        <p>Exceeded categories: <span style={{color:"#EF4444"}}>{counts.overbudget}</span></p>
+        <p>Warning categories: <span style={{color:"#F59E0B"}}>{counts.warning}</span></p>
+        <p>All good categories: <span style={{color:"#10B981"}}>{counts.ok}</span></p>
+      </div>
       {counts.overbudget > 0 && (
         <div className="buttonWrapper">
-          <NavLink to="/budget">
-            <button className="btnGoBudget">Go to Budgets</button>
-          </NavLink>
+          <Link to="/budget">
+            <button className="btnGoBudget">Find out why</button>
+          </Link>
+        </div>
+      )}
+      {/* dumb way of doing this but it works */}
+      {!(counts.overbudget > 0) && (
+        <div className="buttonWrapper">
+          <Link to="/budget">
+            <button className="btnGoBudget">Find out more</button>
+          </Link>
         </div>
       )}
     </div>

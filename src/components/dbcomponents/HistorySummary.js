@@ -19,7 +19,7 @@ const SpecialIcon = ({ emoji, bgColor = '#f0f0f0', size = 40 }) => {
   );
 }
 
-// mappings for the icons <- can replace with svg or react-icons later 
+// mappings for the icons
 const categoryMap = {
   Food:           { emoji: "🍔", color: "#FF6347" },   // red-orange
   Entertainment:  { emoji: "🎬", color: "#FF69B4" },   // pink
@@ -34,7 +34,6 @@ const categoryMap = {
   Other:          { emoji: "📦", color: "#A9A9A9" },   // grey
 };
 
-// newer function
 export const HistorySummary = ({ wallet, selectedDate }) => {
   const [page, setPage] = useState(0);
   const perPage = 5;
@@ -65,7 +64,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
   // flatten transactions
   const flatTransactions = useMemo(() => {
     if (!selectedDate) {
-      // all transactions for normal pagination
+      // flatten transactions into a single array if no date is selected
       return dates.flatMap(date => grouped[date]);
     }
 
@@ -89,23 +88,43 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
       {/* <h2 style={{marginTop: "18px"}}>{selectedDate ? `Transactions on ${selectedDate}` : "Recent Transactions"}</h2> */}
 
       {displayTransactions.map(t => {
-        // map each category to icons
         const { emoji, color } = categoryMap[t.category] || { emoji: "❓", color: "#f0f0f0" };
 
         return (
           <div 
             key={t.id} 
-            style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }} // color: t.type === "expense" ? "red" : "green",
+            className="transactionRow"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              // marginBottom: '15px',
+              padding: '15px 0',
+              borderBottom: '1px solid #e5e7eb'
+            }}
           >
-            <SpecialIcon emoji={emoji} size={30} bgColor={color} />
-            <span style={{ marginLeft: '10px', fontSize:"18px", color: t.type === "expense" ? "red" : "green"}}>
-              {t.date.split("T")[0]} - {t.category}: ${t.amount} ({t.type})
-            </span>
+            {/* icon on the left */}
+            <SpecialIcon emoji={emoji} size={40} bgColor={color} />
+
+            {/* text in the middle */}
+            <div style={{ marginLeft: '12px', flex: 1 }}>
+              <div className="transactionName" style={{ fontSize: '18px', fontWeight: '500' }}>
+                {t.category}
+              </div>
+              <div className="transactionDate" style={{ fontSize: '14px', color: '#585859ff' }}>
+                {t.date.split("T")[0]}
+              </div>
+            </div>
+
+            {/* amount on the right */}
+            <div style={{ fontSize: '16px', fontWeight: '500', color: t.type === "expense" ? "#EF4444" : "#10B981" }}>
+              ${t.amount.toFixed(2)}
+            </div>
           </div>
         );
       })}
 
-      {/* always show page controls if more than 1 page */}
+      {/* show page controls (when max page > 1 or transaction > 5) <- can just comment out the max page part to remove it */}
       {maxPage > 1 && (
         <div className="pageControls">
           <button disabled={page === 0} onClick={() => setPage(page - 1)}>←</button>
