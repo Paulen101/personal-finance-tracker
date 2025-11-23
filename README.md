@@ -107,13 +107,33 @@ To reset to demo data, clear your browser's localStorage and refresh.
 ```
 src/
 ├── components/
+│   ├── charts/
+│       ├── CategoryPieChart.js
+│       ├── IncomeVsExpensesChart.js
+│       ├── MonthlyComparisonChart.js
+│       └── SpendingTrendsChart.js
+│   ├── dbcomponents/
+│       ├── BudgetSummary.js    # Budget reminder/summary component
+│       ├── BudgetSummary.css
+│       ├── ExpensesSummary.js  # Expenses summary component
+│       ├── ExpensesSummary.css
+│       ├── HistorySummary.js   # History summary component 
+│       ├── HistorySummary.css
+│       ├── TotalSummary.js     # Total summary component
+│       └── TotalSummary.css
 │   ├── BudgetForm.js       # Form for creating/editing budgets
 │   ├── BudgetForm.css
 │   ├── BudgetItem.js       # Individual budget display
-│   └── BudgetItem.css
+│   ├── BudgetItem.css
+│   ├── ErrorBoundary.js    # Error page for when encountering problems
+│   └── ErrorBoundary.css
 ├── context/
 │   └── FinanceContext.js   # Global state management
 ├── pages/
+│   ├── DashboardPage.js    # Dashboard page 
+│   ├── DashboardPage.css   
+│   ├── AnalyticsPage.js    # Analytics page
+│   ├── AnalyticsPage.css
 │   ├── BudgetPage.js       # Main budget management page
 │   └── BudgetPage.css
 ├── utils/

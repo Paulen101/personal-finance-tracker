@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 
 const FinanceContext = createContext();
 
@@ -23,7 +23,7 @@ export const FinanceProvider = ({ children }) => {
       console.error('localStorage.getItem error', key, e);
       setStorageError(e);
       return fallback;
-    }
+    } 
   };
 
   const safeSet = (key, value) => {
@@ -32,7 +32,7 @@ export const FinanceProvider = ({ children }) => {
     } catch (e) {
       console.error('localStorage.setItem error', key, e);
       setStorageError(e);
-    }
+    } 
   };
 
   const safeRemove = (key) => {
@@ -41,21 +41,24 @@ export const FinanceProvider = ({ children }) => {
     } catch (e) {
       console.error('localStorage.removeItem error', key, e);
       setStorageError(e);
-    }
+    } 
   };
 
-  // Initialize state from localStorage (safe)
+  // State declarations 
+  // Initialize wallets state from localStorage (safe)
   const [wallets, setWallets] = useState(() => safeGet('finance_wallets', [
     {
       id: 0,
       name: 'Main Wallet',
-      balance: 1000,
+      balance: 0,
       transactions: []
     }
   ]));
 
+  // Initialize budgets state from localStorage (safe)
   const [budgets, setBudgets] = useState(() => safeGet('finance_budgets', []));
 
+  // Initialize selected wallet state (default to first wallet)
   const [selectedWalletId, setSelectedWalletId] = useState(() => {
     const defaultWallet = (Array.isArray(wallets) && wallets[0] && wallets[0].id) || 0;
     return defaultWallet;
@@ -75,8 +78,8 @@ export const FinanceProvider = ({ children }) => {
     return wallets.find(w => w.id === selectedWalletId) || wallets[0];
   };
 
-  // Calculate spent amount for a budget safely
-  const calculateBudgetSpent = (budget) => {
+  // Calculate spent amount for a budget safely (useCallback to fix react warning)
+  const calculateBudgetSpent = useCallback((budget) => {
     try {
       // For wallet-specific budgets, use that wallet's transactions
       // For global budgets (walletID === null), calculate against the selected wallet
@@ -87,6 +90,7 @@ export const FinanceProvider = ({ children }) => {
       // Sum transactions that match the budget category and are expenses
       const spent = wallet.transactions
         .filter(t => t && t.category === budget.category && t.type === 'expense')
+        .filter(t => new Date(t.date) >= new Date(budget.dateSet))                            // <-  only count after budget was set
         .reduce((sum, t) => sum + Math.abs(Number(t.amount) || 0), 0);
 
       return spent;
@@ -95,7 +99,17 @@ export const FinanceProvider = ({ children }) => {
       setStorageError(e);
       return 0;
     }
-  };
+  }, [wallets, selectedWalletId]);
+
+  // Update spent in budgets whenever budgets or transactions change
+  useEffect(() => {
+    setBudgets(prev =>
+      prev.map(b => ({
+        ...b,
+        spent: calculateBudgetSpent(b),
+      }))
+    );
+  }, [budgets.length, calculateBudgetSpent]); 
 
   // Get applicable budgets for current wallet
   const getApplicableBudgets = (walletId = selectedWalletId) => {
@@ -181,8 +195,8 @@ export const FinanceProvider = ({ children }) => {
     addBudget,
     updateBudget,
     deleteBudget,
-    addTransaction
-    , storageError,
+    addTransaction, 
+    storageError,
     clearStorage,
     clearStorageError: () => setStorageError(null)
   };

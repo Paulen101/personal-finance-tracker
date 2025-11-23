@@ -1,0 +1,40 @@
+
+.historySummary { 
+  display: flex;
+  flex-direction: column;       /* stack transactions + page controls */
+  text-align: left;
+  /* border: 1px solid #eee;        */
+  border-radius: 10px;
+  min-height: 400px;
+  box-sizing: border-box;
+  position: relative;           /* allows absolute positioning inside */
+}
+
+.pageControls {
+  position: absolute;           /* stick to bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 0 0 0;
+  background-color: inherit;    /* optional: match container */
+}
+
+.pageControls button {
+  cursor: pointer;
+}
+
+.totalSummary {
+  min-height: 100px;
+  text-align: left;
+}
+
+.specialIcon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: bold;
+}

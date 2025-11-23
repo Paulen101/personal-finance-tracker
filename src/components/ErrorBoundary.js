@@ -12,7 +12,7 @@ class ErrorBoundary extends React.Component {
   }
 
   componentDidCatch(error, info) {
-    // You could log to an external service here
+    // Could log to an external service here
     // console.error('ErrorBoundary caught:', error, info);
   }
 

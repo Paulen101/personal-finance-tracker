@@ -47,10 +47,10 @@ const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
       <div className="budget-item-details">
         <div className="budget-amount">
           <span className="spent" style={{ color: getStatusColor() }}>
-            ${spent.toFixed(2)}
+            ${Number(spent || 0).toFixed(2)}
           </span>
           <span className="separator">/</span>
-          <span className="limit">${budget.limit.toFixed(2)}</span>
+          <span className="limit">${Number(budget.limit || 0).toFixed(2)}</span>
         </div>
         <div className="budget-percentage" style={{ color: getStatusColor() }}>
           {percentage.toFixed(1)}%

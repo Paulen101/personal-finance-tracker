@@ -331,6 +331,15 @@
   text-align: center;
 }
 
+/* turns off the outline around the pie chart when clicked to match the other charts */
+.recharts-layer.recharts-pie,
+.recharts-sector:focus {
+    outline: none !important;
+    outline-color: none;
+    outline-style: none;
+    outline-width: none;
+}
+
 /* Custom Tooltip */
 .custom-tooltip {
   background: rgba(31, 41, 55, 0.95);

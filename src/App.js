@@ -1,47 +1,62 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FinanceProvider } from './context/FinanceContext';
+
 import BudgetPage from './pages/BudgetPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import DashboardPage from './pages/DashboardPage';
+
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import ErrorBoundary from './components/ErrorBoundary';
 import { initializeDemoDataIfNeeded } from './utils/demoData';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('budget');
 
+  // might not work (uncommment in index.js instead if it doesn't work)
   useEffect(() => {
     // Initialize demo data on first load
-    initializeDemoDataIfNeeded();
+    initializeDemoDataIfNeeded()
   }, []);
 
   return (
     <FinanceProvider>
       <ErrorBoundary>
-        <div className="App">
-          {/* Simple Navigation */}
-          <nav className="app-nav">
-            <div className="nav-container">
-              <h2 className="app-title">💰 Finance Tracker</h2>
-              <div className="nav-buttons">
-                <button
-                  className={`nav-btn ${currentPage === 'budget' ? 'active' : ''}`}
-                  onClick={() => setCurrentPage('budget')}
-                >
-                  💵 Budgets
-                </button>
-                <button
-                  className={`nav-btn ${currentPage === 'analytics' ? 'active' : ''}`}
-                  onClick={() => setCurrentPage('analytics')}
-                >
-                  📊 Analytics
-                </button>
+        <Router>
+          <div className="App">
+            {/* Simple Navigation */}
+            <nav className="app-nav">
+              <div className="nav-container">
+                <h2 className="app-title">💰 Finance Tracker</h2>
+                <div className="nav-buttons">
+                  <NavLink
+                    className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
+                    to="/"
+                  >
+                    📈 Dashboard
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
+                    to="/budget"
+                  >
+                    💵 Budgets
+                  </NavLink>
+                  <NavLink
+                    className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
+                    to="/analytics"
+                  >
+                    📊 Analytics
+                  </NavLink>
+                </div>
               </div>
-            </div>
-          </nav>
-
-          {/* Page Content */}
-          {currentPage === 'budget' ? <BudgetPage /> : <AnalyticsPage />}
-        </div>
+            </nav>
+            <Routes>
+              <Route path="/" element={<DashboardPage />} />
+              <Route path="/budget" element={<BudgetPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="*" element={<ErrorBoundary />} />
+            </Routes>
+          </div>
+        </Router>
       </ErrorBoundary>
     </FinanceProvider>
   );
