@@ -1,8 +1,9 @@
 import React, {useMemo, useEffect, useState} from "react";
+import { FaUtensils, FaFilm, FaBus, FaShoppingBag, FaFileInvoice, FaPills, FaBook, FaPlane, FaShoppingCart, FaLightbulb, FaBox, FaExclamationTriangle } from 'react-icons/fa';
 import './HistorySummary.css'
 
 // function for displaying the icon
-const SpecialIcon = ({ emoji, bgColor = '#f0f0f0', size = 40 }) => {
+const SpecialIcon = ({ icon: Icon, bgColor = '#f0f0f0', size = 40 }) => {
   return (
     <div
       className="specialIcon"
@@ -10,28 +11,30 @@ const SpecialIcon = ({ emoji, bgColor = '#f0f0f0', size = 40 }) => {
         backgroundColor: bgColor,
         width: size,
         height: size,
-        lineHeight: `${size}px`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontSize: size * 0.5,
       }}
     >
-      {emoji}
+      <Icon />
     </div>
   );
 }
 
 // mappings for the icons
 const categoryMap = {
-  Food:           { emoji: "🍔", color: "#FF6347" },   // red-orange
-  Entertainment:  { emoji: "🎬", color: "#FF69B4" },   // pink
-  Transportation: { emoji: "🚌", color: "#87CEEB" },   // sky blue
-  Shopping:       { emoji: "🛍️", color: "#BA55D3" },   // purple
-  Bills:          { emoji: "📄", color: "#FFB347" },   // light orange
-  Healthcare:     { emoji: "💊", color: "#FFEB51" },   // yellow
-  Education:      { emoji: "📚", color: "#6A5ACD" },   // slate blue
-  Travel:         { emoji: "✈️", color: "#1E90FF" },   // dodger blue
-  Groceries:      { emoji: "🛒", color: "#32CD32" },   // green
-  Utilities:      { emoji: "💡", color: "#FFA500" },   // orange
-  Other:          { emoji: "📦", color: "#A9A9A9" },   // grey
+  Food:           { icon: FaUtensils, color: "#FF6347" },   // red-orange
+  Entertainment:  { icon: FaFilm, color: "#FF69B4" },   // pink
+  Transportation: { icon: FaBus, color: "#87CEEB" },   // sky blue
+  Shopping:       { icon: FaShoppingBag, color: "#BA55D3" },   // purple
+  Bills:          { icon: FaFileInvoice, color: "#FFB347" },   // light orange
+  Healthcare:     { icon: FaPills, color: "#FFEB51" },   // yellow
+  Education:      { icon: FaBook, color: "#6A5ACD" },   // slate blue
+  Travel:         { icon: FaPlane, color: "#1E90FF" },   // dodger blue
+  Groceries:      { icon: FaShoppingCart, color: "#32CD32" },   // green
+  Utilities:      { icon: FaLightbulb, color: "#FFA500" },   // orange
+  Other:          { icon: FaBox, color: "#A9A9A9" },   // grey
 };
 
 export const HistorySummary = ({ wallet, selectedDate }) => {
@@ -80,7 +83,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
   const displayTransactions = flatTransactions.slice(page * perPage, (page + 1) * perPage);
 
   if (!transactions || transactions.length===0) {
-    return <div style={{display: 'flex', alignItems: 'center'}} className="historySummary chart-empty-state">⚠️ No transactions found.</div>;   // or maybe use this emoji 💵?
+    return <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="historySummary chart-empty-state"><FaExclamationTriangle /> No transactions found.</div>;
   }
 
   return (
@@ -88,7 +91,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
       {/* <h2 style={{marginTop: "18px"}}>{selectedDate ? `Transactions on ${selectedDate}` : "Recent Transactions"}</h2> */}
 
       {displayTransactions.map(t => {
-        const { emoji, color } = categoryMap[t.category] || { emoji: "❓", color: "#f0f0f0" };
+        const { icon, color } = categoryMap[t.category] || { icon: FaBox, color: "#f0f0f0" };
 
         return (
           <div 
@@ -104,7 +107,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
             }}
           >
             {/* icon on the left */}
-            <SpecialIcon emoji={emoji} size={40} bgColor={color} />
+            <SpecialIcon icon={icon} size={40} bgColor={color} />
 
             {/* text in the middle */}
             <div style={{ marginLeft: '12px', flex: 1 }}>

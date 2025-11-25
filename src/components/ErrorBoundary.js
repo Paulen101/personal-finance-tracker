@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaExclamationTriangle } from 'react-icons/fa';
 import './ErrorBoundary.css';
 
 class ErrorBoundary extends React.Component {
@@ -33,7 +34,7 @@ class ErrorBoundary extends React.Component {
       return (
         <div className="error-boundary-root">
           <div className="error-card">
-            <div className="error-illustration">⚠️</div>
+            <div className="error-illustration"><FaExclamationTriangle /></div>
             <h2>Something went wrong</h2>
             <p>
               An unexpected error occurred. You can try reloading the app or

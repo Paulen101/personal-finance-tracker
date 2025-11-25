@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaEdit, FaTrash, FaExclamationTriangle, FaBolt } from 'react-icons/fa';
 import './BudgetItem.css';
 
 const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
@@ -36,10 +37,10 @@ const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
         </div>
         <div className="budget-item-actions">
           <button onClick={() => onEdit(budget)} className="btn-edit" title="Edit">
-            ✏️
+            <FaEdit />
           </button>
           <button onClick={() => onDelete(budget.id)} className="btn-delete" title="Delete">
-            🗑️
+            <FaTrash />
           </button>
         </div>
       </div>
@@ -70,10 +71,10 @@ const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
       <div className="budget-item-footer">
         <span className="budget-date">Set on {formatDate(budget.dateSet)}</span>
         {percentage >= 100 && (
-          <span className="budget-warning">⚠️ Budget exceeded!</span>
+          <span className="budget-warning"><FaExclamationTriangle /> Budget exceeded!</span>
         )}
         {percentage >= 80 && percentage < 100 && (
-          <span className="budget-warning-soft">⚡ Approaching limit</span>
+          <span className="budget-warning-soft"><FaBolt /> Approaching limit</span>
         )}
       </div>
     </div>

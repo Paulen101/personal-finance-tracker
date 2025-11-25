@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ReferenceLine, ResponsiveContainer, Cell, CartesianGrid, Legend } from "recharts";
+import { FaChartBar } from 'react-icons/fa';
 import { formatDate, formatCurrency } from '../../utils/analyticsHelpers';
 import './ExpensesSummary.css';
 
@@ -82,7 +83,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
 
       {(!data || data.length === 0) ? (
         <div className="chart-empty-state">
-          <p>📊 No spending data available for this month</p>
+          <p style={{display: 'flex', alignItems: 'center', gap: '8px', justifyContent: 'center'}}><FaChartBar /> No spending data available for this month</p>
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={300}>

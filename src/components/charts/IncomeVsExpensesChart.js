@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaChartBar } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { formatDate, formatCurrency } from '../../utils/analyticsHelpers';
 
@@ -22,7 +23,7 @@ const IncomeVsExpensesChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (
       <div className="chart-empty-state">
-        <p>📊 No transaction data available</p>
+        <p><FaChartBar /> No transaction data available</p>
       </div>
     );
   }

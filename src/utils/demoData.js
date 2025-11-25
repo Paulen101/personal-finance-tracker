@@ -93,9 +93,9 @@ export const setupDemoData = () => {
   localStorage.setItem('finance_wallets', JSON.stringify(demoWallets));
   localStorage.setItem('finance_budgets', JSON.stringify(demoBudgets));
 
-  console.log('✅ Demo data loaded successfully!');
-  console.log('📊 Wallets:', demoWallets.length);
-  console.log('💰 Budgets:', demoBudgets.length);
+  console.log('[SUCCESS] Demo data loaded successfully!');
+  console.log('[DATA] Wallets:', demoWallets.length);
+  console.log('[DATA] Budgets:', demoBudgets.length);
   
   return { demoWallets, demoBudgets };
 };
@@ -103,7 +103,7 @@ export const setupDemoData = () => {
 export const clearDemoData = () => {
   localStorage.removeItem('finance_wallets');
   localStorage.removeItem('finance_budgets');
-  console.log('🗑️ Demo data cleared!');
+  console.log('[CLEARED] Demo data cleared!');
 };
 
 // Auto-load demo data if localStorage is empty (for first-time users)
@@ -112,7 +112,7 @@ export const initializeDemoDataIfNeeded = () => {
   const hasBudgets = localStorage.getItem('finance_budgets');
   
   if (!hasWallets || !hasBudgets) {
-    console.log('🚀 Initializing with demo data...');
+    console.log('[INIT] Initializing with demo data...');
     setupDemoData();
   }
 };

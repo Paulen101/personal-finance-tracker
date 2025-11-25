@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { FinanceProvider } from './context/FinanceContext';
+import { FaWallet, FaChartLine, FaDollarSign, FaChartPie } from 'react-icons/fa';
 
 import BudgetPage from './pages/BudgetPage';
 import AnalyticsPage from './pages/AnalyticsPage';
@@ -24,27 +25,27 @@ function App() {
         <Router>
           <div className="App">
             {/* Simple Navigation */}
-            <nav className="app-nav">
-              <div className="nav-container">
-                <h2 className="app-title">💰 Finance Tracker</h2>
-                <div className="nav-buttons">
+          <nav className="app-nav">
+            <div className="nav-container">
+              <h2 className="app-title"><FaWallet /> Finance Tracker</h2>
+              <div className="nav-buttons">
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/"
                   >
-                    📈 Dashboard
+                    <FaChartLine /> Dashboard
                   </NavLink>
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/budget"
                   >
-                    💵 Budgets
+                    <FaDollarSign /> Budgets
                   </NavLink>
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/analytics"
                   >
-                    📊 Analytics
+                    <FaChartPie /> Analytics
                   </NavLink>
                 </div>
               </div>

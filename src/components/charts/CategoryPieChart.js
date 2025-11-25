@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaChartPie } from 'react-icons/fa';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { formatCurrency, getCategoryColor } from '../../utils/analyticsHelpers';
 
@@ -22,7 +23,7 @@ const CategoryPieChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (
       <div className="chart-empty-state">
-        <p>🥧 No category data available</p>
+        <p><FaChartPie /> No category data available</p>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { FaExclamationTriangle, FaWallet, FaChartBar } from 'react-icons/fa';
 import { useFinance } from '../context/FinanceContext';
 import BudgetForm from '../components/BudgetForm';
 import BudgetItem from '../components/BudgetItem';
@@ -128,7 +129,7 @@ const BudgetPage = () => {
     <div className="budget-page">
       {storageError && (
         <div className="storage-error-banner">
-          <div>⚠️ Storage error detected. Some features may not work correctly.</div>
+          <div><FaExclamationTriangle /> Storage error detected. Some features may not work correctly.</div>
           <div className="storage-error-actions">
             <button className="btn-clear-storage" onClick={() => { if (window.confirm('Clear local data and reload?')) { clearStorage(); window.location.reload(); } }}>
               Clear Local Data
@@ -138,7 +139,7 @@ const BudgetPage = () => {
       )}
       <div className="budget-header">
         <div className="budget-header-top">
-          <h1>💰 Budget Management</h1>
+          <h1><FaWallet /> Budget Management</h1>
           <button onClick={() => setShowForm(true)} className="btn-add-budget">
             + Add Budget
           </button>
@@ -222,7 +223,7 @@ const BudgetPage = () => {
       <div className="budget-list">
         {filteredBudgets.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">📊</div>
+            <div className="empty-icon"><FaChartBar /></div>
             <h3>No budgets found</h3>
             <p>
               {budgets.length === 0 

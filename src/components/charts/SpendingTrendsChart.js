@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaChartLine } from 'react-icons/fa';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { formatDate, formatCurrency } from '../../utils/analyticsHelpers';
 
@@ -22,7 +23,7 @@ const SpendingTrendsChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (
       <div className="chart-empty-state">
-        <p>📊 No spending data available for the selected period</p>
+        <p><FaChartLine /> No spending data available for the selected period</p>
       </div>
     );
   }

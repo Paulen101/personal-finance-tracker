@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaChartBar } from 'react-icons/fa';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { formatMonth, formatCurrency } from '../../utils/analyticsHelpers';
 
@@ -22,7 +23,7 @@ const MonthlyComparisonChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (
       <div className="chart-empty-state">
-        <p>📊 No monthly data available</p>
+        <p><FaChartBar /> No monthly data available</p>
       </div>
     );
   }
