@@ -4,6 +4,7 @@ import { FaExclamationCircle, FaTimesCircle, FaExclamationTriangle, FaCheckCircl
 import './BudgetSummary.css'
 
 const BudgetOutput = ({groups, counts}) => {
+  // overbudget === 1
   if (counts.overbudget === 1) {
     const overbudgetCategory = Object.entries(groups)
       .filter(([_, info]) => info.status === "overbudget")
@@ -34,6 +35,7 @@ const BudgetOutput = ({groups, counts}) => {
       </>
     )
   }
+  // overbudget > 1
   else if (counts.overbudget > 1) {
     return (
       <>
@@ -61,6 +63,7 @@ const BudgetOutput = ({groups, counts}) => {
       </>
     )
   }
+  // warning === 1
   else if (counts.warning === 1) {
     const WarningCategory = Object.entries(groups)
       .filter(([_, info]) => info.status === "warning")
@@ -81,7 +84,7 @@ const BudgetOutput = ({groups, counts}) => {
       <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle /></div>
 
       {/* Text in the right */}
-        <div style={{ paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
+        <div style={{paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
           Be careful!
         </div>
       </div>

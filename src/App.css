@@ -21,6 +21,11 @@
   align-items: center;
 }
 
+svg {
+  position: relative;
+  top: 2.5px; /* adjust to taste */
+}
+
 .app-title {
   margin: 0;
   font-size: 1.5rem;
@@ -31,6 +36,12 @@
 .nav-buttons {
   display: flex;
   gap: 12px;
+}
+
+.nav-btn svg{
+  position: relative;
+  padding-right: 5px;
+  top: 1px;
 }
 
 .nav-btn {
