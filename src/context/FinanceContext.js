@@ -276,6 +276,75 @@ export const FinanceProvider = ({ children }) => {
       return true;
   };
 
+  const transferBetweenWallets = (fromWalletId, toWalletId, amount, description="") => {
+    if (fromWalletId === toWalletId) {
+      alert("Cannot transfer to the same wallet!");
+      return false;
+    }
+
+    const transferAmount = parseFloat(amount);
+    if (isNaN(transferAmount) || transferAmount <= 0) {
+      alert("Please enter a valid transfer amount!");
+      return false;
+    }
+
+    const fromWallet = wallets.find(w => w.id === fromWalletId);
+    const toWallet = wallets.find(w => w.id === toWalletId);
+
+    if (!fromWallet || !toWallet) {
+      alert("Wallet not found!");
+      return false;
+    }
+
+    const fromWalletBalance = fromWallet.transactions.reduce((total, t) => {
+      return t.type === "income" ? total + t.amount : total - t.amount;
+    }, 0);
+
+    if (fromWalletBalance < transferAmount) {
+      alert(`Insufficient balance! Available: $${fromWalletBalance.toFixed(2)}`);
+      return false;
+    }
+
+    const timestamp = Date.now();
+    const date = new Date().toISOString().split("T")[0];
+
+    const transferOutTransaction = {
+      id: timestamp,
+      type: "expense",
+      category: "Transfer Out",
+      amount: transferAmount,
+      description: description || `Transfer to ${toWallet.name}`,
+      date: date,
+    };
+
+    const transferInTransaction = {
+      id: timestamp + 1,
+      type: "income",
+      category: "Transfer In",
+      amount: transferAmount,
+      description: description || `Transfer from ${fromWallet.name}`,
+      date: date,
+    };
+
+    setWallets(wallets.map(wallet => {
+      if (wallet.id === fromWalletId) {
+        return {
+          ...wallet,
+          transactions: [...wallet.transactions, transferOutTransaction]
+        };
+      }
+      if (wallet.id === toWalletId) {
+        return {
+          ...wallet,
+          transactions: [...wallet.transactions, transferInTransaction]
+        };
+      }
+      return wallet;
+    }));
+
+    return true; 
+  }
+
   const clearStorage = () => {
     safeRemove("finance_wallets");
     safeRemove("finance_budgets");
@@ -303,6 +372,7 @@ export const FinanceProvider = ({ children }) => {
     income,
     addWallet,
     deleteWallet,
+    transferBetweenWallets,
     storageError,
     clearStorage,
     clearStorageError: () => setStorageError(null),

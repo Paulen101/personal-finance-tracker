@@ -1,0 +1,116 @@
+/* TransferForm.css */
+.transfer-form-container {
+  margin-bottom: 20px;
+}
+
+.transfer-form-open-btn {
+  padding: 10px 20px;
+  background-color: #FF9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.transfer-form-open-btn:hover:not(:disabled) {
+  background-color: #F57C00;
+}
+
+.transfer-form-open-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.transfer-form {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff8e1;
+}
+
+.transfer-form h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.transfer-form-select,
+.transfer-form-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.transfer-form-select:focus,
+.transfer-form-input:focus {
+  outline: none;
+  border-color: #FF9800;
+}
+
+.balance-info {
+  display: block;
+  margin-top: 5px;
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.transfer-form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.transfer-form-submit-btn {
+  flex: 1;
+  padding: 10px 15px;
+  background-color: #FF9800;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.transfer-form-submit-btn:hover {
+  background-color: #F57C00;
+}
+
+.transfer-form-cancel-btn {
+  flex: 1;
+  padding: 10px 15px;
+  background-color: #757575;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.transfer-form-cancel-btn:hover {
+  background-color: #616161;
+}
+
+.transfer-form-warning {
+  margin-top: 10px;
+  color: #f44336;
+  font-size: 14px;
+  font-style: italic;
+}
