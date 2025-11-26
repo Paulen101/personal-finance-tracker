@@ -13,7 +13,10 @@ function TransactionList() {
 
   const formatDate = (date) => new Date(date).toISOString().split("T")[0];
 
-  //select wallet
+  const generateTransactionId = (walletId, transactionId) => {
+    return `TXN-${walletId}${String(transactionId).padStart(4, '0')}`;
+  };
+
   let displayedTransactions = [];
 
   if (selectedWalletId === "all") {
@@ -30,52 +33,73 @@ function TransactionList() {
     const currentWallet = wallets.find(
       (wallet) => wallet.id === Number(selectedWalletId)
     );
-    displayedTransactions = currentWallet?.transactions || [];
-    displayedTransactions = displayedTransactions.map((transaction) => ({
-      ...transaction,
-      walletName: currentWallet.name,
-      walletId: currentWallet.id,
-    }));
+
+    displayedTransactions =
+      currentWallet?.transactions.map((transaction) => ({
+        ...transaction,
+        walletName: currentWallet.name,
+        walletId: currentWallet.id,
+      })) || [];
   }
 
-  // Search
   if (searchQuery.trim() !== "") {
     displayedTransactions = displayedTransactions.filter((transaction) =>
       transaction.category.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
 
-  //Filter
   if (filteredType !== "all") {
     displayedTransactions = displayedTransactions.filter(
       (transaction) => transaction.type === filteredType
     );
   }
 
-  //Display sorted output
   displayedTransactions.sort((a, b) => {
-    if (sortOrder === "dateAsc") {
-      return new Date(a.date) - new Date(b.date);
-    }
-    if (sortOrder === "dateDesc") {
-      return new Date(b.date) - new Date(a.date);
-    }
-    if (sortOrder === "amountAsc") {
-      return a.amount - b.amount;
-    }
-    if (sortOrder === "amountDesc") {
-      return b.amount - a.amount;
-    }
+    if (sortOrder === "dateAsc") return new Date(a.date) - new Date(b.date);
+    if (sortOrder === "dateDesc") return new Date(b.date) - new Date(a.date);
+    if (sortOrder === "amountAsc") return a.amount - b.amount;
+    if (sortOrder === "amountDesc") return b.amount - a.amount;
     return 0;
   });
 
   return (
     <div className="transaction-list-container">
-      <div className="transaction-list-header">
+      <div className="transaction-top-row">
         <h2>Transaction History</h2>
-        
-        <div className="wallet-selector-section">
-          <label>Wallet:</label>
+
+        <div className="transaction-top-filters">
+          <div className="search-box">
+            <FaSearch className="search-icon" />
+            <input
+              type="search"
+              placeholder="Search category..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+          </div>
+
+          <select
+            value={filteredType}
+            onChange={(e) => setFilteredType(e.target.value)}
+            className="transaction-select"
+          >
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="transaction-select"
+          >
+            <option value="dateDesc">Date: Newest</option>
+            <option value="dateAsc">Date: Oldest</option>
+            <option value="amountDesc">Amount: High → Low</option>
+            <option value="amountAsc">Amount: Low → High</option>
+          </select>
+
           <select
             value={selectedWalletId}
             onChange={(e) => setSelectedWalletId(e.target.value)}
@@ -91,41 +115,17 @@ function TransactionList() {
         </div>
       </div>
 
-      <div className="transaction-filters">
-        <div className="search-box">
-          <FaSearch className="search-icon" />
-          <input
-            type="search"
-            placeholder="Search by category..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="search-input"
-          />
-        </div>
-
-        <select
-          value={filteredType}
-          onChange={(e) => setFilteredType(e.target.value)}
-          className="transaction-select"
-        >
-          <option value="all">All Types</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>
-        </select>
-
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="transaction-select"
-        >
-          <option value="dateDesc">Date: Newest</option>
-          <option value="dateAsc">Date: Oldest</option>
-          <option value="amountDesc">Amount: High to Low</option>
-          <option value="amountAsc">Amount: Low to High</option>
-        </select>
+      <div className="transaction-table-header">
+        <span>Transaction ID</span>
+        <span>Category</span>
+        <span>Amount</span>
+        <span>Type</span>
+        <span>Date</span>
+        {selectedWalletId === "all" && <span>Wallet</span>}
+        <span>Action</span>
       </div>
 
-      <div className="transactions-list">
+      <div className="transaction-table-body">
         {displayedTransactions.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">📝</div>
@@ -134,37 +134,30 @@ function TransactionList() {
           </div>
         ) : (
           displayedTransactions.map((transaction) => (
-            <div 
-              key={transaction.id} 
-              className={`transaction-item ${transaction.type}`}
-            >
-              <div className="transaction-left">
-                <div className="transaction-category-badge">
-                  {transaction.category}
-                </div>
-                <div className="transaction-info">
-                  <span className="transaction-date">{formatDate(transaction.date)}</span>
-                  {selectedWalletId === "all" && (
-                    <span className="transaction-wallet">{transaction.walletName}</span>
-                  )}
-                  {transaction.description && (
-                    <span className="transaction-description">{transaction.description}</span>
-                  )}
-                </div>
-              </div>
-              
-              <div className="transaction-right">
-                <span className={`transaction-amount ${transaction.type}`}>
-                  {transaction.type === "income" ? "+" : "-"}${transaction.amount.toFixed(2)}
-                </span>
-                <button
-                  onClick={() => deleteTransaction(transaction.walletId, transaction.id)}
-                  className="transaction-delete-btn"
-                  title="Delete transaction"
-                >
-                  <FaTrash />
-                </button>
-              </div>
+            <div className="transaction-row" key={transaction.id}>
+              <span>{generateTransactionId(transaction.walletId, transaction.id)}</span>
+              <span>{transaction.category}</span>
+              <span className={transaction.type}>
+                {transaction.type === "income" ? "+" : "-"}$
+                {transaction.amount.toFixed(2)}
+              </span>
+              <span className={`type-badge ${transaction.type}`}>
+                {transaction.type}
+              </span>
+              <span>{formatDate(transaction.date)}</span>
+
+              {selectedWalletId === "all" && (
+                <span className="wallet-name">{transaction.walletName}</span>
+              )}
+
+              <button
+                onClick={() =>
+                  deleteTransaction(transaction.walletId, transaction.id)
+                }
+                className="transaction-delete-btn"
+              >
+                <FaTrash />
+              </button>
             </div>
           ))
         )}
