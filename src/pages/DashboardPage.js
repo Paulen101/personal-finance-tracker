@@ -13,6 +13,7 @@ function Dashboard() {
     getApplicableBudgets,
     selectedWalletId,
     setSelectedWalletId,
+    getWalletBalance,
     wallets
   } = useFinance();
 
@@ -64,7 +65,7 @@ function Dashboard() {
     <div className="dashboardWrapper">
       {error ? (
         <div className="analytics-error">
-          <div className="error-icon"><FaExclamationTriangle /></div>
+          <div className="error-icon"><FaExclamationTriangle className="FaIcon"/></div>
           <h3>Error status: {error.message || error.toString()}</h3>
           <p>An error occurred while processing your data. Please try again.</p>
           <button onClick={() => window.location.reload()} className="btn-retry">
@@ -80,13 +81,13 @@ function Dashboard() {
         )}
 
         <div className="dashboardHeader">
-          <h1 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><FaChartLine /> Dashboard</h1>
+          <h1 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><FaChartLine className="FaIcon"/> Dashboard</h1>
           <p className="dashboardSubtitle">Financial overview</p>
         </div>
 
         <div className="budget-header">
           <div className="budget-header-top">
-            <h1 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><FaCreditCard /> Quick Wallet Management</h1>
+            <h1 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><FaCreditCard className="FaIcon"/> Quick Wallet Management</h1>
           </div>
           {/* Wallet Selector */}
           <div className="wallet-selector">
@@ -98,7 +99,7 @@ function Dashboard() {
             >
               {wallets.map(wallet => (
                 <option key={wallet.id} value={wallet.id}>
-                  {wallet.name} (${wallet.balance.toFixed(2)})
+                  {wallet.name} (${getWalletBalance(wallet.id).toFixed(2)})
                 </option>
               ))} 
             </select>

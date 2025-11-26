@@ -47,7 +47,7 @@ function WalletList() {
                     className="wallet-delete-btn"
                     title="Delete Wallet"
                   >
-                    <FaTrash />
+                    <FaTrash/>
                   </button>
                 </div>
                 <p

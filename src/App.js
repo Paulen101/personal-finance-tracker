@@ -29,37 +29,37 @@ function App() {
             {/* Simple Navigation */}
           <nav className="app-nav">
             <div className="nav-container">
-              <h2 className="app-title"><FaWallet /> Finance Tracker</h2>
+              <h2 className="app-title"><FaWallet className="FaIcon" /> Finance Tracker</h2>
               <div className="nav-buttons">
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/"
                   >
-                    <FaChartLine /> Dashboard
+                    <FaChartLine className="FaIcon" /> Dashboard
                   </NavLink>
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/transaction"
                   >
-                    <FaCoins /> Transactions
+                    <FaCoins className="FaIcon" /> Transactions
                   </NavLink>
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/wallet"
                   >
-                    <FaWallet /> Wallet
+                    <FaWallet className="FaIcon" /> Wallet
                   </NavLink>
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/budget"
                   >
-                    <FaDollarSign /> Budgets
+                    <FaDollarSign className="FaIcon" /> Budgets
                   </NavLink>
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
                     to="/analytics"
                   >
-                    <FaChartPie /> Analytics
+                    <FaChartPie className="FaIcon" /> Analytics
                   </NavLink>
                 </div>
               </div>

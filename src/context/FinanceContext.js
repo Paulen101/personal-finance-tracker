@@ -134,6 +134,15 @@ export const FinanceProvider = ({ children }) => {
     return wallets.find((w) => w.id === selectedWalletId) || wallets[0];
   };
 
+  const getWalletBalance = (walletId) => {
+    const wallet = wallets.find((w) => w.id === walletId);
+    if (!wallet) return 0;
+    return (wallet.transactions || []).reduce(
+      (total, t) => (t.type === "income" ? total + t.amount : total - t.amount),
+      0
+    );
+  };
+
   // Calculate spent amount for a budget safely
   const calculateBudgetSpent = (budget) => {
     try {
@@ -335,7 +344,7 @@ export const FinanceProvider = ({ children }) => {
       id: timestamp,
       type: "expense",
       category: "Transfer Out",
-      amount: transferAmount,
+      amount: -transferAmount,
       description: description || `Transfer to ${toWallet.name}`,
       date: date,
     };
@@ -387,6 +396,7 @@ export const FinanceProvider = ({ children }) => {
     getCurrentWallet,
     calculateBudgetSpent,
     getApplicableBudgets,
+    getWalletBalance,
     addBudget,
     updateBudget,
     deleteBudget,

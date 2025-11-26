@@ -139,7 +139,7 @@ function TransactionList() {
               <span>{transaction.category}</span>
               <span className={transaction.type}>
                 {transaction.type === "income" ? "+" : "-"}$
-                {transaction.amount.toFixed(2)}
+                {Math.abs(transaction.amount).toFixed(2)}
               </span>
               <span className={`type-badge ${transaction.type}`}>
                 {transaction.type}

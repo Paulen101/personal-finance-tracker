@@ -55,7 +55,7 @@ function TransactionForm() {
         <button
           onClick={() => setShowForm(true)}
           className="transaction-form-open-btn"
-          disabled={selectedWalletId === "all" || !selectedWalletId}
+          disabled={selectedWalletId == null || selectedWalletId === "all"}
         >
           + Add Transaction
         </button>

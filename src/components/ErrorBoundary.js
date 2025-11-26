@@ -34,7 +34,7 @@ class ErrorBoundary extends React.Component {
       return (
         <div className="error-boundary-root">
           <div className="error-card">
-            <div className="error-illustration"><FaExclamationTriangle /></div>
+            <div className="error-illustration"><FaExclamationTriangle className="FaIcon"/></div>
             <h2>Something went wrong</h2>
             <p>
               An unexpected error occurred. You can try reloading the app or

@@ -13,6 +13,7 @@ const BudgetPage = () => {
     setSelectedWalletId,
     calculateBudgetSpent,
     getApplicableBudgets,
+    getWalletBalance,
     addBudget,
     updateBudget,
     deleteBudget, storageError, clearStorage
@@ -129,7 +130,7 @@ const BudgetPage = () => {
     <div className="budget-page">
       {storageError && (
         <div className="storage-error-banner">
-          <div><FaExclamationTriangle /> Storage error detected. Some features may not work correctly.</div>
+          <div><FaExclamationTriangle className="FaIcon"/> Storage error detected. Some features may not work correctly.</div>
           <div className="storage-error-actions">
             <button className="btn-clear-storage" onClick={() => { if (window.confirm('Clear local data and reload?')) { clearStorage(); window.location.reload(); } }}>
               Clear Local Data
@@ -139,7 +140,7 @@ const BudgetPage = () => {
       )}
       <div className="budget-header">
         <div className="budget-header-top">
-          <h1><FaWallet /> Budget Management</h1>
+          <h1><FaWallet className="FaIcon"/> Budget Management</h1>
           <button onClick={() => setShowForm(true)} className="btn-add-budget">
             + Add Budget
           </button>
@@ -154,7 +155,7 @@ const BudgetPage = () => {
           >
             {wallets.map(wallet => (
               <option key={wallet.id} value={wallet.id}>
-                {wallet.name} (${wallet.balance.toFixed(2)})
+                {wallet.name} (${getWalletBalance(wallet.id).toFixed(2)})
               </option>
             ))}
           </select>
@@ -223,7 +224,7 @@ const BudgetPage = () => {
       <div className="budget-list">
         {filteredBudgets.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon"><FaChartBar /></div>
+            <div className="empty-icon"><FaChartBar className="FaIcon"/></div>
             <h3>No budgets found</h3>
             <p>
               {budgets.length === 0 

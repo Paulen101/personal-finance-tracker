@@ -36,7 +36,7 @@ function WalletCarousel() {
 
           const displayCardNumber = wallet.cardNumber 
             ? wallet.cardNumber
-            : `**** **** **** String(wallet.id).padStart(4, '0')`;
+            : `**** **** **** ${String(wallet.id).padStart(4, '0')}`;
 
           return (
             <div
@@ -49,7 +49,7 @@ function WalletCarousel() {
                 className="wallet-mini-card-delete"
                 title="Delete wallet"
               >
-                <FaTrash />
+                <FaTrash/>
               </button>
               
               <div className="wallet-mini-card-content">

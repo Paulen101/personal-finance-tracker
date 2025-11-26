@@ -44,14 +44,15 @@ function WalletTransactions() {
               
               <div className="transaction-right">
                 <span className={`transaction-amount ${transaction.type}`}>
-                  {transaction.type === "income" ? "+" : "-"}${transaction.amount.toFixed(2)}
+                  {transaction.type === "income" ? "+" : "-"}${Math.abs(transaction.amount).toFixed(2)}
+                  {/* {transaction.amount >= 0 ? "+" : "-"}${Math.abs(transaction.amount).toFixed(2)}       alternative method */}
                 </span>
                 <button
                   onClick={() => deleteTransaction(currentWallet.id, transaction.id)}
                   className="transaction-delete-btn"
                   title="Delete transaction"
                 >
-                  <FaTrash />
+                  <FaTrash/>
                 </button>
               </div>
             </div>
