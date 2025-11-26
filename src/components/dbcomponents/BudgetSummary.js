@@ -22,7 +22,7 @@ const BudgetOutput = ({groups, counts}) => {
       >
 
       {/* Icon on the left */}
-      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#EF4444"}}><FaExclamationCircle /></div>
+      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#EF4444"}}><FaExclamationCircle className="FaIcon" /></div>
 
       {/* Text in the right */}
         <div style={{ paddingRight: '40px', flex: 1, color:"#EF4444", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
@@ -50,7 +50,7 @@ const BudgetOutput = ({groups, counts}) => {
       >
 
       {/* Icon on the left */}
-      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#EF4444"}}><FaTimesCircle /></div>
+      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#EF4444"}}><FaTimesCircle className="FaIcon" /></div>
 
       {/* Text in the right */}
         <div style={{ paddingRight: '40px', flex: 1, color:"#EF4444", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
@@ -81,7 +81,7 @@ const BudgetOutput = ({groups, counts}) => {
       >
 
       {/* Icon on the left */}
-      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle /></div>
+      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle className="FaIcon" /></div>
 
       {/* Text in the right */}
         <div style={{paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
@@ -108,7 +108,7 @@ const BudgetOutput = ({groups, counts}) => {
       >
 
       {/* Icon on the left */}
-      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle /></div>
+      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle className="FaIcon" /></div>
 
       {/* Text in the right */}
         <div style={{ paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
@@ -144,7 +144,7 @@ const BudgetOutput = ({groups, counts}) => {
       }}
     >
       {/* Icon on the left */}
-      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#10B981"}}><FaCheckCircle /></div>
+      <div style={{fontSize:"50px", paddingLeft:"10px", color:"#10B981"}}><FaCheckCircle className="FaIcon" /></div>
 
       {/* Text in the right */}
       <div style={{ paddingRight: '40px', flex: 1, color:"#10B981", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
@@ -210,7 +210,7 @@ export const BudgetReminder = ({budgets}) => {
   if (!budgets || budgets.length === 0) { 
     return (
       <div className="budgetReminder">
-        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="chart-empty-state"><FaExclamationTriangle /> No transactions found.</div>;
+        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="chart-empty-state"><FaExclamationTriangle className="FaIcon" /> No transactions found.</div>;
         <div className="buttonWrapper">
           <Link to="/budget">
             <button className="btnGoBudget">Go to Budget</button>

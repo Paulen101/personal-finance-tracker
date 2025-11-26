@@ -1,0 +1,136 @@
+.transfer-form-container {
+  margin-bottom: 24px;
+}
+
+.transfer-form-open-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.transfer-form-open-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(245, 124, 0, 0.3);
+}
+
+.transfer-form-open-btn:disabled {
+  background: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.transfer-form {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.transfer-form h3 {
+  margin: 0 0 20px 0;
+  font-size: 1.5rem;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.transfer-form-select,
+.transfer-form-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.transfer-form-select:focus,
+.transfer-form-input:focus {
+  outline: none;
+  border-color: #FF9800;
+}
+
+.balance-info {
+  display: block;
+  margin-top: 6px;
+  color: #10B981;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.transfer-form-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.transfer-form-submit-btn {
+  flex: 1;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.transfer-form-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+}
+
+.transfer-form-cancel-btn {
+  flex: 1;
+  padding: 12px 24px;
+  background: #f3f4f6;
+  color: #374151;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.transfer-form-cancel-btn:hover {
+  background: #e5e7eb;
+}
+
+.transfer-form-warning {
+  margin-top: 12px;
+  color: #EF4444;
+  font-size: 0.875rem;
+  font-style: italic;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .transfer-form {
+    padding: 20px;
+  }
+
+  .transfer-form-buttons {
+    flex-direction: column;
+  }
+}

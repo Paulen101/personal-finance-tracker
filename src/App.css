@@ -21,7 +21,7 @@
   align-items: center;
 }
 
-svg {
+.FaIcon {
   position: relative;
   top: 2.5px; /* adjust to taste */
 }

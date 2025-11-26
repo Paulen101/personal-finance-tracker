@@ -42,7 +42,7 @@
   letter-spacing: 0.5px;
 }
 
-.budget-badge.global {
+/* .budget-badge.global {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
@@ -50,7 +50,7 @@
 .budget-badge.wallet {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   color: white;
-}
+} */
 
 .budget-item-actions {
   display: flex;
@@ -125,7 +125,7 @@
   color: white;
 }
 
-.budget-badge.wallet {
+.budget-badge.budgetwallet {
   background: linear-gradient(135deg, #06B6D4 0%, #8B5CF6 100%);
   color: white;
 }
