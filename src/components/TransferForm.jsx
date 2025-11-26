@@ -40,8 +40,8 @@ function TransferForm() {
     if (!fromWalletId) return 0;
     const wallet = wallets.find(w => w.id === Number(fromWalletId));
     if (!wallet) return 0;
-    return wallet.transactions.reduce((total, tx) => {
-      return tx.type === "income" ? total + tx.amount : total - tx.amount;
+    return wallet.transactions.reduce((total, transaction) => {
+      return transaction.type === "income" ? total + transaction.amount : total - transaction.amount;
     }, 0);
   };
 

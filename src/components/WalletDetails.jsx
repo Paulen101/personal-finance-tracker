@@ -24,9 +24,9 @@ function WalletDetails() {
   // Calculate spending by category for pie chart
   const categorySpending = {};
   currentWallet.transactions
-    .filter(tx => tx.type === "expense")
-    .forEach(tx => {
-      categorySpending[tx.category] = (categorySpending[tx.category] || 0) + tx.amount;
+    .filter(transaction => transaction.type === "expense")
+    .forEach(transaction => {
+      categorySpending[transaction.category] = (categorySpending[transaction.category] || 0) + transaction.amount;
     });
 
   const totalSpending = Object.values(categorySpending).reduce((a, b) => a + b, 0);

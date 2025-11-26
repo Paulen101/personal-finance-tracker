@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useFinance } from "../context/FinanceContext";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaSearch } from "react-icons/fa";
+import "./TransactionList.css";
 
 function TransactionList() {
   const { wallets, selectedWalletId, setSelectedWalletId, deleteTransaction } =
@@ -30,8 +31,8 @@ function TransactionList() {
       (wallet) => wallet.id === Number(selectedWalletId)
     );
     displayedTransactions = currentWallet?.transactions || [];
-    displayedTransactions = displayedTransactions.map((tx) => ({
-      ...tx,
+    displayedTransactions = displayedTransactions.map((transaction) => ({
+      ...transaction,
       walletName: currentWallet.name,
       walletId: currentWallet.id,
     }));
@@ -69,66 +70,105 @@ function TransactionList() {
   });
 
   return (
-    <div>
-      <h2>Transactions</h2>
+    <div className="transaction-list-container">
+      <div className="transaction-list-header">
+        <h2>Transaction History</h2>
+        
+        <div className="wallet-selector-section">
+          <label>Wallet:</label>
+          <select
+            value={selectedWalletId}
+            onChange={(e) => setSelectedWalletId(e.target.value)}
+            className="transaction-select"
+          >
+            <option value="all">All Wallets</option>
+            {wallets.map((w) => (
+              <option key={w.id} value={w.id}>
+                {w.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
-      {/* wallet switch */}
-      <select
-        value={selectedWalletId}
-        onChange={(e) => setSelectedWalletId(e.target.value)}
-      >
-        <option value="all">All Wallets</option>
-        {wallets.map((w) => (
-          <option key={w.id} value={w.id}>
-            {w.name}
-          </option>
-        ))}
-      </select>
+      <div className="transaction-filters">
+        <div className="search-box">
+          <FaSearch className="search-icon" />
+          <input
+            type="search"
+            placeholder="Search by category..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+        </div>
 
-      <form>
-        {/* search by category */}
-        <input
-          type="search"
-          placeholder="Search by category"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        {/* filter by type */}
         <select
           value={filteredType}
           onChange={(e) => setFilteredType(e.target.value)}
+          className="transaction-select"
         >
-          <option value="all">All</option>
+          <option value="all">All Types</option>
           <option value="income">Income</option>
           <option value="expense">Expense</option>
         </select>
-        {/* sort by date or amount */}
+
         <select
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
+          className="transaction-select"
         >
           <option value="dateDesc">Date: Newest</option>
           <option value="dateAsc">Date: Oldest</option>
           <option value="amountDesc">Amount: High to Low</option>
           <option value="amountAsc">Amount: Low to High</option>
         </select>
-      </form>
+      </div>
 
-      {/* transaction list display */}
-      {displayedTransactions.map((transaction) => (
-        <div key={transaction.id}>
-          {transaction.id} - {transaction.category} - ${transaction.amount} -{" "}
-          {formatDate(transaction.date)}
-          <button
-            onClick={() =>
-              deleteTransaction(transaction.walletId, transaction.id)
-            }
-          >
-            <FaTrash color="red" />
-          </button>
-        </div>
-      ))}
-      {displayedTransactions.length === 0 && <p>No transactions yet.</p>}
+      <div className="transactions-list">
+        {displayedTransactions.length === 0 ? (
+          <div className="empty-state">
+            <div className="empty-icon">📝</div>
+            <h3>No transactions found</h3>
+            <p>Try adjusting your filters or add a new transaction</p>
+          </div>
+        ) : (
+          displayedTransactions.map((transaction) => (
+            <div 
+              key={transaction.id} 
+              className={`transaction-item ${transaction.type}`}
+            >
+              <div className="transaction-left">
+                <div className="transaction-category-badge">
+                  {transaction.category}
+                </div>
+                <div className="transaction-info">
+                  <span className="transaction-date">{formatDate(transaction.date)}</span>
+                  {selectedWalletId === "all" && (
+                    <span className="transaction-wallet">{transaction.walletName}</span>
+                  )}
+                  {transaction.description && (
+                    <span className="transaction-description">{transaction.description}</span>
+                  )}
+                </div>
+              </div>
+              
+              <div className="transaction-right">
+                <span className={`transaction-amount ${transaction.type}`}>
+                  {transaction.type === "income" ? "+" : "-"}${transaction.amount.toFixed(2)}
+                </span>
+                <button
+                  onClick={() => deleteTransaction(transaction.walletId, transaction.id)}
+                  className="transaction-delete-btn"
+                  title="Delete transaction"
+                >
+                  <FaTrash />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

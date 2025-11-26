@@ -80,7 +80,7 @@ export const FinanceProvider = ({ children }) => {
           ? {
               ...w,
               transactions: w.transactions.filter(
-                (tx) => tx.id !== transactionId
+                (transaction) => transaction.id !== transactionId
               ),
             }
           : w

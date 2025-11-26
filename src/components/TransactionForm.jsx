@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFinance } from "../context/FinanceContext";
+import "./TransactionForm.css";
 
 function TransactionForm() {
   const { addTransaction, selectedWalletId } = useFinance();
@@ -7,6 +8,7 @@ function TransactionForm() {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("expense");
+  const [showForm, setShowForm] = useState(false);
 
   const categories = [
     "Food",
@@ -22,8 +24,8 @@ function TransactionForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!selectedWalletId) {
-      alert("Please select a wallet first!");
+    if (!selectedWalletId || selectedWalletId === "all") {
+      alert("Please select a specific wallet!");
       return;
     }
 
@@ -32,62 +34,104 @@ function TransactionForm() {
       return;
     }
 
-    console.log(
-      "submit: selectedWalletId",
-      selectedWalletId,
-      typeof selectedWalletId
-    );
-
     const newTransaction = {
       type,
       category,
       amount: parseFloat(amount),
       date: new Date().toISOString().split("T")[0],
     };
-    console.log("newTransaction", newTransaction);
 
     addTransaction(Number(selectedWalletId), newTransaction);
 
     setAmount("");
     setCategory("");
+    setShowForm(false);
+    alert("Transaction added successfully!");
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          placeholder="Amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          required
-        />
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
+    <div className="transaction-form-container">
+      {!showForm ? (
+        <button
+          onClick={() => setShowForm(true)}
+          className="transaction-form-open-btn"
+          disabled={selectedWalletId === "all" || !selectedWalletId}
         >
-          <option value="">Select Category</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-        <select value={type} onChange={(e) => setType(e.target.value)}>
-          <option value="expense">Expense</option>
-          <option value="income">Income</option>
-        </select>
-        <button type="submit" disabled={selectedWalletId === "all"}>
-          Add Transaction
+          + Add Transaction
         </button>
+      ) : (
+        <form onSubmit={handleSubmit} className="transaction-form">
+          <h3>Add New Transaction</h3>
 
-        {selectedWalletId === "all" && (
-          <p style={{ color: "red" }}>
-            Please select a specific wallet to add a transaction.
-          </p>
-        )}
-      </form>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Type:</label>
+              <select
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                className="transaction-form-select"
+              >
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Category:</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+                className="transaction-form-select"
+              >
+                <option value="">Select Category</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Amount:</label>
+              <input
+                type="number"
+                step="0.01"
+                min="0.01"
+                placeholder="0.00"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+                className="transaction-form-input"
+              />
+            </div>
+          </div>
+
+          <div className="transaction-form-buttons">
+            <button type="submit" className="transaction-form-submit-btn">
+              Add Transaction
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setShowForm(false);
+                setAmount("");
+                setCategory("");
+              }}
+              className="transaction-form-cancel-btn"
+            >
+              Cancel
+            </button>
+          </div>
+
+          {selectedWalletId === "all" && (
+            <p className="transaction-form-warning">
+              Please select a specific wallet to add a transaction.
+            </p>
+          )}
+        </form>
+      )}
     </div>
   );
 }
