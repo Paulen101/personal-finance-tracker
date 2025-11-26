@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FaGlobe, FaWallet } from 'react-icons/fa';
+// import { FaGlobe, FaWallet } from 'react-icons/fa';
 import './BudgetForm.css';
 
 const COMMON_CATEGORIES = [
