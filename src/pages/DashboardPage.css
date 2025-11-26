@@ -1,0 +1,42 @@
+/* Body wrapper including header */
+.dashboardWrapper { 
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.dashboardHeader {
+  margin-bottom: 24px;
+}
+
+.dashboardHeader h1 {
+  margin: 0 0 8px 0;
+  font-size: 2rem;
+  color: #1f2937;
+  font-weight: 800;
+}
+
+.dashboardSubtitle {
+  color: #6b7280;
+  margin: 0;
+  font-size: 1rem;
+  display: inline-flex;
+}
+
+/* Wrapper for components */
+.dashboardBody{ 
+  background: #f5f7fa;
+  border-radius: 30px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 680px) {
+  .dashboardBody {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* charts-card reused from analyticsPage */
