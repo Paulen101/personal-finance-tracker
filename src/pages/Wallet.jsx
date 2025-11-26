@@ -1,18 +1,25 @@
+import React from "react";
 import WalletForm from "../components/WalletForm";
-import WalletList from "../components/WalletList";
+import WalletCarousel from "../components/WalletCarousel";
+import WalletDetails from "../components/WalletDetails";
+import WalletTransactions from "../components/WalletTransactions";
 import TransferForm from "../components/TransferForm";
+import "./Wallet.css";
 
-function Wallet () {
-
-    return (
-        <div>
-            <h1>Wallet Page</h1>
-            <WalletForm />
-            <TransferForm />
-            <WalletList />
-
-        </div>
-    );
+function Wallet() {
+  return (
+    <div className="wallet">
+      <div className="wallet-header">
+        <h1>Wallet Management</h1>
+        <WalletForm />
+      </div>
+      
+      <WalletCarousel />
+      <TransferForm />
+      <WalletDetails />
+      <WalletTransactions />
+    </div>
+  );
 }
 
 export default Wallet;

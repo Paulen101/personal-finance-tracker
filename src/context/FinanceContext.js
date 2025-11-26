@@ -51,6 +51,8 @@ export const FinanceProvider = ({ children }) => {
         id: 0,
         name: "Main Wallet",
         balance: 1000,
+        cardNumber: "**** **** **** 0001",
+        expiryDate: "12/27",
         transactions: [
           {
             id: 0,
@@ -100,7 +102,8 @@ export const FinanceProvider = ({ children }) => {
     return (Array.isArray(savedWallets) && savedWallets[0]?.id) || 0;
   });
 
-  const currentWallet = wallets.find((w) => w.id === selectedWalletId) || wallets[0];
+  const currentWallet =
+    wallets.find((w) => w.id === selectedWalletId) || wallets[0];
 
   const balance =
     currentWallet?.transactions?.reduce((acc, t) => {
@@ -215,7 +218,11 @@ export const FinanceProvider = ({ children }) => {
 
   // Transaction operations (for demo purposes)
   const addTransaction = (walletId, transaction) => {
-    console.log("addTransaction called with walletId:", walletId, typeof walletId);
+    console.log(
+      "addTransaction called with walletId:",
+      walletId,
+      typeof walletId
+    );
     setWallets(
       wallets.map((w) =>
         w.id === walletId
@@ -237,16 +244,24 @@ export const FinanceProvider = ({ children }) => {
 
   // Add this NEW function
   const addWallet = (walletData) => {
+    const last4Digit = String(Date.now()).slice(-4);
+    const expiryDate = new Date();
+    expiryDate.setFullYear(expiryDate.getFullYear() + 2);
+    const expiryMonth = String(expiryDate.getMonth() + 1).padStart(2, "0");
+    const expiryYear = String(expiryDate.getFullYear()).slice(-2);
+
     const newWallet = {
       id: Date.now(),
       name: walletData.name,
+      cardNumber: `**** **** **** ${last4Digit}`,
+      expiryDate: `${expiryMonth}/${expiryYear}`,
       transactions: [],
     };
-    
+
     setWallets([...wallets, newWallet]);
     setSelectedWalletId(newWallet.id);
-    
-    return newWallet; 
+
+    return newWallet;
   };
 
   const deleteWallet = (walletId) => {
@@ -255,28 +270,34 @@ export const FinanceProvider = ({ children }) => {
       return false;
     }
 
-    const walletToDelete = wallets.find(w => w.id === walletId);
+    const walletToDelete = wallets.find((w) => w.id === walletId);
 
     const transactionCount = walletToDelete?.transactions?.length || 0;
-    const confirmMsg = transactionCount > 0
-      ? `The wallet "${walletToDelete.name}" has ${transactionCount} transaction(s). Deleting it will also remove all its transactions. Are you sure you want to proceed?`
-      : `Are you sure you want to delete the wallet "${walletToDelete.name}"?`;
+    const confirmMsg =
+      transactionCount > 0
+        ? `The wallet "${walletToDelete.name}" has ${transactionCount} transaction(s). Deleting it will also remove all its transactions. Are you sure you want to proceed?`
+        : `Are you sure you want to delete the wallet "${walletToDelete.name}"?`;
 
-      if (!window.confirm(confirmMsg)) {
-        return false;
-      }
+    if (!window.confirm(confirmMsg)) {
+      return false;
+    }
 
-      if (selectedWalletId === walletId) {
-        const nextWallet = wallets.find(w => w.id !== walletId);
-        setSelectedWalletId(nextWallet.id);
-      }
+    if (selectedWalletId === walletId) {
+      const nextWallet = wallets.find((w) => w.id !== walletId);
+      setSelectedWalletId(nextWallet.id);
+    }
 
-      setWallets(wallets.filter(w => w.id !== walletId));
+    setWallets(wallets.filter((w) => w.id !== walletId));
 
-      return true;
+    return true;
   };
 
-  const transferBetweenWallets = (fromWalletId, toWalletId, amount, description="") => {
+  const transferBetweenWallets = (
+    fromWalletId,
+    toWalletId,
+    amount,
+    description = ""
+  ) => {
     if (fromWalletId === toWalletId) {
       alert("Cannot transfer to the same wallet!");
       return false;
@@ -288,8 +309,8 @@ export const FinanceProvider = ({ children }) => {
       return false;
     }
 
-    const fromWallet = wallets.find(w => w.id === fromWalletId);
-    const toWallet = wallets.find(w => w.id === toWalletId);
+    const fromWallet = wallets.find((w) => w.id === fromWalletId);
+    const toWallet = wallets.find((w) => w.id === toWalletId);
 
     if (!fromWallet || !toWallet) {
       alert("Wallet not found!");
@@ -301,7 +322,9 @@ export const FinanceProvider = ({ children }) => {
     }, 0);
 
     if (fromWalletBalance < transferAmount) {
-      alert(`Insufficient balance! Available: $${fromWalletBalance.toFixed(2)}`);
+      alert(
+        `Insufficient balance! Available: $${fromWalletBalance.toFixed(2)}`
+      );
       return false;
     }
 
@@ -326,24 +349,26 @@ export const FinanceProvider = ({ children }) => {
       date: date,
     };
 
-    setWallets(wallets.map(wallet => {
-      if (wallet.id === fromWalletId) {
-        return {
-          ...wallet,
-          transactions: [...wallet.transactions, transferOutTransaction]
-        };
-      }
-      if (wallet.id === toWalletId) {
-        return {
-          ...wallet,
-          transactions: [...wallet.transactions, transferInTransaction]
-        };
-      }
-      return wallet;
-    }));
+    setWallets(
+      wallets.map((wallet) => {
+        if (wallet.id === fromWalletId) {
+          return {
+            ...wallet,
+            transactions: [...wallet.transactions, transferOutTransaction],
+          };
+        }
+        if (wallet.id === toWalletId) {
+          return {
+            ...wallet,
+            transactions: [...wallet.transactions, transferInTransaction],
+          };
+        }
+        return wallet;
+      })
+    );
 
-    return true; 
-  }
+    return true;
+  };
 
   const clearStorage = () => {
     safeRemove("finance_wallets");

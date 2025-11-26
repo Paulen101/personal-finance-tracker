@@ -9,24 +9,25 @@ function WalletForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!walletName.trim()) {
       alert("Please enter a wallet name!");
       return;
     }
-    
-    addWallet({ name: walletName });
-    
+
+
+    addWallet({ name: walletName.trim()});
+
     setWalletName("");
     setShowForm(false);
-    
+
     alert(`Wallet "${walletName}" created successfully!`);
   };
 
   return (
     <div className="wallet-form-container">
       {!showForm ? (
-        <button 
+        <button
           onClick={() => setShowForm(true)}
           className="wallet-form-create-btn"
         >
@@ -43,13 +44,10 @@ function WalletForm() {
             className="wallet-form-input"
           />
           <div className="wallet-form-buttons">
-            <button 
-              type="submit"
-              className="wallet-form-submit-btn"
-            >
+            <button type="submit" className="wallet-form-submit-btn">
               Create
             </button>
-            <button 
+            <button
               type="button"
               onClick={() => {
                 setShowForm(false);

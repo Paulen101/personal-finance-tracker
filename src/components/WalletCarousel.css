@@ -1,0 +1,122 @@
+/* WalletCarousel.css */
+.wallet-carousel {
+  margin-bottom: 24px;
+}
+
+.wallet-carousel-empty {
+  background: white;
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.wallet-carousel-empty p {
+  color: #6b7280;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.wallet-carousel-scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding: 8px 0 16px 0;
+  scroll-behavior: smooth;
+}
+
+.wallet-carousel-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.wallet-carousel-scroll::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+.wallet-carousel-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+
+.wallet-carousel-scroll::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.wallet-mini-card {
+  min-width: 240px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  position: relative;
+  color: white;
+}
+
+.wallet-mini-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.wallet-mini-card.active {
+  border: 3px solid #8B5CF6;
+  box-shadow: 0 10px 20px rgba(139, 92, 246, 0.4);
+}
+
+.wallet-mini-card-delete {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.wallet-mini-card-delete:hover {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+.wallet-mini-card-content {
+  margin-top: 8px;
+}
+
+.wallet-mini-name {
+  margin: 0 0 8px 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.9;
+  letter-spacing: 0.5px;
+}
+
+.wallet-mini-balance {
+  margin: 0 0 16px 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.wallet-mini-cardnumber {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0.8;
+  letter-spacing: 2px;
+  font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 768px) {
+  .wallet-mini-card {
+    min-width: 200px;
+  }
+}
