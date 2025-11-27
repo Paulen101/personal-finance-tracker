@@ -1,3 +1,4 @@
+/* TransactionList.css */
 .transaction-list-container {
   background: white;
   border-radius: 12px;
@@ -24,11 +25,12 @@
 .transaction-top-filters {
   display: flex;
   gap: 12px;
-  flex-wrap: wrap;
+  align-items: center;
 }
 
 .search-box {
   position: relative;
+  min-width: 250px;
 }
 
 .search-icon {
@@ -37,12 +39,22 @@
   top: 50%;
   transform: translateY(-50%);
   color: #9ca3af;
+  font-size: 0.875rem;
 }
 
 .search-input {
+  width: 100%;
   padding: 10px 10px 10px 36px;
   border: 2px solid #e5e7eb;
   border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #8B5CF6;
 }
 
 .transaction-select {
@@ -50,11 +62,20 @@
   border: 2px solid #e5e7eb;
   border-radius: 8px;
   background: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  min-width: 150px;
+}
+
+.transaction-select:focus {
+  outline: none;
+  border-color: #8B5CF6;
 }
 
 .transaction-table-header {
   display: grid;
-  grid-template-columns: 140px 150fr 160px 120px 130px 80px;
+  grid-template-columns: 200px 150px 140px 120px 160px 80px;
   font-weight: 700;
   color: #374151;
   padding: 12px 16px;
@@ -62,11 +83,12 @@
   border-radius: 8px;
   margin-bottom: 8px;
   align-items: center;
-  gap: 16px;
+  gap: 40px;
+  font-size: 0.875rem;
 }
 
 .transaction-table-header.with-wallet {
-  grid-template-columns: 140px 150fr 160px 120px 130px 140px 80px;
+  grid-template-columns: 200px 120px 150px 140px 120px 160px 80px;
 }
 
 .transaction-table-header span {
@@ -74,7 +96,17 @@
 }
 
 .transaction-table-header .amount-header {
-  text-align: center;
+  text-align: left;
+  padding-left: 16px;
+}
+
+.transaction-table-header .type-header {
+  text-align: left;
+  padding-left: 16px;
+}
+
+.transaction-table-header .date-header {
+  text-align: left;
 }
 
 .transaction-table-header .action-header {
@@ -89,29 +121,47 @@
 
 .transaction-row {
   display: grid;
-  grid-template-columns: 140px 200px 160px 120px 140px 80px;
+  grid-template-columns: 200px 150px 140px 120px 160px 80px;
   align-items: center;
   background: #f9fafb;
   padding: 12px 16px;
   border-radius: 8px;
-  gap: 16px;
+  gap: 40px;
+  transition: background 0.2s, transform 0.2s;
 }
 
 .transaction-row.with-wallet {
-  grid-template-columns: 140px 1fr 160px 120px 130px 140px 80px;
+  grid-template-columns: 200px 120px 150px 140px 120px 160px 80px;
 }
 
 .transaction-row:hover {
   background: #f3f4f6;
+  transform: translateX(4px);
 }
 
 .transaction-row > span {
   text-align: left;
+  font-size: 0.95rem;
+}
+
+.transaction-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-cell {
+  font-weight: 500;
+  color: #374151;
 }
 
 .amount-cell {
-  text-align: center;
-  font-weight: 600;
+  text-align: right;
+  font-weight: 700;
+  font-size: 1rem;
 }
 
 .amount-cell.income {
@@ -123,13 +173,15 @@
 }
 
 .type-badge {
-  padding: 4px 8px;
+  padding: 6px 12px;
   border-radius: 6px;
   text-transform: capitalize;
   font-weight: 600;
   text-align: center;
   display: inline-block;
   font-size: 0.875rem;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .type-badge.income {
@@ -142,9 +194,15 @@
   color: #991b1b;
 }
 
-.wallet-name {
+.date-cell {
   color: #6b7280;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+}
+
+.wallet-name {
+  color: #8B5CF6;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .transaction-delete-btn {
@@ -158,17 +216,18 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-  transition: color 0.2s;
+  transition: all 0.2s;
+  border-radius: 4px;
 }
 
 .transaction-delete-btn:hover {
   color: #ef4444;
+  background: #fee2e2;
 }
 
 .empty-state {
   text-align: center;
   padding: 60px 20px;
-  color: #6b7280;
 }
 
 .empty-icon {
@@ -178,29 +237,11 @@
 
 .empty-state h3 {
   margin: 0 0 8px 0;
-  color: #374151;
+  color: #1f2937;
+  font-size: 1.25rem;
 }
 
 .empty-state p {
   margin: 0;
-  color: #9ca3af;
-}
-
-@media (max-width: 768px) {
-  .transaction-table-header,
-  .transaction-table-header.with-wallet,
-  .transaction-row,
-  .transaction-row.with-wallet {
-    grid-template-columns: 1fr 1fr 80px;
-    font-size: 0.875rem;
-  }
-  
-  .transaction-table-header span:nth-child(n+4),
-  .transaction-row > span:nth-child(n+4) {
-    display: none;
-  }
-  
-  .transaction-delete-btn {
-    display: flex;
-  }
+  color: #6b7280;
 }
