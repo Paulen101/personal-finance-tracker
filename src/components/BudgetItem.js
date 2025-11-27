@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaEdit, FaTrash, FaExclamationTriangle, FaBolt } from 'react-icons/fa';
 import './BudgetItem.css';
 
 const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
@@ -30,16 +31,16 @@ const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
       <div className="budget-item-header">
         <div className="budget-item-title">
           <h3>{budget.category}</h3>
-          <span className={`budget-badge ${budget.walletID === null ? 'global' : 'wallet'}`}>
+          <span className={`budget-badge ${budget.walletID === null ? 'global' : 'budgetwallet'}`}>
             {getWalletName()}
           </span>
         </div>
         <div className="budget-item-actions">
           <button onClick={() => onEdit(budget)} className="btn-edit" title="Edit">
-            ✏️
+            <FaEdit className="FaIcon" />
           </button>
           <button onClick={() => onDelete(budget.id)} className="btn-delete" title="Delete">
-            🗑️
+            <FaTrash className="FaIcon" />
           </button>
         </div>
       </div>
@@ -70,10 +71,10 @@ const BudgetItem = ({ budget, spent, onEdit, onDelete, wallets }) => {
       <div className="budget-item-footer">
         <span className="budget-date">Set on {formatDate(budget.dateSet)}</span>
         {percentage >= 100 && (
-          <span className="budget-warning">⚠️ Budget exceeded!</span>
+          <span className="budget-warning"><FaExclamationTriangle className="FaIcon"/> Budget exceeded!</span>
         )}
         {percentage >= 80 && percentage < 100 && (
-          <span className="budget-warning-soft">⚡ Approaching limit</span>
+          <span className="budget-warning-soft"><FaBolt className="FaIcon"/> Approaching limit</span>
         )}
       </div>
     </div>

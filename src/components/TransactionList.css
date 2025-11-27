@@ -1,0 +1,247 @@
+/* TransactionList.css */
+.transaction-list-container {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.transaction-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.transaction-top-row h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.transaction-top-filters {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.search-box {
+  position: relative;
+  min-width: 250px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 0.875rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 10px 10px 36px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #8B5CF6;
+}
+
+.transaction-select {
+  padding: 10px 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  min-width: 150px;
+}
+
+.transaction-select:focus {
+  outline: none;
+  border-color: #8B5CF6;
+}
+
+.transaction-table-header {
+  display: grid;
+  grid-template-columns: 200px 150px 140px 120px 160px 80px;
+  font-weight: 700;
+  color: #374151;
+  padding: 12px 16px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+  gap: 40px;
+  font-size: 0.875rem;
+}
+
+.transaction-table-header.with-wallet {
+  grid-template-columns: 200px 120px 150px 140px 120px 160px 80px;
+}
+
+.transaction-table-header span {
+  text-align: left;
+}
+
+.transaction-table-header .amount-header {
+  text-align: left;
+  padding-left: 16px;
+}
+
+.transaction-table-header .type-header {
+  text-align: left;
+  padding-left: 16px;
+}
+
+.transaction-table-header .date-header {
+  text-align: left;
+}
+
+.transaction-table-header .action-header {
+  text-align: center;
+}
+
+.transaction-table-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.transaction-row {
+  display: grid;
+  grid-template-columns: 200px 150px 140px 120px 160px 80px;
+  align-items: center;
+  background: #f9fafb;
+  padding: 12px 16px;
+  border-radius: 8px;
+  gap: 40px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.transaction-row.with-wallet {
+  grid-template-columns: 200px 120px 150px 140px 120px 160px 80px;
+}
+
+.transaction-row:hover {
+  background: #f3f4f6;
+  transform: translateX(4px);
+}
+
+.transaction-row > span {
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.transaction-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: #6b7280;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.category-cell {
+  font-weight: 500;
+  color: #374151;
+}
+
+.amount-cell {
+  text-align: right;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.amount-cell.income {
+  color: #10b981;
+}
+
+.amount-cell.expense {
+  color: #ef4444;
+}
+
+.type-badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  text-transform: capitalize;
+  font-weight: 600;
+  text-align: center;
+  display: inline-block;
+  font-size: 0.875rem;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.type-badge.income {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.type-badge.expense {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.date-cell {
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.wallet-name {
+  color: #8B5CF6;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.transaction-delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 1rem;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+.transaction-delete-btn:hover {
+  color: #ef4444;
+  background: #fee2e2;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  margin: 0 0 8px 0;
+  color: #1f2937;
+  font-size: 1.25rem;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #6b7280;
+}

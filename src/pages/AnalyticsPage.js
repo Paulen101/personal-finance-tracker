@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useFinance } from '../context/FinanceContext';
+import { FaExclamationTriangle, FaChartLine, FaCheck, FaMoneyBillWave, FaCreditCard, FaArrowUp, FaArrowDown, FaCalendarAlt, FaChartBar } from 'react-icons/fa';
 import SpendingTrendsChart from '../components/charts/SpendingTrendsChart';
 import IncomeVsExpensesChart from '../components/charts/IncomeVsExpensesChart';
 import CategoryPieChart from '../components/charts/CategoryPieChart';
@@ -113,7 +114,7 @@ const AnalyticsPage = () => {
     return (
       <div className="analytics-page">
         <div className="analytics-error">
-          <div className="error-icon">⚠️</div>
+          <div className="error-icon"><FaExclamationTriangle className="FaIcon" /></div>
           <h3>Failed to load analytics</h3>
           <p>An error occurred while processing your data. Please try again.</p>
           <button onClick={() => window.location.reload()} className="btn-retry">
@@ -128,7 +129,7 @@ const AnalyticsPage = () => {
     <div className="analytics-page">
       {/* Header */}
       <div className="analytics-header">
-        <h1>📊 Analytics Dashboard</h1>
+        <h1><FaChartLine className="FaIcon" /> Analytics Dashboard</h1>
         <p className="analytics-subtitle">Track your financial insights and trends</p>
       </div>
 
@@ -158,7 +159,7 @@ const AnalyticsPage = () => {
               className="wallet-filter-all"
               onClick={handleSelectAllWallets}
             >
-              {selectedWalletIds.length === wallets.length ? '✓ All Selected' : 'Select All'}
+              {selectedWalletIds.length === wallets.length ? <><FaCheck className="FaIcon" /> All Selected</> : 'Select All'}
             </button>
             <div className="wallet-chips">
               {wallets.map((wallet, index) => (
@@ -188,7 +189,7 @@ const AnalyticsPage = () => {
           {/* Statistics Cards */}
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-icon income">💰</div>
+              <div className="stat-icon income"><FaMoneyBillWave /></div>
               <div className="stat-content">
                 <p className="stat-label">Total Income</p>
                 <h3 className="stat-value">{formatCurrency(analyticsData.totals.income)}</h3>
@@ -199,7 +200,7 @@ const AnalyticsPage = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon expense">💸</div>
+              <div className="stat-icon expense"><FaCreditCard /></div>
               <div className="stat-content">
                 <p className="stat-label">Total Expenses</p>
                 <h3 className="stat-value">{formatCurrency(analyticsData.totals.expenses)}</h3>
@@ -211,7 +212,7 @@ const AnalyticsPage = () => {
 
             <div className="stat-card">
               <div className="stat-icon net">
-                {analyticsData.totals.net >= 0 ? '📈' : '📉'}
+                {analyticsData.totals.net >= 0 ? <FaArrowUp /> : <FaArrowDown />}
               </div>
               <div className="stat-content">
                 <p className="stat-label">Net Savings</p>
@@ -225,7 +226,7 @@ const AnalyticsPage = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon average">📅</div>
+              <div className="stat-icon average"><FaCalendarAlt /></div>
               <div className="stat-content">
                 <p className="stat-label">Avg Daily Spending</p>
                 <h3 className="stat-value">{formatCurrency(analyticsData.averages.daily)}</h3>
@@ -339,7 +340,7 @@ const AnalyticsPage = () => {
         </>
       ) : (
         <div className="analytics-empty">
-          <div className="empty-icon">📊</div>
+          <div className="empty-icon"><FaChartBar className="FaIcon"/></div>
           <h3>No data available</h3>
           <p>Start adding transactions to see your financial analytics</p>
         </div>

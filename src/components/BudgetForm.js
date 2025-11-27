@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// import { FaGlobe, FaWallet } from 'react-icons/fa';
 import './BudgetForm.css';
 
 const COMMON_CATEGORIES = [
@@ -85,10 +86,10 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
               onChange={handleChange}
               required
             >
-              <option value="global">🌐 Global (All Wallets)</option>
+              <option value="global">Global (All Wallets)</option>
               {wallets.map(wallet => (
                 <option key={wallet.id} value={wallet.id}>
-                  💰 {wallet.name}
+                  {wallet.name}
                 </option>
               ))}
             </select>

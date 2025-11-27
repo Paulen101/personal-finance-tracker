@@ -113,18 +113,37 @@ src/
 │       ├── MonthlyComparisonChart.js
 │       └── SpendingTrendsChart.js
 │   ├── dbcomponents/
-│       ├── BudgetSummary.js    # Budget reminder/summary component
+│       ├── BudgetSummary.js    # Budget reminder display
 │       ├── BudgetSummary.css
-│       ├── ExpensesSummary.js  # Expenses summary component
+│       ├── ExpensesSummary.js  # Monthly expenses with selectable filters
 │       ├── ExpensesSummary.css
-│       ├── HistorySummary.js   # History summary component 
+│       ├── HistorySummary.js   # Transaction history display 
 │       ├── HistorySummary.css
-│       ├── TotalSummary.js     # Total summary component
+│       ├── TotalSummary.js     # Total expenses display
 │       └── TotalSummary.css
 │   ├── BudgetForm.js       # Form for creating/editing budgets
 │   ├── BudgetForm.css
 │   ├── BudgetItem.js       # Individual budget display
 │   ├── BudgetItem.css
+│   ├── Balance.jsx         # Balance display
+│   ├── Balance.css
+│   ├── FilterBar.jsx       # Filter bar component
+│   ├── TransactionsForm.jsx    # Transactions form for adding transactions
+│   ├── TransactionsForm.css   
+│   ├── TransactionsList.jsx    # Transactions list display
+│   ├── TransactionsList.css
+│   ├── TransferForm.jsx        # Transfer form for transferring cash
+│   ├── TransferForm.css
+│   ├── WalletCarousel.jsx      # Wallet carousel for selecting wallet
+│   ├── WalletCarousel.css
+│   ├── WalletDetails.jsx       # Wallet details display
+│   ├── WalletDetails.css
+│   ├── WalletForm.jsx          # Wallet Form for adding wallet
+│   ├── WalletForm.css
+│   ├── WalletList.jsx          # Wallet list display
+│   ├── WalletList.css
+│   ├── WalletTransactions.jsx  # Wallet transactions display
+│   ├── WalletTransactions.css
 │   ├── ErrorBoundary.js    # Error page for when encountering problems
 │   └── ErrorBoundary.css
 ├── context/
@@ -134,6 +153,10 @@ src/
 │   ├── DashboardPage.css   
 │   ├── AnalyticsPage.js    # Analytics page
 │   ├── AnalyticsPage.css
+│   ├── Transactions.jsx    # Tranaction page
+│   ├── Transactions.css
+│   ├── Wallet.jsx          # Wallet page
+│   ├── Wallet.css
 │   ├── BudgetPage.js       # Main budget management page
 │   └── BudgetPage.css
 ├── utils/
@@ -160,6 +183,8 @@ src/
 ```javascript
 {
   id: Number,              // Unique identifier
+  cardNumber: Number,      // Credit card number
+  expiryDate: String,      // Stringified expiry date
   name: String,            // Wallet name
   balance: Number,         // Current balance
   transactions: Array      // Transaction history
