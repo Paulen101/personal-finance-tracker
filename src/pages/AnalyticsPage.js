@@ -189,7 +189,7 @@ const AnalyticsPage = () => {
           {/* Statistics Cards */}
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-icon income"><FaMoneyBillWave className="FaIcon" /></div>
+              <div className="stat-icon income"><FaMoneyBillWave /></div>
               <div className="stat-content">
                 <p className="stat-label">Total Income</p>
                 <h3 className="stat-value">{formatCurrency(analyticsData.totals.income)}</h3>
@@ -200,7 +200,7 @@ const AnalyticsPage = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon expense"><FaCreditCard className="FaIcon" /></div>
+              <div className="stat-icon expense"><FaCreditCard /></div>
               <div className="stat-content">
                 <p className="stat-label">Total Expenses</p>
                 <h3 className="stat-value">{formatCurrency(analyticsData.totals.expenses)}</h3>
@@ -212,7 +212,7 @@ const AnalyticsPage = () => {
 
             <div className="stat-card">
               <div className="stat-icon net">
-                {analyticsData.totals.net >= 0 ? <FaArrowUp className="FaIcon" /> : <FaArrowDown className="FaIcon"/>}
+                {analyticsData.totals.net >= 0 ? <FaArrowUp /> : <FaArrowDown />}
               </div>
               <div className="stat-content">
                 <p className="stat-label">Net Savings</p>
@@ -226,7 +226,7 @@ const AnalyticsPage = () => {
             </div>
 
             <div className="stat-card">
-              <div className="stat-icon average"><FaCalendarAlt className="FaIcon"/></div>
+              <div className="stat-icon average"><FaCalendarAlt /></div>
               <div className="stat-content">
                 <p className="stat-label">Avg Daily Spending</p>
                 <h3 className="stat-value">{formatCurrency(analyticsData.averages.daily)}</h3>

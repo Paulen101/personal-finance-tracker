@@ -50,7 +50,7 @@ export const FinanceProvider = ({ children }) => {
       {
         id: 0,
         name: "Main Wallet",
-        balance: 1000,
+        balance: 0,
         cardNumber: "**** **** **** 0001",
         expiryDate: "12/27",
         transactions: [
@@ -95,7 +95,7 @@ export const FinanceProvider = ({ children }) => {
       {
         id: 0,
         name: "Main Wallet",
-        balance: 1000,
+        balance: 0,
         transactions: [],
       },
     ]);
@@ -190,7 +190,7 @@ export const FinanceProvider = ({ children }) => {
   // Budget CRUD operations
   const addBudget = (budgetData) => {
     const newBudget = {
-      id: Date.now(),
+      id: Date.now() % 1000000,
       walletID:
         budgetData.walletID === "global" ? null : parseInt(budgetData.walletID),
       category: budgetData.category,
@@ -240,7 +240,7 @@ export const FinanceProvider = ({ children }) => {
               transactions: [
                 ...(w.transactions || []),
                 {
-                  id: Date.now(),
+                  id: Date.now() % 1000000,
                   ...transaction,
                   date: transaction.date,
                 },

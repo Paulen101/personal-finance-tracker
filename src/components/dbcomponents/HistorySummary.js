@@ -83,7 +83,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
   const displayTransactions = flatTransactions.slice(page * perPage, (page + 1) * perPage);
 
   if (!transactions || transactions.length===0) {
-    return <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="historySummary chart-empty-state"><FaExclamationTriangle /> No transactions found.</div>;
+    return <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="historySummary chart-empty-state"><FaExclamationTriangle className="FaIcon" /> No transactions found.</div>;
   }
 
   return (
@@ -121,7 +121,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
 
             {/* amount on the right */}
             <div style={{ fontSize: '16px', fontWeight: '500', color: t.type === "expense" ? "#EF4444" : "#10B981" }}>
-              ${t.amount.toFixed(2)}
+              {t.type === "expense" ? "-" : "+"}${Math.abs(t.amount).toFixed(2)}
             </div>
           </div>
         );

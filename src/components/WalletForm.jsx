@@ -42,6 +42,8 @@ function WalletForm() {
             value={walletName}
             onChange={(e) => setWalletName(e.target.value)}
             className="wallet-form-input"
+            id="walletName"
+            name="walletName"
           />
           <div className="wallet-form-buttons">
             <button type="submit" className="wallet-form-submit-btn">

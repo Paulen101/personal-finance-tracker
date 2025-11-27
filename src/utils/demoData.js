@@ -5,6 +5,8 @@ export const setupDemoData = () => {
   const demoWallets = [
     {
       id: 0,
+      cardNumber: "**** **** **** 0000",
+      expiryDate:"11/27",
       name: 'Main Wallet',
       balance: 5000,
       transactions: [
@@ -19,6 +21,8 @@ export const setupDemoData = () => {
     },
     {
       id: 1,
+      cardNumber: "**** **** **** 0001",
+      expiryDate:"11/27",
       name: 'Savings Account',
       balance: 10000,
       transactions: [
@@ -28,6 +32,8 @@ export const setupDemoData = () => {
     },
     {
       id: 2,
+      cardNumber: "**** **** **** 0002",
+      expiryDate:"11/27",
       name: 'Business Account',
       balance: 15000,
       transactions: [

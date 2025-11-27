@@ -37,6 +37,7 @@
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: -1;
+  border-radius: 16px;
 }
 
 .wallet-form h3 {

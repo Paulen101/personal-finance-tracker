@@ -24,7 +24,7 @@ function TransactionForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!selectedWalletId || selectedWalletId === "all") {
+    if (selectedWalletId===null || selectedWalletId === "all") {
       alert("Please select a specific wallet!");
       return;
     }
@@ -65,11 +65,13 @@ function TransactionForm() {
 
           <div className="form-row">
             <div className="form-group">
-              <label>Type:</label>
+              <label htmlFor="type">Type:</label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
                 className="transaction-form-select"
+                id="type"
+                name="type"
               >
                 <option value="expense">Expense</option>
                 <option value="income">Income</option>
@@ -77,12 +79,14 @@ function TransactionForm() {
             </div>
 
             <div className="form-group">
-              <label>Category:</label>
+              <label htmlFor="category">Category:</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
                 className="transaction-form-select"
+                id="category"
+                name="category"
               >
                 <option value="">Select Category</option>
                 {categories.map((cat) => (
@@ -94,7 +98,7 @@ function TransactionForm() {
             </div>
 
             <div className="form-group">
-              <label>Amount:</label>
+              <label htmlFor="type">Amount:</label>
               <input
                 type="number"
                 step="0.01"

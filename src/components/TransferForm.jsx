@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFinance } from "../context/FinanceContext";
+import { FcMoneyTransfer } from "react-icons/fc";
 import "./TransferForm.css";
 
 function TransferForm() {
@@ -55,7 +56,7 @@ function TransferForm() {
           className="transfer-form-open-btn"
           disabled={wallets.length < 2}
         >
-          💸 Transfer Between Wallets
+          <FcMoneyTransfer className="FaIcon"/> Transfer Between Wallets
         </button>
       ) : (
         <form onSubmit={handleSubmit} className="transfer-form">

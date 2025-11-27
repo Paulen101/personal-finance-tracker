@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFinance } from "../context/FinanceContext";
-import { FaTrash, FaSearch } from "react-icons/fa";
+import { FaTrash, FaSearch, FaRegStickyNote } from "react-icons/fa";
 import "./TransactionList.css";
 
 function TransactionList() {
@@ -41,7 +41,7 @@ function TransactionList() {
     });
   } else {
     const currentWallet = wallets.find(
-      (wallet) => wallet.id === Number(selectedWalletId)
+      (wallet) => wallet.id === selectedWalletId
     );
     displayedTransactions = currentWallet?.transactions || [];
     displayedTransactions = displayedTransactions.map((tx) => ({
@@ -90,6 +90,8 @@ function TransactionList() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="search-input"
+              id="searchQuery"
+              name="searchQuery"
             />
           </div>
 
@@ -98,6 +100,8 @@ function TransactionList() {
             value={filteredType}
             onChange={(e) => setFilteredType(e.target.value)}
             className="transaction-select"
+            id="filteredType"
+            name="filteredType"
           >
             <option value="all">All Types</option>
             <option value="income">Income</option>
@@ -109,6 +113,8 @@ function TransactionList() {
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
             className="transaction-select"
+            id="sortOrder"
+            name="sortOrder"
           >
             <option value="dateDesc">Date: Newest</option>
             <option value="dateAsc">Date: Oldest</option>
@@ -119,8 +125,14 @@ function TransactionList() {
           {/* Wallet Selector */}
           <select
             value={selectedWalletId}
-            onChange={(e) => setSelectedWalletId(e.target.value)}
+            onChange={(e) =>
+              e.target.value === "all"
+                ? setSelectedWalletId("all")                  // keep "all" as string
+                : setSelectedWalletId(Number(e.target.value)) // convert to number
+            }
             className="transaction-select"
+            id="selectedWalletId"
+            name="selectedWalletId"
           >
             <option value="all">All Wallets</option>
             {wallets.map((w) => (
@@ -151,7 +163,7 @@ function TransactionList() {
       <div className="transaction-table-body">
         {displayedTransactions.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">📝</div>
+            <div className="empty-icon"><FaRegStickyNote className="FaIcon"/></div>
             <h3>No transactions found</h3>
             <p>Try adjusting your filters or add a new transaction</p>
           </div>
