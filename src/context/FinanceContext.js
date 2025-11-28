@@ -344,7 +344,7 @@ export const FinanceProvider = ({ children }) => {
       id: timestamp,
       type: "expense",
       category: "Transfer Out",
-      amount: -transferAmount,
+      amount: transferAmount,
       description: description || `Transfer to ${toWallet.name}`,
       date: date,
     };

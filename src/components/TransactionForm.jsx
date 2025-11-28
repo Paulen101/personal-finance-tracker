@@ -12,7 +12,7 @@ function TransactionForm() {
 
   const categories = [
     "Food",
-    "Transport",
+    "Transportation",
     "Salary",
     "Entertainment",
     "Rent",
