@@ -55,7 +55,7 @@ function WalletCarousel() {
               <div className="wallet-mini-card-content">
                 <p className="wallet-mini-name">{wallet.name}</p>
                 <p className="wallet-mini-balance">
-                  ${balance.toFixed(2)}
+                  {balance < 0 ? "-" : "+"}${Math.abs(balance).toFixed(2)}
                 </p>
                 <p className="wallet-mini-cardnumber">
                   {displayCardNumber}

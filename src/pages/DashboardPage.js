@@ -91,15 +91,15 @@ function Dashboard() {
           </div>
           {/* Wallet Selector */}
           <div className="wallet-selector">
-            <label id="walletLabel" htmlFor="walletSelect">Current Wallet:</label>
+            <label htmlFor="selectedWalletId">Current Wallet:</label>
             <select 
-              id="walletSelect"
+              id="selectedWalletId"
               value={selectedWalletId} 
               onChange={(e) => handleWalletChange(parseInt(e.target.value))}
             >
               {wallets.map(wallet => (
                 <option key={wallet.id} value={wallet.id}>
-                  {wallet.name} (${getWalletBalance(wallet.id).toFixed(2)})
+                  {wallet.name} ({getWalletBalance(wallet.id) < 0 ? '-' : ''}${Math.abs(getWalletBalance(wallet.id)).toFixed(2)})
                 </option>
               ))} 
             </select>
@@ -111,13 +111,12 @@ function Dashboard() {
           <div className="chart-card">
             <div className="chart-header">
               <h3>Daily Net Balance</h3> {/* can add ({selectedWallet?.name ?? " "}) to show current wallet */}
-              <span
-                style={{ cursor: "pointer", userSelect: "none", color:"grey", paddingRight:"5px"}}
-                onClick={() => handlePrevMonth()}
-              >
-                ◀
-              </span>
-              {selectedWallet?.transactions?.length > 0 && (
+                <span
+                  style={{ cursor: "pointer", userSelect: "none", color:"grey", paddingRight:"5px"}}
+                  onClick={() => handlePrevMonth()}
+                >
+                  ◀
+                </span>
                 <p className="dashboardSubtitle" >
                   {(() => {
                     let cm = currentMonth;
@@ -143,19 +142,17 @@ function Dashboard() {
                     return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
                   })()}
                 </p>
-              )}
-              <span
-                style={{ cursor: isNextMonthValid() ? "not-allowed" : "pointer", userSelect: "none", color:"grey", paddingLeft:"5px", opacity: isNextMonthValid() ? 0.3 : 1}}
-                onClick={() => {
-                  if (!isNextMonthValid()) {
-                    handleNextMonth();
-                  }
-                }}
-              >
-                ▶
-              </span>
+                <span
+                  style={{ cursor: isNextMonthValid() ? "not-allowed" : "pointer", userSelect: "none", color:"grey", paddingLeft:"5px", opacity: isNextMonthValid() ? 0.3 : 1}}
+                  onClick={() => {
+                    if (!isNextMonthValid()) {
+                      handleNextMonth();
+                    }
+                  }}
+                >
+                  ▶
+                </span>
             </div>
-            
             <div className="chart-container">
               <ExpensesSummary wallet = {selectedWallet} onSelectDate={setSelectedDate} currentMonth={currentMonth} onError={setError}/>
             </div>

@@ -51,55 +51,61 @@ export const FinanceProvider = ({ children }) => {
         id: 0,
         name: "Main Wallet",
         balance: 0,
-        cardNumber: "**** **** **** 0001",
+        cardNumber: "**** **** **** 0000",
         expiryDate: "12/27",
         transactions: [
-          {
-            id: 0,
-            date: "2024-01-01",
-            category: "Food",
-            type: "expense",
-            amount: 50,
-          },
-          {
-            id: 1,
-            date: "2024-01-02",
-            category: "Salary",
-            type: "income",
-            amount: 2000,
-          },
+          // THIS INITIALIAZATION IS VERY BUGGY 
+          // {
+          //   id: 0,
+          //   date: "2024-01-01",
+          //   category: "Food",
+          //   type: "expense",
+          //   amount: 50,
+          // },
+          // {
+          //   id: 1,
+          //   date: "2024-01-02",
+          //   category: "Salary",
+          //   type: "income",
+          //   amount: 2000,
+          // },
         ],
       },
     ])
   );
 
   const deleteTransaction = (walletId, transactionId) => {
-    setWallets(
-      wallets.map((w) =>
-        w.id === walletId
-          ? {
-              ...w,
-              transactions: w.transactions.filter(
-                (transaction) => transaction.id !== transactionId
-              ),
-            }
-          : w
-      )
-    );
+    setWallets(prevWallets =>
+    prevWallets.map(w => {
+      if (w.id === walletId) {
+        const updatedTransactions = w.transactions.filter(
+          t => t.id !== transactionId
+        );
+
+        // Recalculate balance
+        const income = updatedTransactions
+          .filter(t => t.type === "income")
+          .reduce((sum, t) => sum + t.amount, 0);
+        const expense = updatedTransactions
+          .filter(t => t.type === "expense")
+          .reduce((sum, t) => sum + t.amount, 0);
+        const balance = income - expense;
+
+        return {
+          ...w,
+          transactions: updatedTransactions,
+          balance,
+        };
+      }
+      return w;
+    }));
   };
 
   const [budgets, setBudgets] = useState(() => safeGet("finance_budgets", []));
 
   const [selectedWalletId, setSelectedWalletId] = useState(() => {
-    const savedWallets = safeGet("finance_wallets", [
-      {
-        id: 0,
-        name: "Main Wallet",
-        balance: 0,
-        transactions: [],
-      },
-    ]);
-    return (Array.isArray(savedWallets) && savedWallets[0]?.id) || 0;
+    const savedWallets = safeGet("finance_wallets", []);
+    return savedWallets?.[0]?.id ?? 0;
   });
 
   const currentWallet =
@@ -228,26 +234,40 @@ export const FinanceProvider = ({ children }) => {
   // Transaction operations (for demo purposes)
   const addTransaction = (walletId, transaction) => {
     console.log(
-      "addTransaction called with walletId:",
-      walletId,
+      "addTransaction called with walletId:", 
+      walletId, 
       typeof walletId
     );
-    setWallets(
-      wallets.map((w) =>
-        w.id === walletId
-          ? {
-              ...w,
-              transactions: [
-                ...(w.transactions || []),
-                {
-                  id: Date.now(),
-                  ...transaction,
-                  date: new Date().toISOString(),
-                },
-              ],
-            }
-          : w
-      )
+
+    setWallets(prevWallets =>
+      prevWallets.map(w => {
+        if (w.id === walletId) {
+          const updatedTransactions = [
+            ...(w.transactions || []),
+            {
+              id: Date.now(),
+              ...transaction,
+              date: new Date().toISOString(),
+            },
+          ];
+
+          // Recalculate balance
+          const income = updatedTransactions
+            .filter(t => t.type === "income")
+            .reduce((sum, t) => sum + t.amount, 0);
+          const expense = updatedTransactions
+            .filter(t => t.type === "expense")
+            .reduce((sum, t) => sum + t.amount, 0);
+          const balance = income - expense;
+
+          return {
+            ...w,
+            transactions: updatedTransactions,
+            balance, 
+          };
+        }
+        return w;
+      })
     );
   };
 
@@ -261,6 +281,7 @@ export const FinanceProvider = ({ children }) => {
 
     const newWallet = {
       id: Date.now(),
+      balance:0, 
       name: walletData.name,
       cardNumber: `**** **** **** ${last4Digit}`,
       expiryDate: `${expiryMonth}/${expiryYear}`,
@@ -344,7 +365,7 @@ export const FinanceProvider = ({ children }) => {
       id: timestamp,
       type: "expense",
       category: "Transfer Out",
-      amount: transferAmount,
+      amount: transferAmount,  
       description: description || `Transfer to ${toWallet.name}`,
       date: date,
     };
@@ -358,26 +379,37 @@ export const FinanceProvider = ({ children }) => {
       date: date,
     };
 
-    setWallets(
-      wallets.map((wallet) => {
+     // update wallets state and recalculate balances
+    setWallets(prevWallets => {
+      const updatedWallets = prevWallets.map(wallet => {
+        // update source wallet
         if (wallet.id === fromWalletId) {
-          return {
-            ...wallet,
-            transactions: [...wallet.transactions, transferOutTransaction],
-          };
+          const updatedTransactions = [...wallet.transactions, transferOutTransaction];
+          const balance = updatedTransactions.reduce(
+            (total, t) => t.type === "income" ? total + t.amount : total - t.amount,
+            0
+          );
+          return { ...wallet, transactions: updatedTransactions, balance };
         }
-        if (wallet.id === toWalletId) {
-          return {
-            ...wallet,
-            transactions: [...wallet.transactions, transferInTransaction],
-          };
-        }
-        return wallet;
-      })
-    );
 
-    return true;
-  };
+        // update target wallet
+        if (wallet.id === toWalletId) {
+          const updatedTransactions = [...wallet.transactions, transferInTransaction];
+          const balance = updatedTransactions.reduce(
+            (total, t) => t.type === "income" ? total + t.amount : total - t.amount,
+            0
+          );
+          return { ...wallet, transactions: updatedTransactions, balance };
+        }
+        
+        return wallet;
+      });
+
+      // Save updated wallets to localStorage
+      localStorage.setItem("finance_wallets", JSON.stringify(updatedWallets));
+      return updatedWallets;
+    });
+  }
 
   const clearStorage = () => {
     safeRemove("finance_wallets");

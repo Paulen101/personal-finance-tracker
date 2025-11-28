@@ -29,7 +29,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
 
   // Filter transactions for the selected month
   const data = useMemo(() => {
-    if (!wallet?.transactions?.length) return [{ date: "No data", net: 0 }];
+    if (!wallet?.transactions?.length) return [];
 
     const monthStr = `${currentMonth.getFullYear()}-${(currentMonth.getMonth() + 1)
       .toString()
@@ -37,16 +37,26 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
 
     const dailyTotals = {};
 
+    // group by day 
     wallet.transactions
       .filter(tx => tx.date.startsWith(monthStr))
       .forEach(tx => {
         const date = tx.date.split("T")[0];
-        const amount = tx.amount;
-        dailyTotals[date] = (dailyTotals[date] || 0) + amount;
-      });
+
+        // initialize new date into obj
+        if (!dailyTotals[date]) {
+          dailyTotals[date] = { net: 0, type: "income" };
+        }
+
+      // income = positive, expense = negative
+      dailyTotals[date].net += tx.type === "income" ? tx.amount : -tx.amount;
+
+      // Set type for coloring
+      dailyTotals[date].type = dailyTotals[date].net < 0 ? "expense" : "income";
+    });
 
     return Object.entries(dailyTotals)
-      .map(([date, net]) => ({ date, net }))
+      .map(([date, {net, type}]) => ({ date, net, type }))
       .sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [wallet, currentMonth]);
 
@@ -60,7 +70,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
       // select
       } else {
         setActiveIndex(index);
-        onSelectDate?.(data.date);        // <- set selected date 
+        onSelectDate?.(data.date);        // <- set selected date (for the history component)
       }
     }
     catch (e) {
@@ -90,16 +100,17 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
           <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
             <XAxis dataKey="date" tickFormatter={formatDate} stroke="#6B7280" style={{ fontSize: "12px" }} />
-            <YAxis stroke="#6B7280" style={{ fontSize: "12px" }} tickFormatter={(val) => `$${val}`} />
+            <YAxis stroke="#6B7280" style={{ fontSize: "12px" }} allowDataOverflow={false} tickFormatter={(val) => `$${val}`} domain={[Math.min(0, Math.min(...data.map(d => d.net))), Math.max(0, Math.max(...data.map(d => d.net)))]}/>
             <Tooltip content={<CustomTooltip />} />
             <ReferenceLine y={0} stroke="#9797979e" strokeWidth={1} />
             <Legend wrapperStyle={{ fontSize: "14px", paddingTop: "10px" }} />
 
+            {/* bar set up */}
             <Bar
               dataKey="net"
               name="Net Change"
               cursor="pointer"
-              radius={[20, 20, 0, 0]}     // rounded edges  
+              radius={[20, 20, 0, 0]} 
               fill="#3B82F6" 
               style={{ outline: "none" }}
               onClick={handleClick}
@@ -115,9 +126,10 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
                 const selected = "#3B82F6";
 
                 return (
+                  // individial 
                   <Cell
                     key={`cell-${index}`}
-                    fill={isSelected ? selected : entry.net < 0 ? negative : positive}
+                    fill={isSelected ? selected : entry.type === "expense" ? negative : positive}
                     stroke={isFocused || isSelected ? "#000000ff" : "none"}
                     strokeWidth={isFocused || isSelected ? 2 : 0}
                     tabIndex={0}

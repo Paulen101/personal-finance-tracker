@@ -1,5 +1,5 @@
 import React, {useMemo, useEffect, useState} from "react";
-import { FaUtensils, FaFilm, FaBus, FaShoppingBag, FaFileInvoice, FaPills, FaBook, FaPlane, FaShoppingCart, FaLightbulb, FaBox, FaExclamationTriangle } from 'react-icons/fa';
+import { FaUtensils, FaFilm, FaMoneyBillWave, FaBus, FaHome, FaFileInvoice, FaArrowDown, FaArrowUp, FaGift, FaBox, FaExclamationTriangle } from 'react-icons/fa';
 import './HistorySummary.css'
 
 // function for displaying the icon
@@ -24,17 +24,16 @@ const SpecialIcon = ({ icon: Icon, bgColor = '#f0f0f0', size = 40 }) => {
 
 // mappings for the icons
 const categoryMap = {
-  Food:           { icon: FaUtensils, color: "#FF6347" },   // red-orange
-  Entertainment:  { icon: FaFilm, color: "#FF69B4" },   // pink
-  Transportation: { icon: FaBus, color: "#87CEEB" },   // sky blue
-  Shopping:       { icon: FaShoppingBag, color: "#BA55D3" },   // purple
-  Bills:          { icon: FaFileInvoice, color: "#FFB347" },   // light orange
-  Healthcare:     { icon: FaPills, color: "#FFEB51" },   // yellow
-  Education:      { icon: FaBook, color: "#6A5ACD" },   // slate blue
-  Travel:         { icon: FaPlane, color: "#1E90FF" },   // dodger blue
-  Groceries:      { icon: FaShoppingCart, color: "#32CD32" },   // green
-  Utilities:      { icon: FaLightbulb, color: "#FFA500" },   // orange
-  Other:          { icon: FaBox, color: "#A9A9A9" },   // grey
+  Food:           { icon: FaUtensils,       color: "#FF6347" },
+  Transportation: { icon: FaBus,            color: "#87CEEB" },
+  Salary:         { icon: FaMoneyBillWave,  color: "#32CD32" },
+  Entertainment:  { icon: FaFilm,           color: "#FF69B4" },
+  Rent:           { icon: FaHome,           color: "#1E90FF" },
+  Bills:          { icon: FaFileInvoice,    color: "#FFB347" },
+  Gift:           { icon: FaGift,           color: "#FFB6C1" },
+  Other:          { icon: FaBox,            color: "#A9A9A9" },
+  "Transfer In":  { icon: FaArrowDown,      color: "#10b981" },
+  "Transfer Out": { icon: FaArrowUp,        color: "#ef4444" },
 };
 
 export const HistorySummary = ({ wallet, selectedDate }) => {

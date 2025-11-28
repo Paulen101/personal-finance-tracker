@@ -192,7 +192,7 @@ function TransactionList() {
 
               <span className={`amount-cell ${transaction.type}`}>
                 {transaction.type === "income" ? "+" : "-"}$
-                {transaction.amount.toFixed(2)}
+                {Math.abs(transaction.amount).toFixed(2)}
               </span>
 
               <span className="type-cell">

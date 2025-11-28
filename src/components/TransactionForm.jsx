@@ -37,7 +37,7 @@ function TransactionForm() {
     const newTransaction = {
       type,
       category,
-      amount: parseFloat(amount),
+      amount:parseFloat(amount),
     };
 
     addTransaction(Number(selectedWalletId), newTransaction);

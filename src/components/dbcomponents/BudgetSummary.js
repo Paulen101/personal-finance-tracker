@@ -210,12 +210,12 @@ export const BudgetReminder = ({budgets}) => {
   if (!budgets || budgets.length === 0) { 
     return (
       <div className="budgetReminder">
-        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="chart-empty-state"><FaExclamationTriangle className="FaIcon" /> No transactions found.</div>;
-        <div className="buttonWrapper">
+        <div style={{display: 'flex', alignItems: 'center', gap: '8px'}} className="chart-empty-state"><FaExclamationTriangle className="FaIcon" /> No budgets found.</div>
+        {/* <div className="buttonWrapper">
           <Link to="/budget">
             <button className="btnGoBudget">Go to Budget</button>
           </Link>
-        </div>
+        </div> */}
       </div>
     )
   }

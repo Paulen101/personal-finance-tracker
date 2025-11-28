@@ -14,7 +14,7 @@ const CategorySummary = ({ spending }) => {
       if (tx.type !== "expense") {
         return acc;
       }
-      acc[tx.category] = (acc[tx.category] || 0) + -tx.amount;
+      acc[tx.category] = (acc[tx.category] || 0) + tx.amount;
       return acc;
     }, {});
 

@@ -90,6 +90,11 @@
     flex: 1;
   }
 }
+@media (max-width: 700px) {
+  .navText {
+    display: none;
+  }
+}
 
 .App-logo {
   height: 40vmin;
