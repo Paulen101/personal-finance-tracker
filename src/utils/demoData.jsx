@@ -108,10 +108,10 @@ export const clearDemoData = () => {
 
 // Auto-load demo data if localStorage is empty (for first-time users)
 export const initializeDemoDataIfNeeded = () => {
-  const hasWallets = localStorage.getItem('finance_wallets');
-  const hasBudgets = localStorage.getItem('finance_budgets');
+  const wallets = localStorage.getItem('finance_wallets');
+  const budgets = localStorage.getItem('finance_budgets');
   
-  if (!hasWallets || !hasBudgets) {
+  if (!wallets || !budgets || wallets === "[]" || budgets === "[]") {
     console.log('[INIT] Initializing with demo data...');
     setupDemoData();
   }

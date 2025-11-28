@@ -1,3 +1,4 @@
+/* Budget form */
 .budget-form-overlay {
   position: fixed;
   top: 0;
@@ -63,6 +64,7 @@
   padding: 24px;
 }
 
+/* Form group */
 .form-group {
   margin-bottom: 20px;
 }
@@ -101,6 +103,7 @@
   line-height: 1.4;
 }
 
+/* Toggle button */
 .category-toggle {
   display: flex;
   gap: 8px;

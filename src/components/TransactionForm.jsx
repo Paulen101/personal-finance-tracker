@@ -5,12 +5,14 @@ import "./TransactionForm.css";
 function TransactionForm() {
   const { addTransaction, selectedWalletId } = useFinance();
 
+  // state initialization
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [customCategory, setCustomCategory] = useState("");         // custom category for 
+  const [customCategory, setCustomCategory] = useState("");         // custom category so it can work with budget's custom category
   const [type, setType] = useState("expense");
   const [showForm, setShowForm] = useState(false);
 
+  // category list 
   const categories = [
     "Food",
     "Transportation",
@@ -35,6 +37,7 @@ function TransactionForm() {
       return;
     }
 
+    // if custom category empty then use other else use the custom category
     const finalCategory = 
       category === "Other" && customCategory.trim() !== ""
         ? customCategory.trim()
@@ -48,6 +51,8 @@ function TransactionForm() {
 
     addTransaction(Number(selectedWalletId), newTransaction);
 
+    // reset state 
+    setCustomCategory("") 
     setAmount("");
     setCategory("");
     setShowForm(false);
@@ -56,6 +61,7 @@ function TransactionForm() {
 
   return (
     <div className="transaction-form-container">
+      {/* show button when not pressed */}
       {!showForm ? (
         <button
           onClick={() => setShowForm(true)}
@@ -66,9 +72,11 @@ function TransactionForm() {
         </button>
       ) : (
         <form onSubmit={handleSubmit} className="transaction-form">
+          {/* form component */}
           <h3>Add New Transaction</h3>
 
           <div className="form-row">
+            {/* type */}
             <div className="form-group">
               <label htmlFor="type">Type:</label>
               <select
@@ -83,6 +91,7 @@ function TransactionForm() {
               </select>
             </div>
 
+            {/* category */}
             <div className="form-group">
               <label htmlFor="category">Category:</label>
               <select
@@ -102,6 +111,7 @@ function TransactionForm() {
               </select>
             </div>
 
+            {/* custom category appear when other is selected */}
             {category === "Other" && (
               <div className="form-group">
                 <label htmlFor="customCategory">Custom Category Name (optional):</label>
@@ -117,6 +127,7 @@ function TransactionForm() {
               </div>
             )}
 
+            {/* amount */}
             <div className="form-group">
               <label htmlFor="amount">Amount:</label>
               <input

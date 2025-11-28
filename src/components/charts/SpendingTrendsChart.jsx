@@ -19,6 +19,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null;
 };
 
+// display spending trends 
 const SpendingTrendsChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (

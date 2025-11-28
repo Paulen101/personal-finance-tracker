@@ -30,6 +30,7 @@ function WalletCarousel() {
   return (
     <div className="wallet-carousel">
       <div className="wallet-carousel-scroll">
+        {/* mapping to display each wallet */}
         {wallets.map((wallet) => {
           const balance = calculateWalletBalance(wallet);
           const isActive = wallet.id === selectedWalletId;

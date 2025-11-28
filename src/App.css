@@ -21,9 +21,10 @@
   align-items: center;
 }
 
+/* icons */
 .FaIcon {
   position: relative;
-  top: 2.5px; /* adjust to taste */
+  top: 2.5px; 
 }
 
 .app-title {
@@ -33,6 +34,7 @@
   font-weight: 800;
 }
 
+/* nav buttons */
 .nav-buttons {
   display: flex;
   gap: 12px;
@@ -90,6 +92,7 @@
     flex: 1;
   }
 }
+
 @media (max-width: 700px) {
   .navText {
     display: none;

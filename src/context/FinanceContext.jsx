@@ -54,7 +54,7 @@ export const FinanceProvider = ({ children }) => {
         cardNumber: "**** **** **** 0000",
         expiryDate: "12/27",
         transactions: [
-          // THIS INITIALIAZATION IS VERY BUGGY 
+          // THIS INITIALIAZATION IS VERY BUGGY FOR SOME REASON
           // {
           //   id: 0,
           //   date: "2024-01-01",
@@ -74,6 +74,7 @@ export const FinanceProvider = ({ children }) => {
     ])
   );
 
+  // deleting transaction
   const deleteTransaction = (walletId, transactionId) => {
     setWallets(prevWallets =>
     prevWallets.map(w => {
@@ -140,6 +141,7 @@ export const FinanceProvider = ({ children }) => {
     return wallets.find((w) => w.id === selectedWalletId) || wallets[0];
   };
 
+  // get balance for the wallet 
   const getWalletBalance = (walletId) => {
     const wallet = wallets.find((w) => w.id === walletId);
     if (!wallet) return 0;
@@ -169,7 +171,7 @@ export const FinanceProvider = ({ children }) => {
             t &&
             t.category === budget.category &&             // search for matching budget category 
             t.type === "expense" &&                       // and is expense 
-            new Date(t.date) >= new Date(budget.dateSet)  // only after budget set date         <---- can comment this out 
+            new Date(t.date) >= new Date(budget.dateSet)  // only after budget set date         <---- can comment this out to disable set date check
         )
         .reduce((sum, t) => sum + Math.abs(Number(t.amount) || 0), 0);
 
@@ -201,7 +203,7 @@ export const FinanceProvider = ({ children }) => {
   // Budget CRUD operations
   const addBudget = (budgetData) => {
     const newBudget = {
-      id: Date.now() % 1000000,
+      id: Date.now() % 1000000,     // cut down length of id but can comment out if want 
       walletID:
         budgetData.walletID === "global" ? null : parseInt(budgetData.walletID),
       category: budgetData.category,
@@ -298,6 +300,7 @@ export const FinanceProvider = ({ children }) => {
     return newWallet;
   };
 
+  // deleting wallet
   const deleteWallet = (walletId) => {
     if (wallets.length === 1) {
       alert("You cannot delete your only wallet!");
@@ -326,17 +329,20 @@ export const FinanceProvider = ({ children }) => {
     return true;
   };
 
+  // for transferring between wallets 
   const transferBetweenWallets = (
     fromWalletId,
     toWalletId,
     amount,
     description = ""
   ) => {
+    // wallets cannot be the same 
     if (fromWalletId === toWalletId) {
       alert("Cannot transfer to the same wallet!");
       return false;
     }
 
+    // transfer amount must be valid 
     const transferAmount = parseFloat(amount);
     if (isNaN(transferAmount) || transferAmount <= 0) {
       alert("Please enter a valid transfer amount!");
@@ -346,6 +352,7 @@ export const FinanceProvider = ({ children }) => {
     const fromWallet = wallets.find((w) => w.id === fromWalletId);
     const toWallet = wallets.find((w) => w.id === toWalletId);
 
+    // wallet must exist
     if (!fromWallet || !toWallet) {
       alert("Wallet not found!");
       return false;
@@ -355,6 +362,7 @@ export const FinanceProvider = ({ children }) => {
       return t.type === "income" ? total + t.amount : total - t.amount;
     }, 0);
 
+    // must have enough balance to transfer 
     if (fromWalletBalance < transferAmount) {
       alert(
         `Insufficient balance! Available: $${fromWalletBalance.toFixed(2)}`
@@ -362,6 +370,7 @@ export const FinanceProvider = ({ children }) => {
       return false;
     }
 
+    // add to transaction history
     const timestamp = Date.now();
     const date = new Date().toISOString().split("T")[0];
 

@@ -8,33 +8,36 @@ function Balance() {
   const { wallets, selectedWalletId } = useFinance();
   // useState for total to calculate income, expense, & balance for a specific wallet & all wallet
   const [totals, setTotals] = useState({ balance: 0, income: 0, expense: 0 });
-    useEffect(() => {
-      let balance = 0;
-      let income = 0;
-      let expense = 0;
+    
+  // when wallets / walletID recalculates balance, income & expense 
+  useEffect(() => {
+    let balance = 0;
+    let income = 0;
+    let expense = 0;
 
-      const selectedWallets =
-        selectedWalletId === "all"
-          ? wallets
-          : wallets.filter((w) => w.id === selectedWalletId);
+    const selectedWallets =
+      selectedWalletId === "all"
+        ? wallets
+        : wallets.filter((w) => w.id === selectedWalletId);
 
-      selectedWallets.forEach((wallet) => {
-        (wallet.transactions || []).forEach((t) => {
-          if (t.type === "income") {
-            income += t.amount;
-            balance += t.amount;
-          } else {
-            expense += t.amount;
-            balance -= t.amount;
-          }
-        });
+    selectedWallets.forEach((wallet) => {
+      (wallet.transactions || []).forEach((t) => {
+        if (t.type === "income") {
+          income += t.amount;
+          balance += t.amount;
+        } else {
+          expense += t.amount;
+          balance -= t.amount;
+        }
       });
+    });
 
-      setTotals({ balance, income, expense });
-    }, [wallets, selectedWalletId]);
+    setTotals({ balance, income, expense });
+  }, [wallets, selectedWalletId]);
 
   return (
     <div className="balance-summary">
+      {/* total/current balance card */}
       <div className="balance-card balance-total">
         <div className="balance-icon"><FaCreditCard /></div>
         <div className="balance-content">
@@ -45,6 +48,7 @@ function Balance() {
         </div>
       </div>
 
+      {/* income card */}
       <div className="balance-card balance-income">
         <div className="balance-icon"><BiLineChart /></div>
         <div className="balance-content">
@@ -55,6 +59,7 @@ function Balance() {
         </div>
       </div>
 
+      {/* expenses card */}
       <div className="balance-card balance-expense">
         <div className="balance-icon"><BiLineChartDown /></div>
         <div className="balance-content">

@@ -1,3 +1,4 @@
+/* budget page container */
 .budget-page {
   max-width: 1200px;
   margin: 0 auto;
@@ -28,6 +29,7 @@
   font-weight: 800;
 }
 
+/* add budget btn */
 .btn-add-budget {
   background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
   color: white;
@@ -45,6 +47,7 @@
   box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
+/* wallet selector */
 .wallet-selector {
   display: flex;
   align-items: center;
@@ -83,6 +86,7 @@
   gap: 16px;
 }
 
+/* summary cards */
 .summary-card {
   background: white;
   padding: 20px;
@@ -120,6 +124,7 @@
   color: #F59E0B;
 }
 
+/* controls */
 .budget-controls {
   background: white;
   border-radius: 12px;
@@ -167,6 +172,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* empty state */
 .empty-state {
   text-align: center;
   padding: 60px 20px;

@@ -1,3 +1,4 @@
+/* budget items */
 .budget-item {
   background: white;
   border-radius: 12px;
@@ -42,6 +43,7 @@
   letter-spacing: 0.5px;
 }
 
+/* diff color/style */
 /* .budget-badge.global {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
@@ -106,6 +108,7 @@
   font-weight: 700;
 }
 
+/* progress bar */
 .budget-progress-bar {
   height: 12px;
   background: #e5e7eb;

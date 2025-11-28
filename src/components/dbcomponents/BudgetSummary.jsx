@@ -21,10 +21,10 @@ const BudgetOutput = ({groups, counts}) => {
         }}
       >
 
-      {/* Icon on the left */}
+      {/* icon on the left */}
       <div style={{fontSize:"50px", paddingLeft:"10px", color:"#EF4444"}}><FaExclamationCircle className="FaIcon" /></div>
 
-      {/* Text in the right */}
+      {/* text in the right */}
         <div style={{ paddingRight: '40px', flex: 1, color:"#EF4444", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
           Oh no!
         </div>
@@ -49,10 +49,10 @@ const BudgetOutput = ({groups, counts}) => {
         }}
       >
 
-      {/* Icon on the left */}
+      {/* icon on the left */}
       <div style={{fontSize:"50px", paddingLeft:"10px", color:"#EF4444"}}><FaTimesCircle className="FaIcon" /></div>
 
-      {/* Text in the right */}
+      {/* text in the right */}
         <div style={{ paddingRight: '40px', flex: 1, color:"#EF4444", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
           Oh no!
         </div>
@@ -80,10 +80,10 @@ const BudgetOutput = ({groups, counts}) => {
         }}
       >
 
-      {/* Icon on the left */}
+      {/* icon on the left */}
       <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle className="FaIcon" /></div>
 
-      {/* Text in the right */}
+      {/* text in the right */}
         <div style={{paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
           Be careful!
         </div>
@@ -94,6 +94,7 @@ const BudgetOutput = ({groups, counts}) => {
       </>
     )
   }
+  // warning > 1
   else if (counts.warning > 1) {
     return (
       <>
@@ -107,10 +108,10 @@ const BudgetOutput = ({groups, counts}) => {
         }}
       >
 
-      {/* Icon on the left */}
+      {/* icon on the left */}
       <div style={{fontSize:"50px", paddingLeft:"10px", color:"#F59E0B"}}><FaExclamationTriangle className="FaIcon" /></div>
 
-      {/* Text in the right */}
+      {/* text in the right */}
         <div style={{ paddingRight: '40px', flex: 1, color:"#F59E0B", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
           Be careful!
         </div>
@@ -122,6 +123,7 @@ const BudgetOutput = ({groups, counts}) => {
     </>
     )
   }
+  // all good -> return category with best budget management (longest time kept under control)
   else {
     const [longestCategory, longestInfo] = Object.entries(groups).reduce(
       ([maxCat, maxInfo], [category, info]) => {
@@ -143,10 +145,10 @@ const BudgetOutput = ({groups, counts}) => {
         padding: '15px 0'
       }}
     >
-      {/* Icon on the left */}
+      {/* icon on the left */}
       <div style={{fontSize:"50px", paddingLeft:"10px", color:"#10B981"}}><FaCheckCircle className="FaIcon" /></div>
 
-      {/* Text in the right */}
+      {/* text in the right */}
       <div style={{ paddingRight: '40px', flex: 1, color:"#10B981", fontSize:"40px", textAlign: "right", fontWeight:700 }}>
         Well done!
       </div>
@@ -187,10 +189,12 @@ export const BudgetReminder = ({ budgets, wallets, selectedWalletId }) => {
 
       const spentPercentage = curr.limit > 0 ? (spent / curr.limit) * 100 : 0;
 
+      // calculate dates for calculating difference  
       const date = new Date(curr.dateSet);
       const dateDiffInMs = now - date;
       const dateDiffInDays = Math.floor(dateDiffInMs / (1000 * 60 * 60 * 24));
 
+      // setting status 
       let status = "ok"; 
       if (spentPercentage >= 100) {
         status = "overbudget";
@@ -202,6 +206,7 @@ export const BudgetReminder = ({ budgets, wallets, selectedWalletId }) => {
         counts.ok += 1;
       }
 
+      // add to acc
       acc[key] = {
         dateSet: curr.dateSet,
         dateLength: dateDiffInDays,
@@ -215,6 +220,7 @@ export const BudgetReminder = ({ budgets, wallets, selectedWalletId }) => {
     return { groups, counts };
   }, [budgets, wallets, selectedWalletId]);
 
+  // case no budget is found 
   if (!budgets || budgets.length === 0) { 
     return (
       <div className="budgetReminder">
@@ -228,28 +234,23 @@ export const BudgetReminder = ({ budgets, wallets, selectedWalletId }) => {
     )
   }
 
+  // destructure for data 
   const { groups, counts } = categoryGroup;
   
   return (
     <div className="budgetReminder">
       <BudgetOutput groups={groups} counts={counts} />
+      {/* box display of quick stats */}
       <div className="budgetBox">
         <p>Exceeded categories: <span style={{color:"#EF4444"}}>{counts.overbudget}</span></p>
         <p>Warning categories: <span style={{color:"#F59E0B"}}>{counts.warning}</span></p>
         <p>All good categories: <span style={{color:"#10B981"}}>{counts.ok}</span></p>
       </div>
+      {/* changes text between overbudget or not */}
       {counts.overbudget > 0 && (
         <div className="buttonWrapper">
           <Link to="/budget">
-            <button className="btnGoBudget">Find out why</button>
-          </Link>
-        </div>
-      )}
-      {/* dumb way of doing this but it works */}
-      {!(counts.overbudget > 0) && (
-        <div className="buttonWrapper">
-          <Link to="/budget">
-            <button className="btnGoBudget">Find out more</button>
+            <button className="btnGoBudget">{counts.overbudget > 0 ? "Find out why" : "Find out more"}</button>
           </Link>
         </div>
       )}

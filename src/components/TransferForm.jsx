@@ -6,6 +6,7 @@ import "./TransferForm.css";
 function TransferForm() {
   const { wallets, transferBetweenWallets } = useFinance();
   
+  // state initialization 
   const [fromWalletId, setFromWalletId] = useState("");
   const [toWalletId, setToWalletId] = useState("");
   const [amount, setAmount] = useState("");
@@ -50,6 +51,7 @@ function TransferForm() {
 
   return (
     <div className="transfer-form-container">
+      {/* show button when not clicked */}
       {!showForm ? (
         <button 
           onClick={() => setShowForm(true)}
@@ -62,6 +64,7 @@ function TransferForm() {
         <form onSubmit={handleSubmit} className="transfer-form">
           <h3>Transfer Money</h3>
           
+          {/* source wallet */}
           <div className="form-group">
             <label htmlFor="fromWalletId">From Wallet:</label>
             <select
@@ -85,6 +88,7 @@ function TransferForm() {
             )}
           </div>
 
+          {/* destination wallet */}
           <div className="form-group">
             <label htmlFor="toWalletId">To Wallet:</label>
             <select
@@ -105,6 +109,7 @@ function TransferForm() {
             </select>
           </div>
 
+          {/* amount */}
           <div className="form-group">
             <label htmlFor="amount">Amount:</label>
             <input
@@ -121,6 +126,7 @@ function TransferForm() {
             />
           </div>
 
+          {/* description */}
           <div className="form-group">
             <label htmlFor="description">Description (Optional):</label>
             <input

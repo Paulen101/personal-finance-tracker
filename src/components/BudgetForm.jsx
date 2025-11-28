@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import { FaGlobe, FaWallet } from 'react-icons/fa';
 import './BudgetForm.css';
 
+// old categories
 // const COMMON_CATEGORIES = [
 //   'Food',
 //   'Entertainment',
@@ -16,6 +17,7 @@ import './BudgetForm.css';
 //   'Other'
 // ];
 
+// new categories aligned with transactions 
 const COMMON_CATEGORIES = [
   'Food',
   'Transportation',
@@ -28,6 +30,7 @@ const COMMON_CATEGORIES = [
 ];
 
 const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
+  // state initialization
   const [formData, setFormData] = useState({
     walletID: 'global',
     category: '',
@@ -89,6 +92,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
 
         <form onSubmit={handleSubmit} className="budget-form">
           <div className="form-group">
+            {/* budget scope set up */}
             <label htmlFor="walletID">Budget Scope</label>
             <select
               id="walletID"
@@ -112,6 +116,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
             </small>
           </div>
 
+          {/* categories set up */}
           <div className="form-group">
             <label htmlFor="category">Category</label>
             <div className="category-toggle">
@@ -137,6 +142,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
               </button>
             </div>
 
+            {/* input method changes depending on type of category */}
             {useCustomCategory ? (
               <input
                 id='category'
@@ -163,6 +169,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
             )}
           </div>
 
+          {/* limit set up */}
           <div className="form-group">
             <label htmlFor="limit">Budget Limit ($)</label>
             <input

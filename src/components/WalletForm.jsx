@@ -4,6 +4,8 @@ import "./WalletForm.css";
 
 function WalletForm() {
   const { addWallet } = useFinance();
+  
+  // state initialize 
   const [walletName, setWalletName] = useState("");
   const [showForm, setShowForm] = useState(false);
 
@@ -15,7 +17,6 @@ function WalletForm() {
       return;
     }
 
-
     addWallet({ name: walletName.trim()});
 
     setWalletName("");
@@ -26,6 +27,7 @@ function WalletForm() {
 
   return (
     <div className="wallet-form-container">
+      {/* show btn when not clicked */}
       {!showForm ? (
         <button
           onClick={() => setShowForm(true)}
@@ -35,6 +37,7 @@ function WalletForm() {
         </button>
       ) : (
         <form onSubmit={handleSubmit} className="wallet-form">
+          {/* wallet form */}
           <h3>Create New Wallet</h3>
           <input
             type="text"

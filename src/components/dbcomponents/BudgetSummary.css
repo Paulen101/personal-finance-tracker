@@ -1,3 +1,4 @@
+/* BUDGET PAGE CONTAINERS */
 .budgetReminder {
   text-align: left;
   margin-top: auto;
@@ -15,14 +16,15 @@
   margin: 4px 0;
 }
 
+/* Button set up */
 .buttonWrapper {
-  text-align: center;  /* center the button inside this div */
-  margin-top: 30px;    /* optional spacing */
+  text-align: center;  
+  margin-top: 30px;
 }
 
 .buttonWrapper button {
-  display: inline-block;  /* keep button size tight */
-  cursor: pointer;         /* show pointer on hover */
+  display: inline-block;
+  cursor: pointer;
   font-size: 16px;
 }
 

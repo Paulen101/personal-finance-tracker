@@ -63,6 +63,7 @@ function Dashboard() {
   
   return (
     <div className="dashboardWrapper">
+      {/* error case */}
       {error ? (
         <div className="analytics-error">
           <div className="error-icon"><FaExclamationTriangle className="FaIcon"/></div>
@@ -85,11 +86,12 @@ function Dashboard() {
           <p className="dashboardSubtitle">Financial overview</p>
         </div>
 
+        {/* Wallet Selector */}
         <div className="budget-header">
           <div className="budget-header-top">
             <h1 style={{display: 'flex', alignItems: 'center', gap: '10px'}}><FaCreditCard className="FaIcon"/> Quick Wallet Management</h1>
           </div>
-          {/* Wallet Selector */}
+  
           <div className="wallet-selector">
             <label htmlFor="selectedWalletId">Current Wallet:</label>
             <select 
@@ -110,13 +112,15 @@ function Dashboard() {
           {/* Expenses summary component card */}
           <div className="chart-card">
             <div className="chart-header">
-              <h3>Daily Net Balance</h3> {/* can add ({selectedWallet?.name ?? " "}) to show current wallet */}
+              <h3>Daily Net Balance</h3>
+              {/* for date controls */}
                 <span
                   style={{ cursor: "pointer", userSelect: "none", color:"grey", paddingRight:"5px"}}
                   onClick={() => handlePrevMonth()}
                 >
                   ◀
                 </span>
+
                 <p className="dashboardSubtitle" >
                   {(() => {
                     let cm = currentMonth;
@@ -142,6 +146,7 @@ function Dashboard() {
                     return `${start.toLocaleDateString()} - ${end.toLocaleDateString()}`;
                   })()}
                 </p>
+
                 <span
                   style={{ cursor: isNextMonthValid() ? "not-allowed" : "pointer", userSelect: "none", color:"grey", paddingLeft:"5px", opacity: isNextMonthValid() ? 0.3 : 1}}
                   onClick={() => {
@@ -153,6 +158,7 @@ function Dashboard() {
                   ▶
                 </span>
             </div>
+            
             <div className="chart-container">
               <ExpensesSummary wallet = {selectedWallet} onSelectDate={setSelectedDate} currentMonth={currentMonth} onError={setError}/>
             </div>

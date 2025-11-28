@@ -1,3 +1,4 @@
+/* wallet details */
 .wallet-details {
   background: white;
   border-radius: 12px;
@@ -31,6 +32,7 @@
   gap: 24px;
 }
 
+/* card visuals */
 .wallet-card-visual {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 16px;
@@ -92,6 +94,7 @@
   font-weight: 600;
 }
 
+/* balance */
 .wallet-balance-section {
   padding: 20px;
   background: #f9fafb;
@@ -132,6 +135,7 @@
   font-weight: 700;
 }
 
+/* category bars */
 .category-bars {
   display: flex;
   flex-direction: column;

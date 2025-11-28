@@ -1,5 +1,5 @@
 import React from 'react';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FinanceProvider } from './context/FinanceContext';
 import { FaWallet, FaChartLine, FaDollarSign, FaChartPie, FaCoins} from 'react-icons/fa';
 
@@ -16,11 +16,11 @@ import './App.css';
 
 function App() {
 
-  // might not work (uncommment in index.js instead if it doesn't work)
-  // useEffect(() => {
-  //   // Initialize demo data on first load
-  //   initializeDemoDataIfNeeded()
-  // }, []);
+  // should work now but will just comment for now 
+  useEffect(() => {
+    // Initialize demo data on first load
+    // initializeDemoDataIfNeeded()
+  }, []);
 
   return (
     <FinanceProvider>
@@ -65,6 +65,7 @@ function App() {
                 </div>
               </div>
             </nav>
+            
             <Routes>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/transaction" element={<Transactions />} />

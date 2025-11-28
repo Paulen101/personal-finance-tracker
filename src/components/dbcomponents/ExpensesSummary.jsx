@@ -55,6 +55,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
       dailyTotals[date].type = dailyTotals[date].net < 0 ? "expense" : "income";
     });
 
+    // map and sort results by the dates from oldest to newest
     return Object.entries(dailyTotals)
       .map(([date, {net, type}]) => ({ date, net, type }))
       .sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -135,7 +136,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
                     tabIndex={0}
                     onFocus={() => setFocusedIndex(index)}
                     onBlur={() => setFocusedIndex(null)}
-                    // for accessibility 
+                    // for tab accessibility 
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();

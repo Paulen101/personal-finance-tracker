@@ -23,13 +23,14 @@ function WalletList() {
   return (
     <div className="wallet-list-container">
       <h2>My Wallets</h2>
-
+      {/* case of no wallet */}
       {wallets.length === 0 ? (
         <p className="wallet-list-empty">
           No wallets yet. Create your first wallet!
         </p>
       ) : (
         <div className="wallet-list">
+          {/* map to show wallet list */}
           {wallets.map((wallet) => {
             const balance = calculateWalletBalance(wallet);
             const isActive = wallet.id === selectedWalletId;

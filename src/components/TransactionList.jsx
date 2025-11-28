@@ -4,13 +4,14 @@ import { FaTrash, FaSearch, FaRegStickyNote } from "react-icons/fa";
 import "./TransactionList.css";
 
 function TransactionList() {
-  const { wallets, selectedWalletId, setSelectedWalletId, deleteTransaction } =
-    useFinance();
+  const { wallets, selectedWalletId, setSelectedWalletId, deleteTransaction } = useFinance();
 
+  // state initialization
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredType, setFilteredType] = useState("all");
   const [sortOrder, setSortOrder] = useState("dateDesc");
 
+  // format date for display 
   const formatDate = (date) => {
     const d = new Date(date);
 

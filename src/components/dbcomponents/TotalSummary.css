@@ -1,13 +1,12 @@
-
+/* progress bar container */
 .progressBarContainer {
   display: flex;      
   flex-direction: column; 
 }
 
-/* if possible configure size of bar later*/ 
 .progressBar {
-  width: 100%;        /* visually smaller */
-  max-width: 410px;  /* optional */
+  width: 100%;       
+  max-width: 410px;  
   text-align: left;         /* align text and contents to the left */
   margin-bottom: 16px;   
 }

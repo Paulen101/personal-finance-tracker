@@ -40,6 +40,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
   const [page, setPage] = useState(0);
   const perPage = 5;
 
+  // memoise transactions 
   const transactions = useMemo(() => wallet?.transactions || [], [wallet]);
 
   // useMemo is save transaction into group
@@ -76,9 +77,10 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
     return (grouped[normDate] || []).map(t => ({ ...t }));
   }, [grouped, dates, selectedDate]);
 
-
+  // max page size 
   const maxPage = Math.ceil(flatTransactions.length / perPage);
 
+  // cut transactions to display based on page size and per page set 
   const displayTransactions = flatTransactions.slice(page * perPage, (page + 1) * perPage);
 
   if (!transactions || transactions.length===0) {
@@ -87,10 +89,8 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
 
   return (
     <div className="historySummary">
-      {/* <h2 style={{marginTop: "18px"}}>{selectedDate ? `Transactions on ${selectedDate}` : "Recent Transactions"}</h2> */}
-
       {displayTransactions.map(t => {
-        const { icon, color } = categoryMap[t.category] || { icon: FaBox, color: "#f0f0f0" };
+        const { icon, color } = categoryMap[t.category] || { icon: FaBox, color: "#f0f0f0" };     // fallback to "other" (not as other but same) for unknown category
 
         return (
           <div 
@@ -100,7 +100,6 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              // marginBottom: '15px',
               padding: '15px 0',
               borderBottom: '1px solid #e5e7eb'
             }}
@@ -126,7 +125,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
         );
       })}
 
-      {/* show page controls (when max page > 1 or transaction > 5) <- can just comment out the max page part to remove it */}
+      {/* show page controls (when max page > 1 or transaction > 5) */}
       {maxPage > 1 && (
         <div className="pageControls">
           <button disabled={page === 0} onClick={() => setPage(page - 1)}>←</button>
