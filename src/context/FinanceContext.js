@@ -159,12 +159,17 @@ export const FinanceProvider = ({ children }) => {
       const wallet = Array.isArray(wallets)
         ? wallets.find((w) => w.id === targetWalletId)
         : null;
-      if (!wallet || !Array.isArray(wallet.transactions)) return 0;
 
+      if (!wallet || !Array.isArray(wallet.transactions)) return 0;
+      
       // Sum transactions that match the budget category and are expenses
       const spent = wallet.transactions
         .filter(
-          (t) => t && t.category === budget.category && t.type === "expense"
+          (t) =>
+            t &&
+            t.category === budget.category &&             // search for matching budget category 
+            t.type === "expense" &&                       // and is expense 
+            new Date(t.date) >= new Date(budget.dateSet)  // only after budget set date         <---- can comment this out 
         )
         .reduce((sum, t) => sum + Math.abs(Number(t.amount) || 0), 0);
 
@@ -201,7 +206,6 @@ export const FinanceProvider = ({ children }) => {
         budgetData.walletID === "global" ? null : parseInt(budgetData.walletID),
       category: budgetData.category,
       limit: parseFloat(budgetData.limit),
-      spent: 0,
       dateSet: new Date().toISOString(),
     };
     setBudgets([...budgets, newBudget]);

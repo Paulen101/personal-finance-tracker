@@ -161,7 +161,7 @@ const BudgetOutput = ({groups, counts}) => {
 }
 
 
-export const BudgetReminder = ({budgets}) => { 
+export const BudgetReminder = ({ budgets, wallets, selectedWalletId }) => { 
   /*
     - 1st state: nothing is close to budget limit -> gives congrats + how long since you've kept it under budget
     - 2nd state: >= 80% -> warning message 
@@ -175,37 +175,45 @@ export const BudgetReminder = ({budgets}) => {
     // total per category
     const groups = budgets.reduce((acc, curr) => {
       const key = curr.category;
-      const spentPercentage = curr.limit > 0 ? (curr.spent / curr.limit) * 100 : 0;
+
+      // find the related wallet transactions
+      const targetWalletId = curr.walletID ?? selectedWalletId; // global budgets use selectedWallet
+      const wallet = wallets.find(w => w.id === targetWalletId);
+
+      // calculate spent in this category
+      const spent = wallet?.transactions
+        ?.filter(t => t.type === "expense" && t.category === curr.category)
+        .reduce((sum, t) => sum + t.amount, 0) || 0;
+
+      const spentPercentage = curr.limit > 0 ? (spent / curr.limit) * 100 : 0;
+
       const date = new Date(curr.dateSet);
-      // calculate difference in milliseconds
       const dateDiffInMs = now - date;
-      // convert milliseconds to days
       const dateDiffInDays = Math.floor(dateDiffInMs / (1000 * 60 * 60 * 24));
+
       let status = "ok"; 
       if (spentPercentage >= 100) {
         status = "overbudget";
         counts.overbudget += 1;
-      }
-      else if (spentPercentage >= 80) {
+      } else if (spentPercentage >= 80) {
         status = "warning";
         counts.warning += 1;
-      }
-      else {
+      } else {
         counts.ok += 1;
       }
 
       acc[key] = {
-        dateSet: curr.dateSet,      // save dateSet just in case it is needed again 
+        dateSet: curr.dateSet,
         dateLength: dateDiffInDays,
         spentPercentage,
-        status: status,
+        status,
       };
 
       return acc;
     }, {});
 
-    return {groups, counts};
-  }, [budgets])
+    return { groups, counts };
+  }, [budgets, wallets, selectedWalletId]);
 
   if (!budgets || budgets.length === 0) { 
     return (

@@ -2,17 +2,28 @@ import React, { useState, useEffect } from 'react';
 // import { FaGlobe, FaWallet } from 'react-icons/fa';
 import './BudgetForm.css';
 
+// const COMMON_CATEGORIES = [
+//   'Food',
+//   'Entertainment',
+//   'Transportation',
+//   'Shopping',
+//   'Bills',
+//   'Healthcare',
+//   'Education',
+//   'Travel',
+//   'Groceries',
+//   'Utilities',
+//   'Other'
+// ];
+
 const COMMON_CATEGORIES = [
   'Food',
-  'Entertainment',
   'Transportation',
-  'Shopping',
+  'Salary',
+  'Entertainment',
+  'Rent',
   'Bills',
-  'Healthcare',
-  'Education',
-  'Travel',
-  'Groceries',
-  'Utilities',
+  'Gift',
   'Other'
 ];
 
@@ -102,7 +113,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
           </div>
 
           <div className="form-group">
-            <label>Category</label>
+            <label htmlFor="category">Category</label>
             <div className="category-toggle">
               <button
                 type="button"
@@ -128,6 +139,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
 
             {useCustomCategory ? (
               <input
+                id='category'
                 type="text"
                 name="category"
                 value={formData.category}
@@ -137,6 +149,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
               />
             ) : (
               <select
+                id='category'
                 name="category"
                 value={formData.category}
                 onChange={handleChange}

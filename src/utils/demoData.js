@@ -50,7 +50,6 @@ export const setupDemoData = () => {
       walletID: 0,
       category: 'Food',
       limit: 200,
-      spent: 0,
       dateSet: '2025-11-01T10:00:00Z'
     },
     {
@@ -58,7 +57,6 @@ export const setupDemoData = () => {
       walletID: null, // Global budget
       category: 'Entertainment',
       limit: 150,
-      spent: 0,
       dateSet: '2025-11-01T10:00:00Z'
     },
     {
@@ -66,7 +64,6 @@ export const setupDemoData = () => {
       walletID: 0,
       category: 'Transportation',
       limit: 100,
-      spent: 0,
       dateSet: '2025-11-01T10:00:00Z'
     },
     {
@@ -74,7 +71,6 @@ export const setupDemoData = () => {
       walletID: null, // Global budget
       category: 'Shopping',
       limit: 300,
-      spent: 0,
       dateSet: '2025-11-01T10:00:00Z'
     },
     {
@@ -82,7 +78,6 @@ export const setupDemoData = () => {
       walletID: 1,
       category: 'Bills',
       limit: 250,
-      spent: 0,
       dateSet: '2025-11-01T10:00:00Z'
     },
     {
@@ -90,7 +85,6 @@ export const setupDemoData = () => {
       walletID: 2,
       category: 'Education',
       limit: 500,
-      spent: 0,
       dateSet: '2025-11-01T10:00:00Z'
     }
   ];

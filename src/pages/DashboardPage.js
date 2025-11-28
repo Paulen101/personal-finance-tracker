@@ -191,7 +191,7 @@ function Dashboard() {
           {/* Budget reminder component card */}
           <div className="chart-card" style={{paddingLeft:"40px", paddingRight:"40px"}}>
             <div className="chart-container">
-              <BudgetReminder budgets = {selectedBudgets}/>
+              <BudgetReminder  budgets={selectedBudgets || []} wallets={wallets || []} selectedWalletId={selectedWalletId ?? 0} />
             </div>
           </div>
         </div>

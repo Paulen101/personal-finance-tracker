@@ -7,6 +7,7 @@ function TransactionForm() {
 
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [customCategory, setCustomCategory] = useState("");         // custom category for 
   const [type, setType] = useState("expense");
   const [showForm, setShowForm] = useState(false);
 
@@ -34,11 +35,16 @@ function TransactionForm() {
       return;
     }
 
+    const finalCategory = 
+      category === "Other" && customCategory.trim() !== ""
+        ? customCategory.trim()
+        : category;
+  
     const newTransaction = {
       type,
-      category,
+      category:finalCategory,
       amount:parseFloat(amount),
-    };
+    };  
 
     addTransaction(Number(selectedWalletId), newTransaction);
 
@@ -95,6 +101,21 @@ function TransactionForm() {
                 ))}
               </select>
             </div>
+
+            {category === "Other" && (
+              <div className="form-group">
+                <label htmlFor="customCategory">Custom Category Name (optional):</label>
+                <input
+                  type="text"
+                  id="customCategory"
+                  name="customCategory"
+                  placeholder="Enter custom name"
+                  value={customCategory}
+                  onChange={(e) => setCustomCategory(e.target.value)}
+                  className="transaction-form-input"
+                />
+              </div>
+            )}
 
             <div className="form-group">
               <label htmlFor="amount">Amount:</label>

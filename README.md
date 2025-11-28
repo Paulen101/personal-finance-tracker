@@ -174,7 +174,6 @@ src/
   walletID: Number | null, // null = global, Number = specific wallet
   category: String,        // Spending category
   limit: Number,           // Budget limit in dollars
-  spent: Number,           // Calculated spent amount
   dateSet: String         // ISO date string
 }
 ```
