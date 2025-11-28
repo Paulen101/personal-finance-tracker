@@ -5,26 +5,33 @@ import { FaCreditCard } from 'react-icons/fa';
 import "./Balance.css";
 
 function Balance() {
-  const { income, expense, wallets, selectedWalletId } = useFinance();
-  // balance for all is more annoying to implement in finance context so this will do
-  const [balance, setBalance] = useState(0); 
+  const { wallets, selectedWalletId } = useFinance();
+  // useState for total to calculate income, expense, & balance for a specific wallet & all wallet
+  const [totals, setTotals] = useState({ balance: 0, income: 0, expense: 0 });
+    useEffect(() => {
+      let balance = 0;
+      let income = 0;
+      let expense = 0;
 
-  useEffect(() => {
-    let totalBalance= 0;
+      const selectedWallets =
+        selectedWalletId === "all"
+          ? wallets
+          : wallets.filter((w) => w.id === selectedWalletId);
 
-    if (selectedWalletId === "all") {
-      wallets.forEach(wallet => {
-        totalBalance += wallet.balance || 0;
+      selectedWallets.forEach((wallet) => {
+        (wallet.transactions || []).forEach((t) => {
+          if (t.type === "income") {
+            income += t.amount;
+            balance += t.amount;
+          } else {
+            expense += t.amount;
+            balance -= t.amount;
+          }
+        });
       });
-    } else {
-      const currentWallet = wallets.find(w => w.id === selectedWalletId);
-      if (currentWallet) {
-        totalBalance = currentWallet.balance || 0;
-      }
-    }
 
-    setBalance(totalBalance);
-  }, [wallets, selectedWalletId]);
+      setTotals({ balance, income, expense });
+    }, [wallets, selectedWalletId]);
 
   return (
     <div className="balance-summary">
@@ -32,8 +39,8 @@ function Balance() {
         <div className="balance-icon"><FaCreditCard /></div>
         <div className="balance-content">
           <p className="balance-label">{selectedWalletId === "all" ? "Total Balance (All Wallets)" : "Current Balance"}</p>
-          <h2 className={`balance-value ${balance < 0 ? 'negative' : 'positive'}`}>
-            {balance < 0 ? '-': '+'}${Math.abs(balance).toFixed(2)}
+          <h2 className={`balance-value ${totals.balance < 0 ? 'negative' : 'positive'}`}>
+            {totals.balance < 0 ? '-': '+'}${Math.abs(totals.balance).toFixed(2)}
           </h2>
         </div>
       </div>
@@ -43,7 +50,7 @@ function Balance() {
         <div className="balance-content">
           <p className="balance-label">Total Income</p>
           <h2 className="balance-value positive">
-            +${income.toFixed(2)}
+            +${totals.income.toFixed(2)}
           </h2>
         </div>
       </div>
@@ -53,7 +60,7 @@ function Balance() {
         <div className="balance-content">
           <p className="balance-label">Total Expenses</p>
           <h2 className="balance-value negative">
-            -${Math.abs(expense).toFixed(2)}
+            -${totals.expense.toFixed(2)}
           </h2>
         </div>
       </div>
