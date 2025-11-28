@@ -13,11 +13,16 @@ function TransactionList() {
 
   const formatDate = (date) => {
     const d = new Date(date);
+
+    if (isNaN(d.getTime())) {
+    return "Invalid Date";
+  }
     const dateStr = d.toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
+    
     const timeStr = d.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",

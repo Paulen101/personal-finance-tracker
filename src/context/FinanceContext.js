@@ -240,9 +240,9 @@ export const FinanceProvider = ({ children }) => {
               transactions: [
                 ...(w.transactions || []),
                 {
-                  id: Date.now() % 1000000,
+                  id: Date.now(),
                   ...transaction,
-                  date: transaction.date,
+                  date: new Date().toISOString(),
                 },
               ],
             }

@@ -38,7 +38,6 @@ function TransactionForm() {
       type,
       category,
       amount: parseFloat(amount),
-      date: new Date().toISOString().split("T")[0],
     };
 
     addTransaction(Number(selectedWalletId), newTransaction);
