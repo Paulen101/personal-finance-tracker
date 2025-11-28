@@ -97,7 +97,7 @@ function TransactionForm() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="type">Amount:</label>
+              <label htmlFor="amount">Amount:</label>
               <input
                 type="number"
                 step="0.01"
@@ -107,6 +107,8 @@ function TransactionForm() {
                 onChange={(e) => setAmount(e.target.value)}
                 required
                 className="transaction-form-input"
+                id="amount"
+                name="amount"
               />
             </div>
           </div>
