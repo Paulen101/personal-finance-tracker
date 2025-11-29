@@ -41,7 +41,11 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
   const perPage = 5;
 
   // memoise transactions 
-  const transactions = useMemo(() => wallet?.transactions || [], [wallet]);
+  const transactions = useMemo(() => {
+    return (wallet?.transactions || []).sort(
+      (a, b) => new Date(b.date) - new Date(a.date) // newest first
+    );
+  }, [wallet]);
 
   // useMemo is save transaction into group
   const grouped = useMemo(() => {

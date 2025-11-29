@@ -11,7 +11,7 @@ A comprehensive React-based personal finance tracker with budget management, mul
 - **Real-time spending calculation** - Automatically tracks expenses against budget limits
 - **Visual progress indicators** - Color-coded progress bars (green, yellow, red)
 - **Budget alerts** - Visual warnings when approaching or exceeding limits
-- **Date filters** - Ensures only transactions made after budget is set are counted 
+- **Date filters** - Ensures only transactions made after budget is set are counted
 
 ### 👛 Multi-Wallet Support
 - Manage multiple wallets/accounts simultaneously
@@ -195,6 +195,7 @@ src/
 │   ├── BudgetPage.jsx       # Main budget management page
 │   └── BudgetPage.css
 ├── utils/
+│   ├── analyticsHelpers.jsx
 │   └── demoData.jsx         # Demo data utilities
 ├── App.jsx                  # Main app component
 └── index.jsx               # App entry point
