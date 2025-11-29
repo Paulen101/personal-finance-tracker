@@ -72,7 +72,6 @@ function App() {
               <Route path="/wallet" element={<Wallet />} />
               <Route path="/budget" element={<BudgetPage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
-              <Route path="*" element={<ErrorBoundary />} />
             </Routes>
           </div>
         </Router>
