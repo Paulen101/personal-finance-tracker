@@ -65,6 +65,30 @@ Launches the test runner in the interactive watch mode.
 Builds the app for production to the `build` folder.
 
 ## Usage
+### Creating a Wallet
+
+1. Click the **"+ Create New Wallet"** button
+2. Enter a wallet name
+3. Click **"Create"**
+
+### Creating a Transaction
+
+1. Click the **"+ Add Transaction"** button
+2. Select a type: **Expense** / **Income**
+3. Select or enter a category:
+   - **Standard category**: shared stardard category between wallet, transactions and budgets
+   - **Custom category**: accessed by selecting other - allow for connecting with budget's custom category
+4. Enter an amount
+5. Click **"Create Budget"**
+
+### Transferring between Wallets
+
+1. Click the **"Transfer Between Wallets"** button
+2. Select a source wallet
+3. Select a destination wallet
+4. Set amount to transfer
+5. Provide a description 
+6. Click **"Transfer"**
 
 ### Creating a Budget
 
@@ -82,11 +106,16 @@ Builds the app for production to the `build` folder.
 - If a wallet has a specific budget for "Food", the global "Food" budget won't apply to that wallet
 - Other wallets without a specific "Food" budget will still use the global one
 
-### Editing/Deleting Budgets
+### Editing/Deleting Budgets/Wallets/Transactions
 
 - Click the **✏️ edit icon** to modify a budget
-- Click the **🗑️ delete icon** to remove a budget
+- Click the **🗑️ delete icon** to remove a budget/transaction/wallet
 - All changes are saved automatically to localStorage
+
+### Switching Wallets
+
+- Selecting **wallet** lined up on wallet page 
+- Using the quick **dropdown menu** on dashboard/transaction/budget page
 
 ### Understanding Budget Status
 
@@ -94,13 +123,19 @@ Builds the app for production to the `build` folder.
 - 🟡 **Yellow (80-99%)**: Warning - approaching limit
 - 🔴 **Red (100%+)**: Exceeded - over budget
 
+### Filtering & Sorting
+- Click on the **bars** on the dashboard page to filter through transaction for selected date
+- Use the **dropdown menus & search bar** on the transaction page to filter/sort through selected wallet's transaction category/type/orderings
+- Use the **dropdown menus & search bar** on the budget page to filter/sort through budget set 
+- Select the **Time ranges & wallet** on analytics page to filter through selected time ranges or wallet for a more detailed analysis
+
 ### Demo Data
 
-The app automatically loads demo data on first use, including:
+The app does contain demo data as reference, including:
 - 3 sample wallets with transactions
 - 6 sample budgets (mix of global and wallet-specific)
 
-To reset to demo data, clear your browser's localStorage and refresh.
+Though it will not automatically load.
 
 ## Project Structure
 
@@ -174,7 +209,6 @@ src/
   walletID: Number | null, // null = global, Number = specific wallet
   category: String,        // Spending category
   limit: Number,           // Budget limit in dollars
-  spent: Number,           // Calculated spent amount
   dateSet: String         // ISO date string
 }
 ```

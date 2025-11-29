@@ -1,3 +1,4 @@
+/* form container */
 .transaction-form-container {
   margin-bottom: 24px;
 }
@@ -58,6 +59,7 @@
   color: #374151;
 }
 
+/* controls & buttons */
 .transaction-form-select,
 .transaction-form-input {
   padding: 12px;

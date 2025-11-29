@@ -1,13 +1,12 @@
-
+/* History summary container */
 .historySummary { 
   display: flex;
   flex-direction: column;       /* stack transactions + page controls */
   text-align: left;
-  /* border: 1px solid #eee;        */
   border-radius: 10px;
   min-height: 400px;
   box-sizing: border-box;
-  position: relative;           /* allows absolute positioning inside */
+  position: relative;           /* allows page controls to stick to the bottom */
 }
 
 .pageControls {
@@ -19,7 +18,7 @@
   justify-content: center;
   gap: 10px;
   padding: 14px 0 0 0;
-  background-color: inherit;    /* optional: match container */
+  background-color: inherit;  
 }
 
 .pageControls button {

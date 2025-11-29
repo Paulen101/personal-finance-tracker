@@ -2,21 +2,35 @@ import React, { useState, useEffect } from 'react';
 // import { FaGlobe, FaWallet } from 'react-icons/fa';
 import './BudgetForm.css';
 
+// old categories
+// const COMMON_CATEGORIES = [
+//   'Food',
+//   'Entertainment',
+//   'Transportation',
+//   'Shopping',
+//   'Bills',
+//   'Healthcare',
+//   'Education',
+//   'Travel',
+//   'Groceries',
+//   'Utilities',
+//   'Other'
+// ];
+
+// new categories aligned with transactions 
 const COMMON_CATEGORIES = [
   'Food',
-  'Entertainment',
   'Transportation',
-  'Shopping',
+  'Salary',
+  'Entertainment',
+  'Rent',
   'Bills',
-  'Healthcare',
-  'Education',
-  'Travel',
-  'Groceries',
-  'Utilities',
+  'Gift',
   'Other'
 ];
 
 const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
+  // state initialization
   const [formData, setFormData] = useState({
     walletID: 'global',
     category: '',
@@ -78,6 +92,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
 
         <form onSubmit={handleSubmit} className="budget-form">
           <div className="form-group">
+            {/* budget scope set up */}
             <label htmlFor="walletID">Budget Scope</label>
             <select
               id="walletID"
@@ -101,8 +116,9 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
             </small>
           </div>
 
+          {/* categories set up */}
           <div className="form-group">
-            <label>Category</label>
+            <label htmlFor="category">Category</label>
             <div className="category-toggle">
               <button
                 type="button"
@@ -126,8 +142,10 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
               </button>
             </div>
 
+            {/* input method changes depending on type of category */}
             {useCustomCategory ? (
               <input
+                id='category'
                 type="text"
                 name="category"
                 value={formData.category}
@@ -137,6 +155,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
               />
             ) : (
               <select
+                id='category'
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
@@ -150,6 +169,7 @@ const BudgetForm = ({ wallets, onSubmit, onCancel, editingBudget }) => {
             )}
           </div>
 
+          {/* limit set up */}
           <div className="form-group">
             <label htmlFor="limit">Budget Limit ($)</label>
             <input

@@ -1,3 +1,4 @@
+/* wallet list container */
 .wallet-list-container {
   padding: 20px;
 }
@@ -18,6 +19,7 @@
   gap: 10px;
 }
 
+/* wallet card */
 .wallet-card {
   padding: 15px;
   border: 1px solid #ccc;

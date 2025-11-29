@@ -12,6 +12,7 @@ function WalletTransactions() {
     return null;
   }
 
+  // format date for display 
   const formatDate = (date) => {
     const d = new Date(date);
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -24,7 +25,7 @@ function WalletTransactions() {
   return (
     <div className="wallet-transactions">
       <h2>Transactions</h2>
-      
+      {/* case of no transaction */}
       {sortedTransactions.length === 0 ? (
         <p className="no-transactions">No transactions yet for this wallet.</p>
       ) : (
@@ -34,6 +35,7 @@ function WalletTransactions() {
               key={transaction.id} 
               className={`transaction-item ${transaction.type}`}
             >
+              {/* transactions on wallet page */}
               <div className="transaction-left">
                 <span className="transaction-category">{transaction.category}</span>
                 <span className="transaction-date">{formatDate(transaction.date)}</span>
@@ -45,7 +47,6 @@ function WalletTransactions() {
               <div className="transaction-right">
                 <span className={`transaction-amount ${transaction.type}`}>
                   {transaction.type === "income" ? "+" : "-"}${Math.abs(transaction.amount).toFixed(2)}
-                  {/* {transaction.amount >= 0 ? "+" : "-"}${Math.abs(transaction.amount).toFixed(2)}       alternative method */}
                 </span>
                 <button
                   onClick={() => deleteTransaction(currentWallet.id, transaction.id)}

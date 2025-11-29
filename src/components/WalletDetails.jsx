@@ -52,7 +52,7 @@ function WalletDetails() {
         <div className="wallet-balance-section">
           <h3>Current Balance</h3>
           <p className={`wallet-balance-amount ${balance < 0 ? 'negative' : ''}`}>
-            ${balance.toFixed(2)}
+            {balance < 0 ? '-' : '+'}${Math.abs(balance).toFixed(2)}
           </p>
         </div>
 

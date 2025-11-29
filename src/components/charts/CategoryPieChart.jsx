@@ -19,6 +19,7 @@ const CustomTooltip = ({ active, payload }) => {
   return null;
 };
 
+// category distribution chart 
 const CategoryPieChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (

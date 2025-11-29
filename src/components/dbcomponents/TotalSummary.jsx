@@ -14,7 +14,7 @@ const CategorySummary = ({ spending }) => {
       if (tx.type !== "expense") {
         return acc;
       }
-      acc[tx.category] = (acc[tx.category] || 0) + -tx.amount;
+      acc[tx.category] = (acc[tx.category] || 0) + tx.amount;
       return acc;
     }, {});
 
@@ -56,17 +56,19 @@ const CategorySummary = ({ spending }) => {
 
   return (
     <div className="progressBarContainer">
+      {/* progress bars */}
       {result.map(([category, total]) => (
         <div className="progressBar" key={category}>
           <div className="totalCategory">
             {category}: <span style={{fontWeight:"700"}}> ${total} </span>spent 
           </div>
+          
           <div className="totalProgressBar">
             <div 
               className="totalProgressFill" 
               style={{ 
                 width: `${Math.min((total/maxTotal)*100, 100)}%`,
-                backgroundColor: "#8B5CF6"      // <- maybe change to "green" or " red"　
+                backgroundColor: "#8B5CF6"
               }}
             />
           </div>

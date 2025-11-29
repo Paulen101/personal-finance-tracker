@@ -1,5 +1,5 @@
 import React, {useMemo, useEffect, useState} from "react";
-import { FaUtensils, FaFilm, FaBus, FaShoppingBag, FaFileInvoice, FaPills, FaBook, FaPlane, FaShoppingCart, FaLightbulb, FaBox, FaExclamationTriangle } from 'react-icons/fa';
+import { FaUtensils, FaFilm, FaMoneyBillWave, FaBus, FaHome, FaFileInvoice, FaArrowDown, FaArrowUp, FaGift, FaBox, FaExclamationTriangle } from 'react-icons/fa';
 import './HistorySummary.css'
 
 // function for displaying the icon
@@ -24,23 +24,23 @@ const SpecialIcon = ({ icon: Icon, bgColor = '#f0f0f0', size = 40 }) => {
 
 // mappings for the icons
 const categoryMap = {
-  Food:           { icon: FaUtensils, color: "#FF6347" },   // red-orange
-  Entertainment:  { icon: FaFilm, color: "#FF69B4" },   // pink
-  Transportation: { icon: FaBus, color: "#87CEEB" },   // sky blue
-  Shopping:       { icon: FaShoppingBag, color: "#BA55D3" },   // purple
-  Bills:          { icon: FaFileInvoice, color: "#FFB347" },   // light orange
-  Healthcare:     { icon: FaPills, color: "#FFEB51" },   // yellow
-  Education:      { icon: FaBook, color: "#6A5ACD" },   // slate blue
-  Travel:         { icon: FaPlane, color: "#1E90FF" },   // dodger blue
-  Groceries:      { icon: FaShoppingCart, color: "#32CD32" },   // green
-  Utilities:      { icon: FaLightbulb, color: "#FFA500" },   // orange
-  Other:          { icon: FaBox, color: "#A9A9A9" },   // grey
+  Food:           { icon: FaUtensils,       color: "#FF6347" },
+  Transportation: { icon: FaBus,            color: "#87CEEB" },
+  Salary:         { icon: FaMoneyBillWave,  color: "#32CD32" },
+  Entertainment:  { icon: FaFilm,           color: "#FF69B4" },
+  Rent:           { icon: FaHome,           color: "#1E90FF" },
+  Bills:          { icon: FaFileInvoice,    color: "#FFB347" },
+  Gift:           { icon: FaGift,           color: "#FFB6C1" },
+  Other:          { icon: FaBox,            color: "#A9A9A9" },
+  "Transfer In":  { icon: FaArrowDown,      color: "#10b981" },
+  "Transfer Out": { icon: FaArrowUp,        color: "#ef4444" },
 };
 
 export const HistorySummary = ({ wallet, selectedDate }) => {
   const [page, setPage] = useState(0);
   const perPage = 5;
 
+  // memoise transactions 
   const transactions = useMemo(() => wallet?.transactions || [], [wallet]);
 
   // useMemo is save transaction into group
@@ -77,9 +77,10 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
     return (grouped[normDate] || []).map(t => ({ ...t }));
   }, [grouped, dates, selectedDate]);
 
-
+  // max page size 
   const maxPage = Math.ceil(flatTransactions.length / perPage);
 
+  // cut transactions to display based on page size and per page set 
   const displayTransactions = flatTransactions.slice(page * perPage, (page + 1) * perPage);
 
   if (!transactions || transactions.length===0) {
@@ -88,10 +89,8 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
 
   return (
     <div className="historySummary">
-      {/* <h2 style={{marginTop: "18px"}}>{selectedDate ? `Transactions on ${selectedDate}` : "Recent Transactions"}</h2> */}
-
       {displayTransactions.map(t => {
-        const { icon, color } = categoryMap[t.category] || { icon: FaBox, color: "#f0f0f0" };
+        const { icon, color } = categoryMap[t.category] || { icon: FaBox, color: "#f0f0f0" };     // fallback to "other" (not as other but same) for unknown category
 
         return (
           <div 
@@ -101,7 +100,6 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              // marginBottom: '15px',
               padding: '15px 0',
               borderBottom: '1px solid #e5e7eb'
             }}
@@ -127,7 +125,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
         );
       })}
 
-      {/* show page controls (when max page > 1 or transaction > 5) <- can just comment out the max page part to remove it */}
+      {/* show page controls (when max page > 1 or transaction > 5) */}
       {maxPage > 1 && (
         <div className="pageControls">
           <button disabled={page === 0} onClick={() => setPage(page - 1)}>←</button>

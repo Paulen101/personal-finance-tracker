@@ -148,14 +148,15 @@ const BudgetPage = () => {
 
         {/* Wallet Selector */}
         <div className="wallet-selector">
-          <label>Current Wallet:</label>
+          <label htmlFor="selectedWalletId">Current Wallet:</label>
           <select 
+            id="selectedWalletId"
             value={selectedWalletId} 
             onChange={(e) => setSelectedWalletId(parseInt(e.target.value))}
           >
             {wallets.map(wallet => (
               <option key={wallet.id} value={wallet.id}>
-                {wallet.name} (${getWalletBalance(wallet.id).toFixed(2)})
+                {wallet.name} ({getWalletBalance(wallet.id) < 0 ? '-' : ''}${Math.abs(getWalletBalance(wallet.id)).toFixed(2)})
               </option>
             ))}
           </select>
@@ -185,8 +186,8 @@ const BudgetPage = () => {
       {/* Filters and Sort */}
       <div className="budget-controls">
         <div className="filter-group">
-          <label>Filter by Wallet:</label>
-          <select value={filterWallet} onChange={(e) => setFilterWallet(e.target.value)}>
+          <label htmlFor="filterWallet">Filter by Wallet:</label>
+          <select id="filterWallet" value={filterWallet} onChange={(e) => setFilterWallet(e.target.value)}>
             <option value="all">All Budgets</option>
             <option value="current">Current Wallet (Applicable)</option>
             <option value="global">Global Only</option>
@@ -199,8 +200,8 @@ const BudgetPage = () => {
         </div>
 
         <div className="filter-group">
-          <label>Filter by Category:</label>
-          <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
+          <label htmlFor="filterCategory">Filter by Category:</label>
+          <select id="filterCategory" value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}>
             <option value="all">All Categories</option>
             {categories.map(cat => (
               <option key={cat} value={cat}>{cat}</option>
@@ -209,8 +210,8 @@ const BudgetPage = () => {
         </div>
 
         <div className="filter-group">
-          <label>Sort by:</label>
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <label htmlFor="sortBy">Sort by:</label>
+          <select id="sortBy" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
             <option value="category">Category</option>
             <option value="limit">Limit (High to Low)</option>
             <option value="spent">Spent (High to Low)</option>

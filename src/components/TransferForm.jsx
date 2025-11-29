@@ -6,6 +6,7 @@ import "./TransferForm.css";
 function TransferForm() {
   const { wallets, transferBetweenWallets } = useFinance();
   
+  // state initialization 
   const [fromWalletId, setFromWalletId] = useState("");
   const [toWalletId, setToWalletId] = useState("");
   const [amount, setAmount] = useState("");
@@ -50,6 +51,7 @@ function TransferForm() {
 
   return (
     <div className="transfer-form-container">
+      {/* show button when not clicked */}
       {!showForm ? (
         <button 
           onClick={() => setShowForm(true)}
@@ -62,9 +64,11 @@ function TransferForm() {
         <form onSubmit={handleSubmit} className="transfer-form">
           <h3>Transfer Money</h3>
           
+          {/* source wallet */}
           <div className="form-group">
-            <label>From Wallet:</label>
+            <label htmlFor="fromWalletId">From Wallet:</label>
             <select
+              id="fromWalletId"
               value={fromWalletId}
               onChange={(e) => setFromWalletId(e.target.value)}
               required
@@ -84,9 +88,11 @@ function TransferForm() {
             )}
           </div>
 
+          {/* destination wallet */}
           <div className="form-group">
-            <label>To Wallet:</label>
+            <label htmlFor="toWalletId">To Wallet:</label>
             <select
+              id="toWalletId"
               value={toWalletId}
               onChange={(e) => setToWalletId(e.target.value)}
               required
@@ -103,9 +109,12 @@ function TransferForm() {
             </select>
           </div>
 
+          {/* amount */}
           <div className="form-group">
-            <label>Amount:</label>
+            <label htmlFor="amount">Amount:</label>
             <input
+              id="amount"
+              name="amount"
               type="number"
               step="0.01"
               min="0.01"
@@ -117,9 +126,12 @@ function TransferForm() {
             />
           </div>
 
+          {/* description */}
           <div className="form-group">
-            <label>Description (Optional):</label>
+            <label htmlFor="description">Description (Optional):</label>
             <input
+              id="description"
+              name="description"
               type="text"
               placeholder="e.g., Monthly savings"
               value={description}

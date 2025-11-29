@@ -30,6 +30,7 @@ function WalletCarousel() {
   return (
     <div className="wallet-carousel">
       <div className="wallet-carousel-scroll">
+        {/* mapping to display each wallet */}
         {wallets.map((wallet) => {
           const balance = calculateWalletBalance(wallet);
           const isActive = wallet.id === selectedWalletId;
@@ -55,7 +56,7 @@ function WalletCarousel() {
               <div className="wallet-mini-card-content">
                 <p className="wallet-mini-name">{wallet.name}</p>
                 <p className="wallet-mini-balance">
-                  ${balance.toFixed(2)}
+                  {balance < 0 ? "-" : "+"}${Math.abs(balance).toFixed(2)}
                 </p>
                 <p className="wallet-mini-cardnumber">
                   {displayCardNumber}
