@@ -195,7 +195,8 @@ src/
 │   ├── BudgetPage.jsx       # Main budget management page
 │   └── BudgetPage.css
 ├── utils/
-│   └── demoData.js         # Demo data utilities
+│   ├── analyticsHelpers.jsx
+│   └── demoData.jsx         # Demo data utilities
 ├── App.jsx                  # Main app component
 └── index.jsx               # App entry point
 ```
