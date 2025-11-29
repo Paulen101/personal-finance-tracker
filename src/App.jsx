@@ -16,7 +16,7 @@ import './App.css';
 
 function App() {
 
-  // should work now but will just comment for now 
+  // very dangerous because it crashes the page
   useEffect(() => {
     // Initialize demo data on first load
     // initializeDemoDataIfNeeded()
@@ -30,7 +30,7 @@ function App() {
             {/* Simple Navigation */}
           <nav className="app-nav">
             <div className="nav-container">
-              <h2 className="app-title"><FaWallet className="FaIcon" /> Finance Tracker</h2>
+              <NavLink to="/" style={{ textDecoration: 'none', color: 'inherit' }}><h2 className="app-title"><FaWallet className="FaIcon" /> Finance Tracker</h2></NavLink>
               <div className="nav-buttons">
                   <NavLink
                     className={({ isActive }) => `nav-btn ${isActive ? 'active' : ''}`}
