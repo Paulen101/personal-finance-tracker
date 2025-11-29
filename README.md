@@ -143,22 +143,22 @@ Though it will not automatically load.
 src/
 ├── components/
 │   ├── charts/
-│       ├── CategoryPieChart.js
-│       ├── IncomeVsExpensesChart.js
-│       ├── MonthlyComparisonChart.js
-│       └── SpendingTrendsChart.js
+│       ├── CategoryPieChart.jsx
+│       ├── IncomeVsExpensesChart.jsx
+│       ├── MonthlyComparisonChart.jsx
+│       └── SpendingTrendsChart.jsx
 │   ├── dbcomponents/
-│       ├── BudgetSummary.js    # Budget reminder display
+│       ├── BudgetSummary.jsx    # Budget reminder display
 │       ├── BudgetSummary.css
-│       ├── ExpensesSummary.js  # Monthly expenses with selectable filters
+│       ├── ExpensesSummary.jsx  # Monthly expenses with selectable filters
 │       ├── ExpensesSummary.css
-│       ├── HistorySummary.js   # Transaction history display 
+│       ├── HistorySummary.jsx   # Transaction history display 
 │       ├── HistorySummary.css
-│       ├── TotalSummary.js     # Total expenses display
+│       ├── TotalSummary.jsx     # Total expenses display
 │       └── TotalSummary.css
-│   ├── BudgetForm.js       # Form for creating/editing budgets
+│   ├── BudgetForm.jsx       # Form for creating/editing budgets
 │   ├── BudgetForm.css
-│   ├── BudgetItem.js       # Individual budget display
+│   ├── BudgetItem.jsx       # Individual budget display
 │   ├── BudgetItem.css
 │   ├── Balance.jsx         # Balance display
 │   ├── Balance.css
@@ -179,25 +179,25 @@ src/
 │   ├── WalletList.css
 │   ├── WalletTransactions.jsx  # Wallet transactions display
 │   ├── WalletTransactions.css
-│   ├── ErrorBoundary.js    # Error page for when encountering problems
+│   ├── ErrorBoundary.jsx    # Error page for when encountering problems
 │   └── ErrorBoundary.css
 ├── context/
-│   └── FinanceContext.js   # Global state management
+│   └── FinanceContext.jsx   # Global state management
 ├── pages/
-│   ├── DashboardPage.js    # Dashboard page 
+│   ├── DashboardPage.jsx    # Dashboard page 
 │   ├── DashboardPage.css   
-│   ├── AnalyticsPage.js    # Analytics page
+│   ├── AnalyticsPage.jsx    # Analytics page
 │   ├── AnalyticsPage.css
 │   ├── Transactions.jsx    # Tranaction page
 │   ├── Transactions.css
 │   ├── Wallet.jsx          # Wallet page
 │   ├── Wallet.css
-│   ├── BudgetPage.js       # Main budget management page
+│   ├── BudgetPage.jsx       # Main budget management page
 │   └── BudgetPage.css
 ├── utils/
 │   └── demoData.js         # Demo data utilities
-├── App.js                  # Main app component
-└── index.js               # App entry point
+├── App.jsx                  # Main app component
+└── index.jsx               # App entry point
 ```
 
 ## Data Structure
