@@ -135,7 +135,7 @@ The app does contain demo data as reference, including:
 - 3 sample wallets with transactions
 - 6 sample budgets (mix of global and wallet-specific)
 
-Though it will not automatically load (but can be loaded by uncommenting in app.jsx).
+Though it will not automatically load.
 
 ## Project Structure
 
