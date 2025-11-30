@@ -422,6 +422,8 @@ export const FinanceProvider = ({ children }) => {
       localStorage.setItem("finance_wallets", JSON.stringify(updatedWallets));
       return updatedWallets;
     });
+
+    return true;
   }
 
   const clearStorage = () => {
