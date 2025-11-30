@@ -372,7 +372,7 @@ export const FinanceProvider = ({ children }) => {
 
     // add to transaction history
     const timestamp = Date.now();
-    const date = new Date().toISOString().split("T")[0];
+    const date = new Date().toLocaleString();
 
     const transferOutTransaction = {
       id: timestamp,
