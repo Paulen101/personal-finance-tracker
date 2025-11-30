@@ -162,7 +162,6 @@ src/
 │   ├── BudgetItem.css
 │   ├── Balance.jsx         # Balance display
 │   ├── Balance.css
-│   ├── FilterBar.jsx       # Filter bar component
 │   ├── TransactionsForm.jsx    # Transactions form for adding transactions
 │   ├── TransactionsForm.css   
 │   ├── TransactionsList.jsx    # Transactions list display
@@ -195,7 +194,7 @@ src/
 │   ├── BudgetPage.jsx       # Main budget management page
 │   └── BudgetPage.css
 ├── utils/
-│   ├── analyticsHelpers.jsx
+│   ├── analyticsHelpers.jsx # Helper functions for analytics 
 │   └── demoData.jsx         # Demo data utilities
 ├── App.jsx                  # Main app component
 └── index.jsx               # App entry point
