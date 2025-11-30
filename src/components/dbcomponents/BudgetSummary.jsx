@@ -247,7 +247,7 @@ export const BudgetReminder = ({ budgets, wallets, selectedWalletId }) => {
         <p>All good categories: <span style={{color:"#10B981"}}>{counts.ok}</span></p>
       </div>
       {/* changes text between overbudget or not */}
-      {counts.overbudget > 0 && (
+      {(counts.overbudget > 0 || counts.warning > 0) && (
         <div className="buttonWrapper">
           <Link to="/budget">
             <button className="btnGoBudget">{counts.overbudget > 0 ? "Find out why" : "Find out more"}</button>
