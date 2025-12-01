@@ -50,7 +50,9 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
   // useMemo is save transaction into group
   const grouped = useMemo(() => {
     return transactions.reduce((acc, t) => {
-      const date = t.date.split("T")[0];
+      const localDate = new Date(t.date);
+      const date = `${localDate.getFullYear()}-${String(localDate.getMonth()+1).padStart(2,'0')}-${String(localDate.getDate()).padStart(2,'0')}`;
+
 
       if (!acc[date]) {
         acc[date] = [];
