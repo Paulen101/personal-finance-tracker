@@ -117,7 +117,7 @@ export const HistorySummary = ({ wallet, selectedDate }) => {
                 {t.category}
               </div>
               <div className="transactionDate" style={{ fontSize: '14px', color: '#585859ff' }}>
-                {{new Date(t.date).toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" })}}
+                {new Date(t.date).toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" })}
               </div>
             </div>
 
