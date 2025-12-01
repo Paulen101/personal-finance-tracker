@@ -41,7 +41,7 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
     wallet.transactions
       .filter(tx => tx.date.startsWith(monthStr))
       .forEach(tx => {
-        const date = tx.date.split("T")[0];
+        const date = new Date(tx.date).toLocaleDateString("en-CA");
 
         // initialize new date into obj
         if (!dailyTotals[date]) {
