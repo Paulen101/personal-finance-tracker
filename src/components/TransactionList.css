@@ -7,6 +7,12 @@
   overflow-x: auto;
 }
 
+.transaction-table-header,
+.transaction-row {
+  min-width: 850px;
+}
+
+
 .transaction-top-row {
   display: flex;
   justify-content: space-between;
