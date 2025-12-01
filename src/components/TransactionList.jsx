@@ -151,6 +151,7 @@ function TransactionList() {
       </div>
 
       {/* Table Header */}
+      <div className={`transaction-wrapper`}>
       <div
         className={`transaction-table-header ${
           selectedWalletId === "all" ? "with-wallet" : ""
@@ -218,6 +219,7 @@ function TransactionList() {
             </div>
           ))
         )}
+      </div>
       </div>
     </div>
   );
