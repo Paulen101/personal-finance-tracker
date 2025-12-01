@@ -39,14 +39,9 @@ export const ExpensesSummary = ({ wallet, onSelectDate, currentMonth, onError })
 
     // group by day 
     wallet.transactions
-      .filter(tx => {
-        const localDate = new Date(tx.date);
-        const txMonth = `${localDate.getUTCFullYear()}-${String(localDate.getUTCMonth() + 1).padStart(2, '0')}`;
-        return txMonth === monthStr;
-      })
+      .filter(tx => tx.date.startsWith(monthStr))
       .forEach(tx => {
-        const localDate = new Date(tx.date);
-        const date = `${localDate.getUTCFullYear()}-${String(localDate.getUTCMonth() + 1).padStart(2,'0')}-${String(localDate.getUTCDate()).padStart(2,'0')}`;
+        const date = tx.date.split("T")[0];
 
         // initialize new date into obj
         if (!dailyTotals[date]) {
