@@ -171,7 +171,7 @@ export const FinanceProvider = ({ children }) => {
             t &&
             t.category === budget.category &&             // search for matching budget category 
             t.type === "expense" &&                       // and is expense 
-            new Date(t.date) >= new Date(budget.dateSet)  // only after budget set date         <---- can comment this out to disable set date check
+            new Date(t.date).setHours(0,0,0,0) >= new Date(budget.dateSet).setHours(0,0,0,0)  // only after budget set date         <---- can comment this out to disable set date check
         )
         .reduce((sum, t) => sum + Math.abs(Number(t.amount) || 0), 0);
 
